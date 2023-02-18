@@ -5,6 +5,7 @@ importers:
   .:
     specifiers:
       '@fluentui/react-icons': ^2.0.183
+      '@headlessui/react': ^1.7.11
       '@heroicons/react': ^2.0.11
       '@jellyfin/sdk': ^0.7.0
       '@tailwindcss/forms': ^0.5.3
@@ -43,6 +44,7 @@ importers:
       typescript: 4.7.2
     dependencies:
       '@fluentui/react-icons': 2.0.183_react@18.1.0
+      '@headlessui/react': 1.7.11_ef5jwxihqo6n7gxfmzogljlgcm
       '@heroicons/react': 2.0.11_react@18.1.0
       '@jellyfin/sdk': 0.7.0
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.1.8
@@ -628,6 +630,18 @@ packages:
       long: 4.0.0
       protobufjs: 7.1.2
       yargs: 16.2.0
+    dev: false
+
+  /@headlessui/react/1.7.11_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-EaDbVgcyiylhtskZZf4Qb/JiiByY7cYbd0qgZ9xm2pm2X7hKojG0P4TaQYKgPOV3vojPhd/pZyQh3nmRkkcSyw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      client-only: 0.0.1
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /@heroicons/react/2.0.11_react@18.1.0:
