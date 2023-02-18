@@ -10,12 +10,18 @@ import {
 } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
 import { useTheme } from "next-themes";
-import { signInWithPopup, signOut } from "firebase/auth";
-import { auth, provider } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { Jellyfin } from "@jellyfin/sdk";
+import { useJellyfin } from "../hooks/handleJellyfin";
 
 const Navbar = () => {
-  const [user] = useAuthState(auth);
+  const signOut = () => {
+    localStorage.removeItem("serverUrl");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("password");
+    window.location.reload();
+  };
+
+  const { api, user } = useJellyfin();
 
   const [search, setSearch] = useState<string>("");
   const [searchRes, setSearchRes] = useState<any>();
@@ -110,9 +116,11 @@ const Navbar = () => {
               />
             </form>
           </div>
-          {user?.photoURL && user?.displayName ? (
+          {user?.Name ? (
             <button
-              onClick={() => signOut(auth)}
+              onClick={() =>
+                signOut()
+              }
               className={`absolute right-10 m-3 mr-4 inline-flex h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 ${
                 resolvedTheme == "light"
                   ? "bg-slate-100 active:bg-slate-300"
@@ -121,27 +129,25 @@ const Navbar = () => {
                   : "bg-slate-100 active:bg-slate-300"
               } gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-slate-600`}
             >
-              <span className="text-[0.75rem]">{user?.displayName}</span>
-              <img
-                draggable={false}
-                className="h-4 w-4 rounded-full"
-                src={user?.photoURL}
-                alt=""
-              />
+              <span className="text-[0.75rem]">{user?.Name}</span>
+              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center">
+                <span className="text-[0.6rem] font-normal text-white">
+                  {user?.Name?.charAt(0).toUpperCase()}
+                </span>
+              </div>
             </button>
           ) : (
             <button
-              onClick={() => signInWithPopup(auth, provider)}
               className={`absolute right-10 m-3 mr-4 h-8 w-8 border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 ${
                 resolvedTheme == "light"
                   ? "bg-slate-100 active:bg-slate-300"
                   : resolvedTheme == "dark"
                   ? "bg-slate-800 active:bg-slate-700"
                   : "bg-slate-100 active:bg-slate-300"
-              } rounded-full p-2 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+              } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
             >
               <img
-                src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/google-icon.svg"
+                src="/jellyfin.svg"
                 alt=""
               />
             </button>

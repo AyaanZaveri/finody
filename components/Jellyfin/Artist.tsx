@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Artist = ({ artist }: Props) => {
-  console.log(artist);
+  // console.log(artist);
 
   return (
     <div className="group-one flex w-48 flex-col select-none items-center justify-between gap-3 rounded-xl bg-white p-4 pb-4 text-sm text-slate-700 active:ring-1 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-slate-100 active:ring-slate-200 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 dark:active:ring-1 dark:active:ring-slate-700">

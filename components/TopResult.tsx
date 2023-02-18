@@ -3,10 +3,7 @@ import { titleCase } from "title-case";
 import Track from "./Track";
 import Video from "./Video";
 import Tilt from "react-parallax-tilt";
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
-import { auth, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
 import { HiHeart } from "react-icons/hi";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { pipedApiUrl, tildaApiUrl } from "../utils/apiUrl";
@@ -18,52 +15,6 @@ import Album from "./TopResults/Album";
 import Artist from "./TopResults/Artist";
 
 const TopResult = ({ result }: { result: any }) => {
-  const [user] = useAuthState(auth);
-
-  const usersRef = collection(db, "users");
-
-  // get uid of user from firebase
-  const userRef = doc(usersRef, user?.uid);
-  const userCollectionRef = collection(userRef, "user");
-  const favoritesRef = doc(userCollectionRef, "favorites");
-  const favoriteTracksRef = collection(favoritesRef, "tracks");
-
-  const [favoriteTracksSnapshot] = useCollection(favoriteTracksRef);
-  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
-
-  // console.log(favoriteTracksSnapshot)
-
-  const checkIfFavoriteExists = (videoId: string) => {
-    return favoriteTracksSnapshot?.docs.find(
-      (doc) => doc.data().videoId === videoId
-    );
-  };
-
-  const addFavorite = async () => {
-    if (!checkIfFavoriteExists(result?.videoId)) {
-      await addDoc(favoriteTracksRef, {
-        videoId: result?.videoId,
-      });
-    }
-  };
-
-  const deleteFavorite = async () => {
-    const favoriteDoc = favoriteTracksSnapshot?.docs.find(
-      (doc) => doc.data().videoId === result?.videoId
-    )?.id;
-    await deleteDoc(doc(favoriteTracksRef, favoriteDoc));
-  };
-
-  const handleFavorited = () => {
-    if (checkIfFavoriteExists(result?.videoId)) {
-      deleteFavorite();
-    } else {
-      addFavorite();
-    }
-  };
-
-  // console.log(result)3
-
   return (
     <div className="mr-8">
       {result?.resultType == "album" ? (
@@ -101,9 +52,8 @@ const TopResult = ({ result }: { result: any }) => {
                   {titleCase(result?.resultType)}
                 </span>
                 <HiHeart
-                  onClick={handleFavorited}
                   className={`h-4 w-4 ${
-                    checkIfFavoriteExists(result?.videoId as string)
+                    true
                       ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
                       : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}

@@ -6,10 +6,6 @@ import { MdExplicit } from "react-icons/md";
 import { HiHeart, HiPlay } from "react-icons/hi";
 import { fancyTimeFormat } from "../utils/fancyTimeFormat";
 import { titleCase } from "title-case";
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
 import { pipedApiUrl, tildaApiUrl } from "../utils/apiUrl";
 import Tilt from "react-parallax-tilt";
 import { useRecoilState } from "recoil";
@@ -38,47 +34,6 @@ const Album = ({ album }: Props) => {
   }, []);
 
   const router = useRouter();
-
-  const [user] = useAuthState(auth);
-
-  const usersRef = collection(db, "users");
-
-  // get uid of user from firebase
-  const userRef = doc(usersRef, user?.uid);
-  const userCollectionRef = collection(userRef, "user");
-  const favoritesRef = doc(userCollectionRef, "favorites");
-  const favoriteAlbumsRef = collection(favoritesRef, "albums");
-
-  const [favoriteAlbumsSnapshot] = useCollection(favoriteAlbumsRef);
-
-  const checkIfFavoriteExists = (browseId: string) => {
-    return favoriteAlbumsSnapshot?.docs.find(
-      (doc) => doc.data().browseId === browseId
-    );
-  };
-
-  const addFavorite = async () => {
-    if (!checkIfFavoriteExists(album?.browseId)) {
-      await addDoc(favoriteAlbumsRef, {
-        browseId: album?.browseId,
-      });
-    }
-  };
-
-  const deleteFavorite = async () => {
-    const favoriteDoc = favoriteAlbumsSnapshot?.docs.find(
-      (doc) => doc.data().browseId === album?.browseId
-    )?.id;
-    await deleteDoc(doc(favoriteAlbumsRef, favoriteDoc));
-  };
-
-  const handleFavorited = () => {
-    if (checkIfFavoriteExists(album?.browseId)) {
-      deleteFavorite();
-    } else {
-      addFavorite();
-    }
-  };
 
   const { query } = useRouter();
   const [albumListId, setAlbumListeId] = useState<any>();
@@ -216,12 +171,11 @@ const Album = ({ album }: Props) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleFavorited();
                 }}
               >
                 <HiHeart
                   className={`w-50 h-4 ${
-                    checkIfFavoriteExists(album?.browseId as string)
+                    true
                       ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
                       : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}

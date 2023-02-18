@@ -3,32 +3,45 @@ import type { AppProps } from "next/app";
 import Navbar from "../components/Navbar";
 import Layout from "../components/Layout";
 import { RecoilRoot, useRecoilState } from "recoil";
-import { currentTrackState } from "../atoms/songAtom";
 import { ThemeProvider } from "next-themes";
-import { auth, db } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Jellyfin } from "@jellyfin/sdk";
+import { apiState } from "../atoms/apiAtom";
+import { userState } from "../atoms/userAtom";
+import { jellyfinAuth } from "../utils/jellyfinAuth";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [user, loading] = useAuthState(auth);
+  const router = useRouter();
 
-  const userRef = collection(db, "users");
-  useEffect(() => {
-    if (user) {
-      setDoc(
-        doc(userRef, user.uid),
-        {
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          email: user.email,
-          lastSeen: serverTimestamp(),
-          uid: user.uid,
-        },
-        { merge: true }
-      );
+  // get local storage values serverUrl, userName, password
+  if (typeof window !== "undefined") {
+    const serverUrl = localStorage.getItem("serverUrl");
+    const userName = localStorage.getItem("userName");
+    const password = localStorage.getItem("password");
+
+    // if all values are present and the page is the login page, redirect to home page
+    if (
+      serverUrl &&
+      userName &&
+      password &&
+      router.pathname === "/login" &&
+      typeof window !== "undefined"
+    ) {
+      router.push("/");
     }
-  }, [user]);
+
+    // if all values are present and the page is not the login page, redirect to login page
+    if (
+      !serverUrl &&
+      !userName &&
+      !password &&
+      router.pathname !== "/login" &&
+      typeof window !== "undefined"
+    ) {
+      router.push("/login");
+    }
+  }
 
   return (
     <div className="font-poppins">

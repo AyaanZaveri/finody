@@ -6,14 +6,10 @@ import { useEffect, useState } from "react";
 import { MdExplicit } from "react-icons/md";
 import { useRecoilState } from "recoil";
 import { titleCase } from "title-case";
-import { currentPlaylistState } from "../atoms/playlistAtom";
-import { currentTrackState, isPlayingState } from "../atoms/songAtom";
-import AlbumTrack from "../components/AlbumTrack";
 import Navbar from "../components/Navbar";
 import { pipedApiUrl, tildaApiUrl } from "../utils/apiUrl";
 import { fancyTimeFormat } from "../utils/fancyTimeFormat";
 import { axiosReq } from "../utils/axiosReq";
-import { playingTrackState } from "../atoms/playingTrack";
 import Tilt from "react-parallax-tilt";
 import { getPlaylistSongs } from "../utils/getPlaylistSongs";
 
@@ -24,12 +20,6 @@ const Playlist: NextPage = () => {
   const [albumData, setAlbumData] = useState<any>();
   const [isExplicit, setIsExplicit] = useState<boolean>();
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
-
-  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
-  const [currentPlaylist, setCurrentPlaylist] =
-    useRecoilState(currentPlaylistState);
-  const [playingTrack, setPlayingTrack] = useRecoilState(playingTrackState);
 
   const [curPlay, setCurPlay] = useState<any>();
 
@@ -106,39 +96,27 @@ const Playlist: NextPage = () => {
     }
   };
 
-  const setPlaylistSongs = () => {
-    try {
-      setCurrentPlaylist(
-        curPlay?.sort((a: any, b: any) =>
-          a.trackNum > b.trackNum ? 1 : b.trackNum > a.trackNum ? -1 : 0
-        )
-      );
-    } catch (error) {}
-  };
+  // const setPlaylistSongs = () => {
+  //   try {
+  //     setCurrentPlaylist(
+  //       curPlay?.sort((a: any, b: any) =>
+  //         a.trackNum > b.trackNum ? 1 : b.trackNum > a.trackNum ? -1 : 0
+  //       )
+  //     );
+  //   } catch (error) {}
+  // };
 
   useEffect(() => {
     getPlaylistSongs();
   }, [albumData]);
 
-  useEffect(() => {
-    if (curPlay && curPlay != "undefined") {
-      try {
-        setCurrentPlaylist(
-          curPlay?.sort((a: any, b: any) =>
-            a.trackNum > b.trackNum ? 1 : b.trackNum > a.trackNum ? -1 : 0
-          )
-        );
-      } catch (error) {}
-    }
-  }, [curPlay]);
-
   // console.log(currentPlaylist);
 
   return (
     <div
-      className={`ml-3 pl-64 pr-12 ${
-        playingTrack?.url?.length > 3 ? "pb-16" : ""
-      }`}
+      // className={`ml-3 pl-64 pr-12 ${
+      //   playingTrack?.url?.length > 3 ? "pb-16" : ""
+      // }`}
     >
       <div className="pt-[4.5rem] pb-8">
         <div className="pt-8">
@@ -238,12 +216,12 @@ const Playlist: NextPage = () => {
                   <div className="mt-3 w-min">
                     <button
                       onClick={() => {
-                        setPlaylistSongs();
-                        setIsPlaying({
-                          isPlaying: true,
-                          type: "playlist",
-                          id: albumBrowseId,
-                        });
+                        // setPlaylistSongs();
+                        // setIsPlaying({
+                        //   isPlaying: true,
+                        //   type: "playlist",
+                        //   id: albumBrowseId,
+                        // });
                       }}
                       className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-emerald-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-emerald-500/30 active:bg-emerald-600"
                     >
@@ -254,15 +232,6 @@ const Playlist: NextPage = () => {
                 ) : null}
               </div>
             </div>
-          </div>
-          <div className="mt-6 flex flex-col gap-1">
-            {albumData?.tracks.map((track: any, index: number) => (
-              <AlbumTrack
-                thumbnails={albumData?.thumbnails}
-                track={track}
-                index={index}
-              />
-            ))}
           </div>
         </div>
       </div>
