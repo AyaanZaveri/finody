@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$rhap_theme-color: #10b981 !default; // Color of all buttons and volume/progress indicators
+$rhap_font-family: "Rubik", sans-serif !default; // Font family of current time and duration
+@import "react-h5-audio-player/src/styles.scss";
+
+html {
+  @apply h-full overflow-hidden;
+}
+
+body {
+  @apply h-full overflow-auto;
+}
+
+.rhap_container {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0px;
+  margin-top: 8px;
+}
+
+.rhap_play-pause-button {
+  margin-bottom: 3px;
+}
+
+[data-theme="light"] {
+  --timeColour: #334155;
+}
+
+[data-theme="dark"] {
+  --timeColour: white;
+}
+
+.rhap_time {
+  font-size: 0.875rem;
+  color: var(--timeColour);
+}
+
+.rhap_main-controls-button {
+  color: #10b981;
+}
+
+.rhap_stacked .rhap_controls-section {
+  margin-top: 0px;
+}
+
+.rhap_progress-bar {
+  height: 4px;
+}
+
+.rhap_progress-indicator {
+  width: 12px;
+  height: 12px;
+  top: -4px;
+}
+
+.rhap_play-pause-button {
+  width: 40px;
+}
+
+.link_animated {
+  animation: backAndForth 5s linear infinite;
+}
+@keyframes backAndForth {
+  55% {
+    transform: translateX(calc(-100% + 200px));
+  }
+  90% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  /* Scroll thumb styles */
+  .scrollbar::-webkit-scrollbar {
+    @apply w-[0.3rem];
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-emerald-800;
+  }
+  .scrollbar::-webkit-scrollbar-thumb:active {
+    @apply bg-slate-800;
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-emerald-900;
+  }
+
+  /* Scroll track styles (Background) */
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+}
