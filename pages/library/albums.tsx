@@ -86,7 +86,7 @@ const LibraryAlbums: NextPage = () => {
                         : sortBy == "CriticRating"
                         ? "Critic Rating"
                         : sortBy == "ProductionYear"
-                        ? "Release Data"
+                        ? "Release Date"
                         : sortBy == "DatePlayed"
                         ? "Date Played"
                         : sortBy == "PlayCount"
