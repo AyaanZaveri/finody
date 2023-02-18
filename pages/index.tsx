@@ -1,24 +1,9 @@
 import type { NextPage } from "next";
-import ReactAudioPlayer from "react-audio-player";
-import {
-  HiFastForward,
-  HiPause,
-  HiPlay,
-  HiRewind,
-  HiVolumeOff,
-  HiVolumeUp,
-} from "react-icons/hi";
-import Navbar from "../components/Navbar";
-import AudioPlayer from "react-h5-audio-player";
-import { MdExplicit } from "react-icons/md";
-import { useRecoilState } from "recoil";
-import { currentTrackState } from "../atoms/songAtom";
 import { useEffect, useState } from "react";
 // Jellyfin SDK
 import { Jellyfin } from "@jellyfin/sdk";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { getArtistsApi } from "@jellyfin/sdk/lib/utils/api/artists-api";
-import { ItemFields } from "@jellyfin/sdk/lib/generated-client/models/item-fields.js";
 import Artist from "../components/Jellyfin/Artist";
 import Album from "../components/Jellyfin/Album";
 
