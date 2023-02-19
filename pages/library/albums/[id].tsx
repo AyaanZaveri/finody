@@ -26,6 +26,8 @@ const LibraryAlbum: NextPage = () => {
     loading: false,
   });
 
+  const [songUrl, setSongUrl] = useState<string>("");
+
   const { api, user } = useJellyfin();
 
   const [serverUrl, setServerUrl] = useState<string>("");
@@ -75,6 +77,7 @@ const LibraryAlbum: NextPage = () => {
     const audio = getAudioApi(api)
       .getAudioStream({
         itemId: id,
+
       })
       .then((res) => {
         setSongLoading({
@@ -87,7 +90,7 @@ const LibraryAlbum: NextPage = () => {
         console.log(err);
       });
 
-    console.log(audio);
+    setSongUrl(await audio as any)
   };
 
   console.log(songLoading);
@@ -97,7 +100,7 @@ const LibraryAlbum: NextPage = () => {
   return (
     <div className={`ml-3 pl-64 pr-12`}>
       <div className="pt-[4.5rem] pb-8">
-        <div className="pt-8">
+        <div className="pt-8 full">
           <div className="flex w-full flex-row items-start gap-12">
             <Tilt
               glareEnable={true}
@@ -208,15 +211,15 @@ const LibraryAlbum: NextPage = () => {
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
                       <tr className="text-slate-700 dark:text-white">
-                        <th className="text-left w-1/12">Track</th>
-                        <th className="text-left w-5/12">Title</th>
-                        <th className="w-1/12">
+                        <th className="text-center w-1/12">Track</th>
+                        <th className="text-left w-1/2">Title</th>
+                        <th className="w-3/12">
                           <span className="flex flex-row items-center justify-center">
                             <HiClock className="w-5 h-5" />
                           </span>
                         </th>
-                        <th className="text-left w-2/12">Bit Rate</th>
-                        <th className="text-center w-1/12">Plays</th>
+                        <th className="text-left w-3/12">Bit Rate</th>
+                        <th className="text-center w-3/12">Plays</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -236,7 +239,7 @@ const LibraryAlbum: NextPage = () => {
                               className="h-10 w-10 rounded-md shadow-lg shadow-emerald-500/20"
                             />
                             {track?.Name}
-                            {songLoading.id == track?.id && songLoading.loading ? (
+                            {songLoading.id == track?.Id && songLoading.loading ? (
                               <CgSpinner className="animate-spin h-5 w-5 text-emerald-500" />
                             ) : null}
                           </td>
