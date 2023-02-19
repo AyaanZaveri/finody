@@ -102,37 +102,9 @@ const LibraryAlbum: NextPage = () => {
       duration: track.RunTimeTicks,
       cover: `${serverUrl}/Items/${track.Id}/Images/Primary?maxHeight=400&tag=${track.ImageTags?.Primary}&quality=90`,
       url: `
-      ${serverUrl}/Audio/${track.Id}/stream.flac?Static=true&mediaSourceId=${track.Id}&deviceId=9aa38b20-8e58-48eb-bb32-b47e8704a6c5&api_key=91ebc1b9b4a54fbcbc41529ea4a6c4eb&Tag=e739c95d40de0dbce384fae600f72320
+      ${serverUrl}/Audio/${track.Id}/stream.flac?Static=true&mediaSourceId=${track.Id}&deviceId=9aa38b20-8e58-48eb-bb32-b47e8704a6c5&api_key=91ebc1b9b4a54fbcbc41529ea4a6c4eb&Tag=e739c95d40de0dbce384fae600f72320&recursive=true
       `,
     });
-
-    // const audio = getAudioApi(api)
-    //   .getAudioStream({
-    //     itemId: track.Id,
-    //     _static: true,
-    //     mediaSourceId: track.Id,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setPlayingTrack({
-    //       id: track.Id,
-    //       title: track.Name,
-    //       artist: track.AlbumArtist,
-    //       album: track.Album,
-    //       duration: track.RunTimeTicks,
-    //       cover: `${serverUrl}/Items/${track.Id}/Images/Primary?maxHeight=400&tag=${track.ImageTags?.Primary}&quality=90`,
-    //       songData: res.data,
-    //     });
-
-    //     setIsPlaying(true);
-    //     setSongLoading({
-    //       id: track.Id,
-    //       loading: false,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
 
     setSongLoading({
       id: track.Id,
@@ -141,44 +113,6 @@ const LibraryAlbum: NextPage = () => {
 
     console.log("got em");
   };
-
-  const getStreamUrl = (args: {
-    container?: string;
-    deviceId: string;
-    id: string;
-    mediaSourceId?: string;
-  }) => {
-    const { id, deviceId } = args;
-
-    // hhttp://127.0.0.1:8096/audio/08903a6d27fc97e8ab6fe8d47a00b430/universal?userId=c953baadafb24d80956b9f89e7c6fdda&deviceId=undefined&audioCodec=aac&playSessionId=undefined&container=opus,mp3,aac,m4a,m4b,flac,wav,ogg&transcodingContainer=ts&transcodingProtocol=hls
-
-    console.log(
-      `${api.basePath}/audio` +
-        `/${id}/universal` +
-        `?userId=${user?.Id}` +
-        `&deviceId=${deviceId}` +
-        "&audioCodec=aac" +
-        `&playSessionId=${deviceId}` +
-        "&container=opus,mp3,aac,m4a,m4b,flac,wav,ogg" +
-        "&transcodingContainer=ts" +
-        "&transcodingProtocol=hls"
-    );
-
-    // return (
-    //   `${server?.url}/audio` +
-    //   `/${id}/universal` +
-    //   `?userId=${server.userId}` +
-    //   `&deviceId=${deviceId}` +
-    //   '&audioCodec=aac' +
-    //   `&playSessionId=${deviceId}` +
-    //   '&container=opus,mp3,aac,m4a,m4b,flac,wav,ogg' +
-    //   '&transcodingContainer=ts' +
-    //   '&transcodingProtocol=hls'
-    // );
-  };
-  console.log(songLoading);
-
-  // console.log(tracksData ? tracksData[1] : null);
 
   return (
     <div className={`ml-3 pl-64 pr-12`}>
