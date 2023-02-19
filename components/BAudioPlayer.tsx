@@ -24,11 +24,43 @@ import Marquee from "react-fast-marquee";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import Tilt from "react-parallax-tilt";
 import { playState, currentTrackState } from "../atoms/playState";
+import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api/playstate-api";
+import { useJellyfin } from "../hooks/handleJellyfin";
 
 const BAudioPlayer = () => {
   const player = useRef<any>();
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
+  const [currentProgress, setCurrentProgress] = useState(0);
+
+  const { user, api } = useJellyfin();
+
+  useEffect(() => {
+    if (!api) return;
+    if (isPlaying && playingTrack?.url) {
+      getPlaystateApi(api).onPlaybackStart({
+        userId: user?.Id,
+        itemId: [playingTrack?.id] as any,
+        canSeek: true,
+      });
+    } else {
+      getPlaystateApi(api).onPlaybackStopped({
+        userId: user?.Id,
+        itemId: [playingTrack?.id] as any,
+      });
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
+    if (!api) return;
+    if (isPlaying && playingTrack?.url) {
+      getPlaystateApi(api).onPlaybackProgress({
+        userId: user?.Id,
+        itemId: [playingTrack?.id] as any,
+        positionTicks: currentProgress * 10000,
+      });
+    }
+  }, [currentProgress]);
 
   console.log(playingTrack);
 
@@ -67,20 +99,15 @@ const BAudioPlayer = () => {
                   </span>
                 </div>
                 <div>
-                  <span className="font-normal">
-                    {playingTrack?.artist}
-                  </span>
+                  <span className="font-normal">{playingTrack?.artist}</span>
                 </div>
               </div>
             </div>
             <div className="w-2/5">
               <AudioPlayer
-                onPause={() =>
-                  setIsPlaying(false)
-                }
-                onPlay={() =>
-                  setIsPlaying(true)
-                }
+                onListen={(e: any) => setCurrentProgress(e?.timeStamp)}
+                onPause={() => setIsPlaying(false)}
+                onPlay={() => setIsPlaying(true)}
                 ref={player}
                 autoPlay={true}
                 showSkipControls={true}

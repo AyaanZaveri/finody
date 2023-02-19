@@ -16,6 +16,7 @@ import { HiClock } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
 import { currentTrackState, playState } from "../../../atoms/playState";
 import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-api";
+import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -83,8 +84,6 @@ const LibraryAlbum: NextPage = () => {
   }, [api]);
 
   const getSongFile = async (track: any) => {
-    // console.log(track)
-
     if (!api) return;
 
     setIsPlaying(true);
@@ -113,6 +112,8 @@ const LibraryAlbum: NextPage = () => {
 
     console.log("got em");
   };
+
+
 
   return (
     <div className={`ml-3 pl-64 pr-12`}>
@@ -228,7 +229,7 @@ const LibraryAlbum: NextPage = () => {
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
                       <tr className="text-slate-700 dark:text-white">
-                        <th className="text-center w-1/12">Track</th>
+                        <th className="text-center w-[5%]">Track</th>
                         <th className="text-left w-1/2">Title</th>
                         <th className="w-3/12">
                           <span className="flex flex-row items-center justify-center">
@@ -256,7 +257,9 @@ const LibraryAlbum: NextPage = () => {
                               className="h-10 w-10 rounded-md"
                             />
                             <div className="flex flex-col">
-                              <span className="font-semibold">{track?.Name}</span>
+                              <span className="font-semibold">
+                                {track?.Name}
+                              </span>
                               <span className="text-slate-600 dark:text-white">
                                 {track?.AlbumArtist}
                               </span>

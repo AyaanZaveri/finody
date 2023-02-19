@@ -8,7 +8,7 @@ export const jellyfinAuth = async (
   if (!serverUrl && !userName && !password) return;
   const jellyfin = new Jellyfin({
     clientInfo: {
-      name: "My Client Application",
+      name: "Finody",
       version: "1.0.0",
     },
     deviceInfo: {
