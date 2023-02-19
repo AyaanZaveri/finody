@@ -321,7 +321,12 @@ const LibraryAlbum: NextPage = () => {
                               alt=""
                               className="h-10 w-10 rounded-md shadow-lg shadow-emerald-500/20"
                             />
-                            {track?.Name}
+                            <div className="flex flex-col">
+                              <span className="font-semibold">{track?.Name}</span>
+                              <span className="text-slate-600 dark:text-white">
+                                {track?.AlbumArtist}
+                              </span>
+                            </div>
                             {songLoading.id == track?.Id &&
                             songLoading.loading ? (
                               <CgSpinner className="animate-spin h-5 w-5 text-emerald-500" />
