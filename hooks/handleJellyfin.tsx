@@ -4,6 +4,7 @@ import { jellyfinAuth } from "../utils/jellyfinAuth";
 export const useJellyfin = () => {
   const [api, setApi] = useState<any>(null);
   const [user, setUser] = useState<any>(null);
+  const [data, setData] = useState<any>(null);
 
   const handleJellyfin = async () => {
     if (window !== undefined) {
@@ -15,6 +16,7 @@ export const useJellyfin = () => {
 
       setApi(jellyData?.api);
       setUser(jellyData?.auth?.data?.User);
+      setData(jellyData);
     }
   };
 
@@ -22,5 +24,5 @@ export const useJellyfin = () => {
     handleJellyfin();
   }, []);
 
-  return { api, user };
+  return { api, user, data };
 };

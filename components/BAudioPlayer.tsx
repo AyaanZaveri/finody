@@ -32,6 +32,10 @@ const BAudioPlayer = () => {
 
   console.log(playingTrack);
 
+  // if spacebar is pressed, play/pause
+
+  
+
   return (
     <div className="z-20 select-none">
       {playingTrack ? (
