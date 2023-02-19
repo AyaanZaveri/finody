@@ -1,16 +1,27 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { HomeModernIcon, MoonIcon, SunIcon } from "@heroicons/react/24/solid";
-import { IoDisc, IoHome, IoMusicalNotes, IoPeople, IoPerson } from "react-icons/io5";
+import {
+  IoDisc,
+  IoHome,
+  IoMusicalNotes,
+  IoPeople,
+  IoPerson,
+} from "react-icons/io5";
 import { SiJellyfin } from "react-icons/si";
 import { useRecoilState } from "recoil";
+import { currentTrackState } from "../atoms/playState";
 
 const Sidebar = () => {
   const router = useRouter();
 
+  const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
+
   return (
     <div
-      className={`flex items-center ml-3 h-full pt-[4.5rem] pb-5 rounded-xl w-56 fixed select-none`}
+      className={`flex items-center ml-3 h-full pt-[4.5rem] ${
+        playingTrack?.url?.length > 3 ? "pb-24" : "pb-5"
+      } rounded-xl w-56 fixed select-none`}
     >
       <div className="bg-slate-100 dark:bg-slate-800 rounded-xl w-56 h-full flex flex-col justify-start items-start">
         <div className="px-2 pt-4 w-full flex flex-col gap-1">

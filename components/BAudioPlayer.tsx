@@ -23,13 +23,18 @@ import {
 import Marquee from "react-fast-marquee";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import Tilt from "react-parallax-tilt";
+import { playState, currentTrackState } from "../atoms/playState";
 
 const BAudioPlayer = () => {
   const player = useRef<any>();
+  const [isPlaying, setIsPlaying] = useRecoilState(playState);
+  const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
+
+  console.log(playingTrack);
 
   return (
     <div className="z-20 select-none">
-      {false ? (
+      {playingTrack ? (
         <div className="fixed bottom-0 flex h-20 w-full items-center justify-center bg-white/75 backdrop-blur-md dark:bg-slate-900/75">
           <div className="flex w-full flex-row items-center justify-center gap-3 text-sm text-slate-700 dark:text-white">
             <div className="absolute left-0 flex flex-row gap-3 pl-4">
@@ -44,13 +49,13 @@ const BAudioPlayer = () => {
                   <img
                     draggable={false}
                     className="w-[3rem] rounded-md"
-                    // src={
-                    //   playingTrack?.track?.thumbnails
-                    //     ? playingTrack?.track?.thumbnails[0]?.url
-                    //     : playingTrack?.thumbnails
-                    //     ? playingTrack?.thumbnails[0]?.url
-                    //     : ""
-                    // }
+                    src={
+                      playingTrack?.cover
+                        ? playingTrack?.cover
+                        : playingTrack?.cover
+                        ? playingTrack?.cover
+                        : ""
+                    }
                     alt=""
                   />
                 </Tilt>
@@ -58,39 +63,28 @@ const BAudioPlayer = () => {
               <div className="flex flex-col justify-center">
                 <div className="flex flex-row gap-3">
                   <span className="inline-flex items-center gap-1 font-semibold">
-                    {/* {playingTrack?.track?.title}{" "}
-                    {playingTrack?.track?.isExplicit ? <MdExplicit /> : null} */}
+                    {playingTrack?.title}
                   </span>
                 </div>
                 <div>
                   <span className="font-normal">
-                    {/* {playingTrack?.track?.artists?.map(
-                      (artist: any, index: number) => (
-                        <span>{(index ? ", " : "") + artist?.name}</span>
-                      )
-                    )} */}
+                    {playingTrack?.artist}
                   </span>
                 </div>
               </div>
             </div>
             <div className="w-2/5">
               <AudioPlayer
-                // onPause={() =>
-                //   setIsPlaying({
-                //     ...isPlaying,
-                //     isPlaying: false,
-                //   })
-                // }
-                // onPlay={() =>
-                //   setIsPlaying({
-                //     ...isPlaying,
-                //     isPlaying: true,
-                //   })
-                // }
+                onPause={() =>
+                  setIsPlaying(false)
+                }
+                onPlay={() =>
+                  setIsPlaying(true)
+                }
                 ref={player}
                 autoPlay={true}
                 showSkipControls={true}
-                // src={playingTrack?.url}
+                src={playingTrack?.url}
                 // onEnded={handleEnd}
                 // onClickNext={handleClickNext}
                 // onClickPrevious={handleClickPrevious}

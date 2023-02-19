@@ -9,10 +9,12 @@ import { titleCase } from "title-case";
 import Tilt from "react-parallax-tilt";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { getAudioApi } from "@jellyfin/sdk/lib/utils/api/audio-api";
+import { getUniversalAudioApi } from "@jellyfin/sdk/lib/utils/api/universal-audio-api";
 import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
 import { HiClock } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
+import { currentTrackState, playState } from "../../../atoms/playState";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -26,7 +28,8 @@ const LibraryAlbum: NextPage = () => {
     loading: false,
   });
 
-  const [songUrl, setSongUrl] = useState<string>("");
+  const [isPlaying, setIsPlaying] = useRecoilState(playState);
+  const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
 
   const { api, user } = useJellyfin();
 
@@ -66,22 +69,37 @@ const LibraryAlbum: NextPage = () => {
     getAlbumInfo();
   }, [api]);
 
-  const getSongFile = async (id: string) => {
+  const getSongFile = async (track: any) => {
+    // console.log(track)
+
     if (!api) return;
 
+    setIsPlaying(true);
+
     setSongLoading({
-      id: id,
+      id: track.Id,
       loading: true,
     });
 
     const audio = getAudioApi(api)
       .getAudioStream({
-        itemId: id,
-
+        itemId: track.Id,
       })
       .then((res) => {
+        console.log(res);
+        setPlayingTrack({
+          id: track.Id,
+          title: track.Name,
+          artist: track.AlbumArtist,
+          album: track.Album,
+          duration: track.RunTimeTicks,
+          cover: `${serverUrl}/Items/${track.Id}/Images/Primary?maxHeight=400&tag=${track.ImageTags?.Primary}&quality=90`,
+          url: res.request?.responseURL,
+        });
+
+        setIsPlaying(true);
         setSongLoading({
-          id: id,
+          id: track.Id,
           loading: false,
         });
         console.log(res);
@@ -90,7 +108,7 @@ const LibraryAlbum: NextPage = () => {
         console.log(err);
       });
 
-    setSongUrl(await audio as any)
+    console.log("got em");
   };
 
   console.log(songLoading);
@@ -228,7 +246,7 @@ const LibraryAlbum: NextPage = () => {
                           key={index}
                           className="text-slate-700 select-none dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition duration-200 ease-in-out rounded-xl active:bg-slate-200 dark:active:bg-slate-700 hover:cursor-pointer"
                           onClick={() => {
-                            getSongFile(track?.Id);
+                            getSongFile(track);
                           }}
                         >
                           <td className="text-center">{index + 1}</td>
@@ -239,7 +257,8 @@ const LibraryAlbum: NextPage = () => {
                               className="h-10 w-10 rounded-md shadow-lg shadow-emerald-500/20"
                             />
                             {track?.Name}
-                            {songLoading.id == track?.Id && songLoading.loading ? (
+                            {songLoading.id == track?.Id &&
+                            songLoading.loading ? (
                               <CgSpinner className="animate-spin h-5 w-5 text-emerald-500" />
                             ) : null}
                           </td>
