@@ -9,9 +9,6 @@ import { titleCase } from "title-case";
 import { pipedApiUrl, tildaApiUrl } from "../utils/apiUrl";
 import Tilt from "react-parallax-tilt";
 import { useRecoilState } from "recoil";
-import { currentTrackState, isPlayingState } from "../atoms/songAtom";
-import { currentPlaylistState } from "../atoms/playlistAtom";
-import { playingTrackState } from "../atoms/playingTrack";
 
 interface Props {
   album: any;
@@ -39,12 +36,6 @@ const Album = ({ album }: Props) => {
   const [albumListId, setAlbumListeId] = useState<any>();
   const [isExplicit, setIsExplicit] = useState<boolean>();
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
-
-  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
-  const [currentPlaylist, setCurrentPlaylist] =
-    useRecoilState(currentPlaylistState);
-  const [playingTrack, setPlayingTrack] = useRecoilState(playingTrackState);
 
   const [curPlay, setCurPlay] = useState<any>();
 
@@ -99,31 +90,9 @@ const Album = ({ album }: Props) => {
     }
   };
 
-  const setPlaylistSongs = () => {
-    try {
-      setCurrentPlaylist(
-        curPlay?.sort((a: any, b: any) =>
-          a.trackNum > b.trackNum ? 1 : b.trackNum > a.trackNum ? -1 : 0
-        )
-      );
-    } catch (error) {}
-  };
-
   useEffect(() => {
     getPlaylistSongs();
   }, [albumData]);
-
-  useEffect(() => {
-    if (curPlay && curPlay != "undefined") {
-      try {
-        setCurrentPlaylist(
-          curPlay?.sort((a: any, b: any) =>
-            a.trackNum > b.trackNum ? 1 : b.trackNum > a.trackNum ? -1 : 0
-          )
-        );
-      } catch (error) {}
-    }
-  }, [curPlay]);
 
   // console.log(curPlay)
 
@@ -177,7 +146,7 @@ const Album = ({ album }: Props) => {
                   className={`w-50 h-4 ${
                     true
                       ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
-                      : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
+                      : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
                 />
               </button>

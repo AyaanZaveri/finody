@@ -8,86 +8,13 @@ import { fancyTimeFormat } from "../utils/fancyTimeFormat";
 import { titleCase } from "title-case";
 import { pipedApiUrl, tildaApiUrl } from "../utils/apiUrl";
 import { useRecoilState } from "recoil";
-import { currentTrackState } from "../atoms/songAtom";
 import { PlayIcon } from "@heroicons/react/24/solid";
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
 
 interface Props {
   video: any;
 }
 
 const Video = ({ video }: Props) => {
-  const [user] = useAuthState(auth);
-
-  const router = useRouter();
-  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
-
-  const getCurrentSong = (query: string, type: string) => {
-    if (query.length > 2) {
-      axios
-        .get(`${pipedApiUrl}/streams/${query}`)
-        .then((res: any) => {
-          setCurrentTrack({
-            url: res?.data?.audioStreams.sort((a: any, b: any) =>
-              a.bitrate < b.bitrate ? 1 : b.bitrate < a.bitrate ? -1 : 0
-            )[0]?.url,
-            track: video,
-            type: type,
-          });
-        })
-        .catch((err: any) => {});
-    } else {
-      setCurrentTrack({
-        url: "",
-        track: "",
-      });
-    }
-  };
-
-  const usersRef = collection(db, "users");
-
-  // get uid of user from firebase
-  const userRef = doc(usersRef, user?.uid);
-  const userCollectionRef = collection(userRef, "user");
-  const favoritesRef = doc(userCollectionRef, "favorites");
-  const favoriteTracksRef = collection(favoritesRef, "tracks");
-
-  const [favoriteTracksSnapshot] = useCollection(favoriteTracksRef);
-
-  // console.log(favoriteTracksSnapshot)
-
-  const checkIfFavoriteExists = (videoId: string) => {
-    return favoriteTracksSnapshot?.docs.find(
-      (doc) => doc.data().videoId === videoId
-    );
-  };
-
-  const addFavorite = async () => {
-    if (!checkIfFavoriteExists(video?.videoId)) {
-      await addDoc(favoriteTracksRef, {
-        videoId: video?.videoId,
-      });
-    }
-  };
-
-  const deleteFavorite = async () => {
-    const favoriteDoc = favoriteTracksSnapshot?.docs.find(
-      (doc) => doc.data().videoId === video?.videoId
-    )?.id;
-    await deleteDoc(doc(favoriteTracksRef, favoriteDoc));
-  };
-
-  const handleFavorited = () => {
-    if (checkIfFavoriteExists(video?.videoId)) {
-      deleteFavorite();
-    } else {
-      addFavorite();
-    }
-  };
-
   return (
     <div
       key={video.videoId}
@@ -96,7 +23,7 @@ const Video = ({ video }: Props) => {
     >
       <div className="flex flex-row gap-3">
         <div
-          onClick={() => getCurrentSong(video.videoId, "video")}
+          // onClick={() => getCurrentSong(video.videoId, "video")}
           className="group-two relative flex cursor-pointer items-center justify-center overflow-hidden rounded-md bg-emerald-200 transition-all dark:bg-emerald-700"
         >
           <PlayIcon className="absolute z-10 ml-0.5 h-5 w-5 text-white opacity-0 transition-all duration-300 ease-in-out group-one-hover:opacity-100 group-one-active:opacity-100 group-two-active:brightness-90" />
@@ -120,12 +47,12 @@ const Video = ({ video }: Props) => {
                 <span>{(index ? ", " : "") + artist?.name}</span>
               ))}{" "}
               <HiHeart
-                onClick={handleFavorited}
-                className={`w-50 h-4 ${
-                  checkIfFavoriteExists(video?.videoId as string)
-                    ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
-                    : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
-                } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
+                // onClick={handleFavorited}
+                // className={`w-50 h-4 ${
+                //   checkIfFavoriteExists(video?.videoId as string)
+                //     ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
+                //     : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
+                // } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
               />
             </span>
           </div>

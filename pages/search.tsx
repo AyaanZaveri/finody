@@ -22,10 +22,6 @@ import Album from "../components/Album";
 import Video from "../components/Video";
 import Marquee from "react-fast-marquee";
 import TopResult from "../components/TopResult";
-import { useRecoilState } from "recoil";
-import { currentTrackState } from "../atoms/songAtom";
-import { currentPlaylistState } from "../atoms/playlistAtom";
-import { playingTrackState } from "../atoms/playingTrack";
 
 const Search = () => {
   const { query } = useRouter();
@@ -37,7 +33,6 @@ const Search = () => {
   const [videos, setVideos] = useState<any>([]);
   const [artists, setArtists] = useState<any>([]);
   const [communityPlaylists, setCommunityPlaylists] = useState<any>([]);
-  const [playingTrack, setPlayingTrack] = useRecoilState(playingTrackState);
 
   const getSearchResults = () => {
     setSearchResults([]);
@@ -128,9 +123,9 @@ const Search = () => {
       <div className="select-none pt-[4.5rem] pb-8">
         <div className="ml-3 flex justify-center pl-64 pt-2">
           <div
-            className={`flex w-full flex-col gap-4 ${
-              playingTrack?.url?.length > 3 ? "pb-16" : ""
-            }`}
+            // className={`flex w-full flex-col gap-4 ${
+            //   playingTrack?.url?.length > 3 ? "pb-16" : ""
+            // }`}
           >
             <div className="flex flex-row items-start pr-6">
               {topResults.length > 0 ? (
