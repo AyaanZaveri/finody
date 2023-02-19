@@ -319,7 +319,7 @@ const LibraryAlbum: NextPage = () => {
                             <img
                               src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
                               alt=""
-                              className="h-10 w-10 rounded-md shadow-lg shadow-emerald-500/20"
+                              className="h-10 w-10 rounded-md"
                             />
                             <div className="flex flex-col">
                               <span className="font-semibold">{track?.Name}</span>
