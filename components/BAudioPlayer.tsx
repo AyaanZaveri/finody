@@ -32,13 +32,9 @@ const BAudioPlayer = () => {
 
   console.log(playingTrack);
 
-  // if spacebar is pressed, play/pause
-
-  
-
   return (
     <div className="z-20 select-none">
-      {playingTrack ? (
+      {playingTrack?.url ? (
         <div className="fixed bottom-0 flex h-20 w-full items-center justify-center bg-white/75 backdrop-blur-md dark:bg-slate-900/75">
           <div className="flex w-full flex-row items-center justify-center gap-3 text-sm text-slate-700 dark:text-white">
             <div className="absolute left-0 flex flex-row gap-3 pl-4">
