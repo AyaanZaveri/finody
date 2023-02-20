@@ -114,7 +114,7 @@ const Playlist: NextPage = () => {
 
   return (
     <div
-      // className={`ml-3 pl-64 pr-12 ${
+      // className={`ml-3 pl-[17rem] pr-12 ${
       //   playingTrack?.url?.length > 3 ? "pb-16" : ""
       // }`}
     >

@@ -87,22 +87,9 @@ const Navbar = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   return (
-    <div className="fixed z-10 w-full select-none px-3">
-      <div className="flex flex-col">
-        <div className="relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-64 backdrop-blur-md dark:bg-slate-900/50">
-          <img
-            draggable="false"
-            onClick={() => router.push("/")}
-            src={`${
-              resolvedTheme == "dark"
-                ? "/FinodyLogoDark.svg"
-                : resolvedTheme == "light"
-                ? "/FinodyLogoLight.svg"
-                : "/FinodyLogoLight.svg"
-            }`}
-            className="absolute left-0 block h-16 select-none py-4 pl-2 hover:cursor-pointer"
-            alt=""
-          />
+    <div className="fixed z-10 w-full select-none px-3 border-b border-slate-100">
+      <div className="flex flex-col ml-36">
+        <div className="relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-32 backdrop-blur-md dark:bg-slate-900/50">
           <div className="relative w-6/12 rounded-md">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <HiOutlineSearch className="text-gray-500 dark:text-slate-100 sm:text-sm" />
@@ -189,7 +176,7 @@ const Navbar = () => {
             )}
           </button>
         </div>
-        <div className="pl-64">
+        <div className="pl-[17rem]">
           <div ref={searchSuggestionsRef} className="w-6/12">
             {searchRes && showSuggestions ? (
               <div className="flex w-full select-none flex-col gap-1 overflow-hidden rounded-lg bg-slate-100/90 py-2 text-slate-700 shadow-2xl shadow-emerald-500/10 backdrop-blur-md transition duration-300 ease-in-out hover:shadow-emerald-500/20 dark:bg-slate-800/90 dark:text-white">

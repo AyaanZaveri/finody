@@ -116,7 +116,7 @@ const LibraryAlbum: NextPage = () => {
 
 
   return (
-    <div className={`ml-3 pl-64 pr-12`}>
+    <div className={`ml-3 pl-[17rem] pr-12`}>
       <div className="pt-[4.5rem] pb-24">
         <div className="pt-8 full">
           <div className="flex w-full flex-row items-start gap-12">

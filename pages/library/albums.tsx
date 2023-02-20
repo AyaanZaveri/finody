@@ -60,7 +60,7 @@ const LibraryAlbums: NextPage = () => {
   }, [user, sortOrder, sortBy]);
 
   return (
-    <div className="ml-3 pl-64 pr-12">
+    <div className="ml-3 pl-[17rem] pr-12">
       <div className="pt-[4.5rem] pb-8">
         <div className="pt-6">
           <div className="flex justify-between flex-row">

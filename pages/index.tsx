@@ -45,7 +45,7 @@ const Home: NextPage = () => {
   }, [user]);
 
   return (
-    <div className="ml-3 pl-64 pr-12">
+    <div className="ml-3 pl-[17rem] pr-12">
       <div className="pt-[4.5rem] pb-8">
         <div className="pt-6">
           <h1 className="text-3xl font-semibold text-slate-700 dark:text-white">

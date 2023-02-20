@@ -121,7 +121,7 @@ const Search = () => {
   return (
     <div>
       <div className="select-none pt-[4.5rem] pb-8">
-        <div className="ml-3 flex justify-center pl-64 pt-2">
+        <div className="ml-3 flex justify-center pl-[17rem] pt-2">
           <div
             // className={`flex w-full flex-col gap-4 ${
             //   playingTrack?.url?.length > 3 ? "pb-16" : ""
