@@ -17,7 +17,7 @@ import { CgSpinner } from "react-icons/cg";
 import { currentTrackState, playState } from "../../../atoms/playState";
 import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-api";
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
-import { FastAverageColor } from "fast-average-color";
+import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -25,32 +25,7 @@ const LibraryAlbum: NextPage = () => {
   const [albumInfo, setAlbumInfo] = useState<any>();
   const [isExplicit, setIsExplicit] = useState<boolean>();
   const [showMore, setShowMore] = useState<boolean>(false);
-
-  const fac = new FastAverageColor();
-
-  const img = useRef(null)
-
-  function useAverageColor(dom: any) {
-    console.log("dom")
-    useEffect(() => {
-      console.log("img", dom);
-      fac
-        .getColorAsync(dom)
-        .then(color => {
-          console.log("color", color);
-          dom.style.backgroundColor = color.rgba;
-          dom.style.color = color.isDark ? "#fff" : "#000";
-          return color;
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    });
-  }
-  
-  const color1 = useAverageColor(img.current);
-
-  console.log("color1", color1)
+  const [srcLoaded, setSrcLoaded] = useState<boolean>(true);
 
   const [songLoading, setSongLoading] = useState({
     id: "",
@@ -140,7 +115,19 @@ const LibraryAlbum: NextPage = () => {
     console.log("got em");
   };
 
+  const imgUrl = `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`;
+  console.log("imgUrl", imgUrl)
 
+  useEffect(() => {
+    if (!imgUrl) return;
+
+    if (imgUrl) {
+      setSrcLoaded(true);
+    }
+  }, [imgUrl]);
+  
+  const bgColor = useFastAverageColor(imgUrl, srcLoaded);
+  console.log("bgColor", bgColor);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
@@ -157,7 +144,6 @@ const LibraryAlbum: NextPage = () => {
               {albumInfo ? (
                 <div className="h-[16.5rem] w-[16.5rem]">
                   <img
-                    ref={img}
                     draggable={false}
                     className="select-none rounded-xl shadow-2xl shadow-emerald-500/20"
                     src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
