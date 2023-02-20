@@ -18,6 +18,7 @@ importers:
       autoprefixer: ^10.4.7
       axios: ^0.27.2
       cross-env: ^7.0.3
+      fast-average-color: ^9.3.0
       firebase: ^9.10.0
       next: ^13.0.0
       next-themes: ^0.2.1
@@ -51,6 +52,7 @@ importers:
       '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.1.8
       '@vercel/analytics': 0.1.1_react@18.1.0
       axios: 0.27.2
+      fast-average-color: 9.3.0
       firebase: 9.10.0
       next: 13.0.0_33m24guoc5sx5ciwm3rhrcjk4e
       next-themes: 0.2.1_ahms37hgp4qwtmegxwewu2rgj4
@@ -1324,6 +1326,11 @@ packages:
     resolution: {integrity: sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==}
     engines: {node: '>=0.8.0'}
     dev: true
+
+  /fast-average-color/9.3.0:
+    resolution: {integrity: sha512-FlPROSqDMOnoBgkFhWMHJODPvpS0Od0WDpedcKq4U/t0JVapGAkblNwxOr75qT+ZNd0dQM4qlgqrtnXbCJ8cNg==}
+    engines: {node: '>= 12'}
+    dev: false
 
   /fast-glob/3.2.12:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
