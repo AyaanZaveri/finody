@@ -23,17 +23,22 @@ import {
 import Marquee from "react-fast-marquee";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import Tilt from "react-parallax-tilt";
-import { playState, currentTrackState } from "../atoms/playState";
+import { playState, currentTrackState, queueState } from "../atoms/playState";
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api/playstate-api";
 import { useJellyfin } from "../hooks/handleJellyfin";
+import { getSongInfo } from "../utils/getSongInfo";
 
 const BAudioPlayer = () => {
   const player = useRef<any>();
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
-  const [currentProgress, setCurrentProgress] = useState(0);
+  const [queue, setQueue] = useRecoilState(queueState);
+  const [currentProgress, setCurrentProgress] = useState({
+    old: 0,
+    new: 0,
+  });
 
-  const { user, api } = useJellyfin();
+  const { user, api, serverUrl } = useJellyfin();
 
   useEffect(() => {
     if (!api) return;
@@ -52,22 +57,33 @@ const BAudioPlayer = () => {
   }, [isPlaying]);
 
   useEffect(() => {
-    if (!api) return;
-    if (isPlaying && playingTrack?.url) {
-      getPlaystateApi(api).onPlaybackProgress({
-        userId: user?.Id,
-        itemId: [playingTrack?.id] as any,
-        positionTicks: currentProgress * 10000,
-      });
+    if (!api && !user) return;
+    if (currentProgress?.new !== currentProgress?.old) {
+      if (isPlaying && playingTrack?.url) {
+        getPlaystateApi(api)
+          .onPlaybackProgress({
+            userId: user?.Id,
+            itemId: [playingTrack?.id] as any,
+            positionTicks: currentProgress?.new * 10000,
+          })
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+      }
     }
   }, [currentProgress]);
 
-  console.log(playingTrack);
+  console.log("playingTracl", playingTrack);
+
+  console.log(currentProgress);
+  console.log(
+    "queuheiuwrh",
+    queue ? queue[playingTrack?.parentIndexNumber + 1] : null
+  );
 
   return (
     <div className="z-20 select-none">
       {playingTrack?.url ? (
-        <div className="fixed bottom-0 flex h-20 w-full items-center justify-center bg-white/75 backdrop-blur-md dark:bg-slate-900/75">
+        <div className="fixed bottom-0 border-t border-slate-100 dark:border-slate-800 flex h-24 w-full items-center justify-center bg-white/75 backdrop-blur-md dark:bg-slate-900/75 z-30">
           <div className="flex w-full flex-row items-center justify-center gap-3 text-sm text-slate-700 dark:text-white">
             <div className="absolute left-0 flex flex-row gap-3 pl-4">
               <div className="group relative flex items-center justify-center overflow-hidden transition-all">
@@ -99,13 +115,20 @@ const BAudioPlayer = () => {
                   </span>
                 </div>
                 <div>
-                  <span className="font-normal">{playingTrack?.artist}</span>
+                  <span className="font-normal w-12">
+                    {playingTrack?.artist}
+                  </span>
                 </div>
               </div>
             </div>
-            <div className="w-2/5">
+            <div className="w-1/2">
               <AudioPlayer
-                onListen={(e: any) => setCurrentProgress(e?.timeStamp)}
+                onListen={(e: any) =>
+                  setCurrentProgress({
+                    old: currentProgress?.new,
+                    new: e?.timeStamp,
+                  })
+                }
                 onPause={() => setIsPlaying(false)}
                 onPlay={() => setIsPlaying(true)}
                 ref={player}
@@ -113,8 +136,8 @@ const BAudioPlayer = () => {
                 showSkipControls={true}
                 src={playingTrack?.url}
                 // onEnded={handleEnd}
-                // onClickNext={handleClickNext}
-                // onClickPrevious={handleClickPrevious}
+                // onClickNext={handleNext}
+                // onClickPrevious={handlePrev}
                 className="outline-none"
                 customIcons={{
                   forward: <FastForward24Filled />,

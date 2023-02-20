@@ -14,10 +14,11 @@ import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
 import { HiClock } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
-import { currentTrackState, playState } from "../../../atoms/playState";
+import { currentTrackState, playState, queueState } from "../../../atoms/playState";
 import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-api";
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
+import { getSongInfo } from "../../../utils/getSongInfo";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -34,20 +35,14 @@ const LibraryAlbum: NextPage = () => {
 
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
+  const [queue, setQueue] = useRecoilState(queueState);
+
+  useEffect(() => {
+    setQueue(tracksData);
+  }, [tracksData]);
 
   const { api, user, data } = useJellyfin();
   console.log("data", data);
-
-  const getConfig = async () => {
-    if (!api) return;
-    const config = getConfigurationApi(api).getConfiguration({
-      userId: user?.Id,
-    });
-
-    console.log("config", await config);
-  };
-
-  getConfig();
 
   const [serverUrl, setServerUrl] = useState<string>("");
 
@@ -85,38 +80,9 @@ const LibraryAlbum: NextPage = () => {
     getAlbumInfo();
   }, [api]);
 
-  const getSongFile = async (track: any) => {
-    if (!api) return;
-
-    setIsPlaying(true);
-
-    setSongLoading({
-      id: track.Id,
-      loading: true,
-    });
-
-    setPlayingTrack({
-      id: track.Id,
-      title: track.Name,
-      artist: track.AlbumArtist,
-      album: track.Album,
-      duration: track.RunTimeTicks,
-      cover: `${serverUrl}/Items/${track.Id}/Images/Primary?maxHeight=400&tag=${track.ImageTags?.Primary}&quality=90`,
-      url: `
-      ${serverUrl}/Audio/${track.Id}/stream.flac?Static=true&mediaSourceId=${track.Id}&deviceId=9aa38b20-8e58-48eb-bb32-b47e8704a6c5&api_key=91ebc1b9b4a54fbcbc41529ea4a6c4eb&Tag=e739c95d40de0dbce384fae600f72320&recursive=true
-      `,
-    });
-
-    setSongLoading({
-      id: track.Id,
-      loading: false,
-    });
-
-    console.log("got em");
-  };
-
-  const imgUrl = `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`;
-  console.log("imgUrl", imgUrl)
+  const imgUrl = `
+  ${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`;
+  console.log("imgUrl", imgUrl);
 
   useEffect(() => {
     if (!imgUrl) return;
@@ -125,14 +91,22 @@ const LibraryAlbum: NextPage = () => {
       setSrcLoaded(true);
     }
   }, [imgUrl]);
-  
+
   const bgColor = useFastAverageColor(imgUrl, srcLoaded);
   console.log("bgColor", bgColor);
+
+  console.log(tracksData)
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
       <div className="pt-[4.5rem] pb-24">
-        <div className="pt-8 full">
+        <div
+          style={{
+            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 30%)`,
+          }}
+          className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
+        ></div>
+        <div className="pt-24 w-full">
           <div className="flex w-full flex-row items-start gap-12">
             <Tilt
               glareEnable={true}
@@ -258,9 +232,9 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition duration-200 ease-in-out rounded-xl active:bg-slate-200 dark:active:bg-slate-700 hover:cursor-pointer"
+                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition duration-200 ease-in-out rounded-xl active:bg-slate-200/50 dark:active:bg-slate-700/50 hover:cursor-pointer backdrop-blur-md"
                           onClick={() => {
-                            getSongFile(track);
+                            getSongInfo(track, api, serverUrl, setIsPlaying, setPlayingTrack);
                           }}
                         >
                           <td className="text-center">{index + 1}</td>

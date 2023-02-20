@@ -7,7 +7,6 @@ export const useFastAverageColor = (
   aglorithm?: "dominant" | "simple" | "sqrt"
 ) => {
   const [color, setColor] = useState<string | undefined>(undefined);
-  console.log("src", src);
 
   useEffect(() => {
     const fac = new FastAverageColor();

@@ -15,5 +15,11 @@ export const currentTrackState = atom({
     duration: 0,
     cover: '',
     url: '',
+    parentIndexNumber: 0,
   },
+});
+
+export const queueState = atom({
+  key: 'queueState',
+  default: [],
 });

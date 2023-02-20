@@ -5,6 +5,7 @@ export const useJellyfin = () => {
   const [api, setApi] = useState<any>(null);
   const [user, setUser] = useState<any>(null);
   const [data, setData] = useState<any>(null);
+  const [serverUrl, setServerUrl] = useState<string | null>(null);
 
   const handleJellyfin = async () => {
     if (window !== undefined) {
@@ -17,6 +18,7 @@ export const useJellyfin = () => {
       setApi(jellyData?.api);
       setUser(jellyData?.auth?.data?.User);
       setData(jellyData);
+      setServerUrl(serverUrl);
     }
   };
 
@@ -24,5 +26,5 @@ export const useJellyfin = () => {
     handleJellyfin();
   }, []);
 
-  return { api, user, data };
+  return { api, user, data, serverUrl };
 };
