@@ -14,7 +14,11 @@ import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
 import { HiClock } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
-import { currentTrackState, playState, queueState } from "../../../atoms/playState";
+import {
+  currentTrackState,
+  playState,
+  queueState,
+} from "../../../atoms/playState";
 import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-api";
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
@@ -95,7 +99,7 @@ const LibraryAlbum: NextPage = () => {
   const bgColor = useFastAverageColor(imgUrl, srcLoaded);
   console.log("bgColor", bgColor);
 
-  console.log(tracksData)
+  console.log(tracksData);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
@@ -106,26 +110,28 @@ const LibraryAlbum: NextPage = () => {
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
-        <div className="pt-24 w-full">
+        <div className="pt-16 w-full">
           <div className="flex w-full flex-row items-start gap-12">
-            <Tilt
-              glareEnable={true}
-              glareMaxOpacity={0.8}
-              glareColor="#ffffff"
-              glarePosition="bottom"
-              glareBorderRadius="12px"
-            >
-              {albumInfo ? (
-                <div className="h-[16.5rem] w-[16.5rem]">
-                  <img
-                    draggable={false}
-                    className="select-none rounded-xl shadow-2xl shadow-emerald-500/20"
-                    src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
-                    alt=""
-                  />
-                </div>
-              ) : null}
-            </Tilt>
+            <div className="transition-all duration-1000 ease-in-out hover:scale-105">
+              <Tilt
+                glareEnable={true}
+                glareMaxOpacity={0.8}
+                glareColor="#ffffff"
+                glarePosition="bottom"
+                glareBorderRadius="12px"
+              >
+                {albumInfo ? (
+                  <div className="h-[16.5rem] w-[16.5rem]">
+                    <img
+                      draggable={false}
+                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
+                      src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
+                      alt=""
+                    />
+                  </div>
+                ) : null}
+              </Tilt>
+            </div>
             <div className="flex select-none flex-col gap-3 pt-5 text-slate-700 dark:text-white">
               <span className="text-5xl font-bold break-words">
                 {albumInfo ? albumInfo?.Name : null}
@@ -232,9 +238,15 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition duration-200 ease-in-out rounded-xl active:bg-slate-200/50 dark:active:bg-slate-700/50 hover:cursor-pointer backdrop-blur-md"
+                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md"
                           onClick={() => {
-                            getSongInfo(track, api, serverUrl, setIsPlaying, setPlayingTrack);
+                            getSongInfo(
+                              track,
+                              api,
+                              serverUrl,
+                              setIsPlaying,
+                              setPlayingTrack
+                            );
                           }}
                         >
                           <td className="text-center">{index + 1}</td>

@@ -87,7 +87,7 @@ const Navbar = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
 
   return (
-    <div className="fixed z-10 w-full select-none px-3 border-b border-slate-100 dark:border-slate-800">
+    <div className="fixed z-10 w-full select-none border-b border-slate-100 dark:border-slate-800">
       <div className="flex flex-col ml-36">
         <div className="relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-32 backdrop-blur-md dark:bg-slate-900/50">
           <div className="relative w-6/12 rounded-md">
@@ -105,9 +105,7 @@ const Navbar = () => {
           </div>
           {user?.Name ? (
             <button
-              onClick={() =>
-                signOut()
-              }
+              onClick={() => signOut()}
               className={`absolute right-10 m-3 mr-4 inline-flex h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 ${
                 resolvedTheme == "light"
                   ? "bg-slate-100 active:bg-slate-300"
@@ -133,10 +131,7 @@ const Navbar = () => {
                   : "bg-slate-800 active:bg-slate-700"
               } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
             >
-              <img
-                src="/jellyfin.svg"
-                alt=""
-              />
+              <img src="/jellyfin.svg" alt="" />
             </button>
           )}
           <button

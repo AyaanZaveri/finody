@@ -37,7 +37,7 @@ const { theme, setTheme, resolvedTheme } = useTheme();
         className="absolute left-3 top-0 block h-16 select-none py-4 mt-1 pl-2 hover:cursor-pointer"
         alt=""
       />
-      <div className="border-r border-slate-100 dark:border-slate-800 w-60 h-full flex flex-col justify-start items-start">
+      <div className="border-r border-slate-100 dark:border-slate-800 w-60 to-emerald-500/20 h-full flex flex-col justify-start items-start">
         <div className="px-2 w-full flex flex-col gap-1 pt-24">
           <div
             onClick={() => router.push("/")}
