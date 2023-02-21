@@ -113,7 +113,7 @@ const Navbar = () => {
                   ? "bg-slate-100 active:bg-slate-300"
                   : resolvedTheme == "dark"
                   ? "bg-slate-800 active:bg-slate-700"
-                  : "bg-slate-100 active:bg-slate-300"
+                  : "bg-slate-800 active:bg-slate-700"
               } gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-slate-600`}
             >
               <span className="text-[0.75rem]">{user?.Name}</span>
@@ -130,7 +130,7 @@ const Navbar = () => {
                   ? "bg-slate-100 active:bg-slate-300"
                   : resolvedTheme == "dark"
                   ? "bg-slate-800 active:bg-slate-700"
-                  : "bg-slate-100 active:bg-slate-300"
+                  : "bg-slate-800 active:bg-slate-700"
               } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
             >
               <img
@@ -154,7 +154,7 @@ const Navbar = () => {
                 ? "bg-slate-100 active:bg-slate-300"
                 : resolvedTheme == "dark"
                 ? "bg-slate-800 active:bg-slate-600"
-                : "bg-slate-100 active:bg-slate-300"
+                : "bg-slate-800 active:bg-slate-600"
             } rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
           >
             {theme == "light" ? (

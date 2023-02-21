@@ -32,7 +32,7 @@ const { theme, setTheme, resolvedTheme } = useTheme();
             ? "/FinodyLogoDark.svg"
             : resolvedTheme == "light"
             ? "/FinodyLogoLight.svg"
-            : "/FinodyLogoLight.svg"
+            : "/FinodyLogoDark.svg"
         }`}
         className="absolute left-3 top-0 block h-16 select-none py-4 mt-1 pl-2 hover:cursor-pointer"
         alt=""
