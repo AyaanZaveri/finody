@@ -160,7 +160,7 @@ const LibraryAlbum: NextPage = () => {
                     {albumInfo?.AlbumArtist}
                   </span>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-700 text-white py-0.5 px-2.5 rounded-full w-min">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/30 shadow-xl w-min ring-1 ring-slate-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
