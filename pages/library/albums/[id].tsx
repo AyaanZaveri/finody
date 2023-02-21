@@ -32,6 +32,9 @@ const LibraryAlbum: NextPage = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const [srcLoaded, setSrcLoaded] = useState<boolean>(true);
 
+  const [showCollapsedAlbumInfo, setShowCollapsedAlbumInfo] =
+    useState<boolean>(false);
+
   const [songLoading, setSongLoading] = useState({
     id: "",
     loading: false,
@@ -100,6 +103,21 @@ const LibraryAlbum: NextPage = () => {
   console.log("bgColor", bgColor);
 
   console.log(tracksData);
+
+  // useEffect(() => {
+  //   console.log(window.scrollY)
+  //   if (typeof window !== "undefined") {
+  //     if (window.scrollY > 30) {
+  //       setShowCollapsedAlbumInfo(true);
+  //     } else {
+  //       setShowCollapsedAlbumInfo(false);
+  //     }
+  //   }
+  // }, [window.scrollY]);
+
+  // useEffect(() => {
+  //   console.log("showCollapsedAlbumInfo", showCollapsedAlbumInfo);
+  // }, [showCollapsedAlbumInfo]);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>

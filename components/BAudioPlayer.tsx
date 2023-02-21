@@ -121,7 +121,7 @@ const BAudioPlayer = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-2/3">
               <AudioPlayer
                 onListen={(e: any) =>
                   setCurrentProgress({
