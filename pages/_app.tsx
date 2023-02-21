@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <div className="font-poppins">
+    <div className="font-rubik">
       <RecoilRoot>
         <ThemeProvider attribute="class">
           <Layout>
