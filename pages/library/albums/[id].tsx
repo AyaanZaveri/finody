@@ -40,7 +40,7 @@ const LibraryAlbum: NextPage = () => {
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
   const [queue, setQueue] = useRecoilState(queueState);
 
-  const [bgColor, setBgColor] = useState<string>("#000000");
+  const [bgColor, setBgColor] = useState<string>("");
 
   useEffect(() => {
     setQueue(tracksData);
@@ -93,7 +93,15 @@ const LibraryAlbum: NextPage = () => {
 
   const getAverageColor = async (url: string) => {
     const response = await fetch(url);
-    const color = await fac.getColorAsync(response.url);
+    const color = await fac.getColorAsync(response.url, {
+      algorithm: "dominant",
+      ignoredColor: [
+        [255, 255, 255, 255, 55], // White
+        [0, 0, 0, 255, 20], // Black
+        [0, 0, 0, 0, 20], // Transparent
+      ],
+      mode: "speed",
+    });
     setBgColor(color.rgb);
   };
 
