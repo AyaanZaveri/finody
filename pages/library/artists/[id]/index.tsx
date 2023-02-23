@@ -24,6 +24,7 @@ import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 import { useFastAverageColor } from "../../../../hooks/useFastAverageColor";
 import { getSongInfo } from "../../../../utils/getSongInfo";
 import { bgColourState } from "../../../../atoms/colourState";
+import { FastAverageColor } from "fast-average-color";
 
 const LibraryArtist: NextPage = () => {
   const { query } = useRouter();
@@ -45,7 +46,7 @@ const LibraryArtist: NextPage = () => {
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
   const [queue, setQueue] = useRecoilState(queueState);
 
-  const [bgColour, setBgColour] = useRecoilState(bgColourState);
+  const [bgColor, setBgColor] = useRecoilState(bgColourState);
 
   useEffect(() => {
     setQueue(tracksData);
@@ -102,7 +103,34 @@ const LibraryArtist: NextPage = () => {
     }
   }, [imgUrl]);
 
-  setBgColour(useFastAverageColor(imgUrl, srcLoaded) as string)
+  const fac = new FastAverageColor();
+
+  const getAverageColor = (url: string) => {
+    const response = axios
+      .get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        fac
+          .getColorAsync(res.request?.responseURL, {
+            algorithm: "dominant",
+            ignoredColor: [
+              [255, 255, 255, 255, 55], // White
+              [0, 0, 0, 255, 20], // Black
+              [0, 0, 0, 0, 20], // Transparent
+            ],
+            mode: "speed",
+          })
+          .then((color) => {
+            setBgColor(color.rgb);
+          });
+      });
+    // setBgColor(color.rgb);
+  };
 
   const router = useRouter();
 
@@ -113,7 +141,7 @@ const LibraryArtist: NextPage = () => {
       <div className="pt-[4.5rem] pb-24">
         <div
           style={{
-            background: `linear-gradient(180deg, ${bgColour} 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
@@ -134,6 +162,8 @@ const LibraryArtist: NextPage = () => {
                       className="select-none rounded-xl shadow-2xl shadow-emerald-500/30 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${artistInfo?.Id}/Images/Primary?maxHeight=400&tag=${artistInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
+                      // @ts-ignore
+                      onLoad={(e) => getAverageColor(e.target.src)}
                     />
                   </div>
                 ) : null}

@@ -55,6 +55,12 @@ const LibraryAlbumsIndex: NextPage = () => {
   return (
     <div className="ml-3 pl-[17rem] pr-12">
       <div className="pt-[4.5rem] pb-28">
+        <div
+          style={{
+            background: `linear-gradient(180deg, rgba(16, 185, 129, 0.75) 0%, rgba(0, 0, 0, 0) 75%)`,
+          }}
+          className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
+        ></div>
         <div className="pt-6">
           <div className="flex justify-between flex-row">
             <h1 className="text-3xl font-semibold text-slate-700 dark:text-white">
