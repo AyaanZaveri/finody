@@ -24,6 +24,7 @@ import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
 import { getSongInfo } from "../../../utils/getSongInfo";
 import { FastAverageColor } from "fast-average-color";
+import { bgColourState } from "../../../atoms/colourState";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -40,7 +41,8 @@ const LibraryAlbum: NextPage = () => {
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
   const [queue, setQueue] = useRecoilState(queueState);
 
-  const [bgColor, setBgColor] = useState<string>("");
+  const [bgColor, setBgColor] = useRecoilState(bgColourState);
+  const [bgUrl, setBgUrl] = useState<string>("");
 
   useEffect(() => {
     setQueue(tracksData);
@@ -57,6 +59,10 @@ const LibraryAlbum: NextPage = () => {
       setServerUrl(localStorage.getItem("serverUrl") || "");
     }
   }, []);
+
+  useEffect(() => {
+    setBgColor("");
+  });
 
   const getItems = async () => {
     if (!api) return;
@@ -91,31 +97,48 @@ const LibraryAlbum: NextPage = () => {
 
   const fac = new FastAverageColor();
 
-  const getAverageColor = async (url: string) => {
-    const response = await fetch(url);
-    const color = await fac.getColorAsync(response.url, {
-      algorithm: "dominant",
-      ignoredColor: [
-        [255, 255, 255, 255, 55], // White
-        [0, 0, 0, 255, 20], // Black
-        [0, 0, 0, 0, 20], // Transparent
-      ],
-      mode: "speed",
-    });
-    setBgColor(color.rgb);
+  const getAverageColor = (url: string) => {
+    const response = axios
+      .get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        fac
+          .getColorAsync(res.request?.responseURL, {
+            algorithm: "dominant",
+            ignoredColor: [
+              [255, 255, 255, 255, 55], // White
+              [0, 0, 0, 255, 20], // Black
+              [0, 0, 0, 0, 20], // Transparent
+            ],
+            mode: "speed",
+          })
+          .then((color) => {
+            setBgColor(color.rgb);
+          });
+      });
+    // setBgColor(color.rgb);
   };
 
-  // console.log(bgColor)
+  // useEffect(() => {
+  //   if (albumInfo) {
+  //     getAverageColor(
+  //       `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+  //     );
+  //   }
+  // }, [albumInfo]);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
       <div className="pt-[4.5rem] pb-24">
         <div
-          style={
-            {
-              background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
-            }
-          }
+          style={{
+            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
+          }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
         <div className="pt-16 w-full">

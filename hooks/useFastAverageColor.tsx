@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { FastAverageColor } from "fast-average-color";
+import { useRecoilState } from "recoil";
+import { bgColourState } from "../atoms/colourState";
 
 export const useFastAverageColor = (
   src?: string | null,
   srcLoaded?: boolean,
   aglorithm?: "dominant" | "simple" | "sqrt"
 ) => {
-  const [color, setColor] = useState<string | undefined>(undefined);
+  const [color, setColor] = useRecoilState(bgColourState);
 
   useEffect(() => {
     const fac = new FastAverageColor();
