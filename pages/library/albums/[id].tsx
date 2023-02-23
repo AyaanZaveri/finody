@@ -23,6 +23,7 @@ import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-a
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
 import { getSongInfo } from "../../../utils/getSongInfo";
+import { FastAverageColor } from "fast-average-color";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -38,6 +39,8 @@ const LibraryAlbum: NextPage = () => {
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
   const [queue, setQueue] = useRecoilState(queueState);
+
+  const [bgColor, setBgColor] = useState<string>("#000000");
 
   useEffect(() => {
     setQueue(tracksData);
@@ -84,30 +87,27 @@ const LibraryAlbum: NextPage = () => {
     getAlbumInfo();
   }, [api]);
 
-  const imgUrl = `
-  ${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`;
-
-  useEffect(() => {
-    if (!imgUrl) return;
-
-    if (imgUrl) {
-      setSrcLoaded(true);
-    }
-  }, [imgUrl]);
-
-  const bgColor = useFastAverageColor(imgUrl, srcLoaded);
-
-  console.log(tracksData);
-
   const router = useRouter();
+
+  const fac = new FastAverageColor();
+
+  const getAverageColor = async (url: string) => {
+    const response = await fetch(url);
+    const color = await fac.getColorAsync(response.url);
+    setBgColor(color.rgb);
+  };
+
+  // console.log(bgColor)
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
       <div className="pt-[4.5rem] pb-24">
         <div
-          style={{
-            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
-          }}
+          style={
+            {
+              background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
+            }
+          }
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
         <div className="pt-16 w-full">
@@ -127,6 +127,8 @@ const LibraryAlbum: NextPage = () => {
                       className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
+                      // @ts-ignore
+                      onLoad={(e) => getAverageColor(e.target.src)}
                     />
                   </div>
                 ) : null}
@@ -140,7 +142,9 @@ const LibraryAlbum: NextPage = () => {
                 <div className="flex flex-row items-center gap-2">
                   <button
                     onClick={() =>
-                      router.push(`/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`)
+                      router.push(
+                        `/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`
+                      )
                     }
                     className="text-xl text-emerald-500 dark:text-emerald-400 hover:underline hover:decoration-emerald-600 hover:cursor-pointer dark:active:text-emerald-500 transition-colors ease-in-out duration-300"
                   >
