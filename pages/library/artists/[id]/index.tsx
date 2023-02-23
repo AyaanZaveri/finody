@@ -10,20 +10,20 @@ import Tilt from "react-parallax-tilt";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { getAudioApi } from "@jellyfin/sdk/lib/utils/api/audio-api";
 import { getUniversalAudioApi } from "@jellyfin/sdk/lib/utils/api/universal-audio-api";
-import { useJellyfin } from "../../../hooks/handleJellyfin";
-import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
+import { useJellyfin } from "../../../../hooks/handleJellyfin";
+import { fancyTimeFormat } from "../../../../utils/fancyTimeFormat";
 import { HiClock } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
 import {
   currentTrackState,
   playState,
   queueState,
-} from "../../../atoms/playState";
+} from "../../../../atoms/playState";
 import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-api";
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
-import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
-import { getSongInfo } from "../../../utils/getSongInfo";
-import { bgColourState } from "../../../atoms/colourState";
+import { useFastAverageColor } from "../../../../hooks/useFastAverageColor";
+import { getSongInfo } from "../../../../utils/getSongInfo";
+import { bgColourState } from "../../../../atoms/colourState";
 
 const LibraryArtist: NextPage = () => {
   const { query } = useRouter();
