@@ -12,13 +12,16 @@ import { SiJellyfin } from "react-icons/si";
 import { useRecoilState } from "recoil";
 import { currentTrackState } from "../atoms/playState";
 import { useTheme } from "next-themes";
+import { bgColourState } from "../atoms/colourState";
 
 const Sidebar = () => {
   const router = useRouter();
 
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
 
-const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+
+  const [bgColour, setBgColour] = useRecoilState(bgColourState);
 
   return (
     <div

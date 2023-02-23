@@ -23,12 +23,18 @@ import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-a
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
 import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
 import { getSongInfo } from "../../../utils/getSongInfo";
+import { bgColourState } from "../../../atoms/colourState";
 
-const LibraryAlbum: NextPage = () => {
+const LibraryArtist: NextPage = () => {
   const { query } = useRouter();
   const [tracksData, setTracksData] = useState<any>();
-  const [albumInfo, setAlbumInfo] = useState<any>();
+  const [artistInfo, setArtistInfo] = useState<any>();
+  const [isExplicit, setIsExplicit] = useState<boolean>();
+  const [showMore, setShowMore] = useState<boolean>(false);
   const [srcLoaded, setSrcLoaded] = useState<boolean>(true);
+
+  const [showCollapsedArtistInfo, setShowCollapsedArtistInfo] =
+    useState<boolean>(false);
 
   const [songLoading, setSongLoading] = useState({
     id: "",
@@ -39,15 +45,16 @@ const LibraryAlbum: NextPage = () => {
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
   const [queue, setQueue] = useRecoilState(queueState);
 
+  const [bgColour, setBgColour] = useRecoilState(bgColourState);
+
   useEffect(() => {
     setQueue(tracksData);
   }, [tracksData]);
 
   const { api, user, data } = useJellyfin();
+  // console.log("data", data);
 
   const [serverUrl, setServerUrl] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("SortName");
-  const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -61,31 +68,31 @@ const LibraryAlbum: NextPage = () => {
       userId: user?.Id,
       fields: ["Genres", "DateCreated", "MediaSources", "ParentId"] as any,
       parentId: query?.id as string,
-      sortBy: sortBy as any,
-      sortOrder: sortOrder as any,
+      sortBy: "SortName" as any,
     });
 
     setTracksData((await items)?.data?.Items);
   };
 
-  const getAlbumInfo = async () => {
+  const getArtistInfo = async () => {
     if (!api) return;
     const info = getItemsApi(api).getItemsByUserId({
       userId: user?.Id,
       ids: query?.id as any,
-      fields: ["Genres", "DateCreated", "ChildCount"] as any,
+      fields: ["Genres", "Overview"] as any,
     });
 
-    setAlbumInfo((await info)?.data?.Items![0]);
+    setArtistInfo((await info)?.data?.Items![0]);
   };
 
   useEffect(() => {
     getItems();
-    getAlbumInfo();
+    getArtistInfo();
   }, [api]);
 
   const imgUrl = `
-  ${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`;
+  ${serverUrl}/Items/${artistInfo?.Id}/Images/Primary?maxHeight=400&tag=${artistInfo?.ImageTags?.Primary}&quality=90`;
+  // console.log("imgUrl", imgUrl);
 
   useEffect(() => {
     if (!imgUrl) return;
@@ -95,18 +102,18 @@ const LibraryAlbum: NextPage = () => {
     }
   }, [imgUrl]);
 
-  const bgColor = useFastAverageColor(imgUrl, srcLoaded);
-
-  console.log(tracksData);
+  setBgColour(useFastAverageColor(imgUrl, srcLoaded) as string)
 
   const router = useRouter();
+
+  console.log("artistInfo", artistInfo);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
       <div className="pt-[4.5rem] pb-24">
         <div
           style={{
-            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, ${bgColour} 0%, rgba(0, 0, 0, 0) 75%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
@@ -120,65 +127,51 @@ const LibraryAlbum: NextPage = () => {
                 glarePosition="bottom"
                 glareBorderRadius="12px"
               >
-                {albumInfo ? (
+                {artistInfo ? (
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
-                      src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
+                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/30 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
+                      src={`${serverUrl}/Items/${artistInfo?.Id}/Images/Primary?maxHeight=400&tag=${artistInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                     />
                   </div>
                 ) : null}
               </Tilt>
             </div>
-            <div className="flex select-none flex-col gap-3 pt-3 text-slate-700 dark:text-white">
+            <div className="flex select-none flex-col gap-3 pt-5 text-slate-700 dark:text-white">
               <span className="text-5xl font-bold break-words">
-                {albumInfo ? albumInfo?.Name : null}
+                {artistInfo ? artistInfo?.Name : null}
               </span>
               <div className="flex flex-col">
-                <div className="flex flex-row items-center gap-2">
-                  <button
-                    onClick={() =>
-                      router.push(`/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`)
-                    }
-                    className="text-xl text-emerald-500 dark:text-emerald-400 hover:underline hover:decoration-emerald-600 hover:cursor-pointer dark:active:text-emerald-500 transition-colors ease-in-out duration-300"
-                  >
-                    {albumInfo?.AlbumArtist}
-                  </button>
-                  {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-slate-700">
-                      <span>{albumInfo?.ProductionYear}</span>
+                <div className="flex flex-row items-center gap-2"
+                  onClick={(() => router.push(`/artist/${artistInfo?.AlbumArtistId}`))}
+                >
+                  <span className="text-xl text-emerald-500 dark:text-emerald-400 transition-colors duration-500 ease-in-out cursor-pointer hover:underline hover:decoration-emerald-500 active:text-emerald-600">
+                    {artistInfo?.AlbumArtist}
+                  </span>
+                  {artistInfo?.ProductionYear ? (
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-lg w-min ring-1 ring-slate-700">
+                      <span>{artistInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
                 </div>
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
-                  {albumInfo ? (
+                  {artistInfo ? (
                     <div className="flex flex-col">
                       <span className="text-emerald-500 dark:text-emerald-400">
-                        {albumInfo?.ChildCount} Tracks
+                        {artistInfo?.ChildCount} Tracks
                       </span>
                       <span className="text-slate-600 dark:text-white">
-                        {albumInfo?.RunTimeTicks
+                        {artistInfo?.RunTimeTicks
                           ? // convert runtimeticks to "x minutes, y seconds"
-                            fancyTimeFormat(albumInfo?.RunTimeTicks / 10000000)
+                            fancyTimeFormat(artistInfo?.RunTimeTicks / 10000000)
                           : null}
                       </span>
                     </div>
                   ) : null}
                 </div>
-                {albumInfo?.Genres ? (
-                  <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
-                    <span className="text-slate-600 dark:text-white flex flex-row gap-2">
-                      {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl hover:shadow-emerald-500/50 ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
-                          <span>{genre}</span>
-                        </div>
-                      ))}
-                    </span>
-                  </div>
-                ) : null}
-                {albumInfo?.tracks ? (
+                {artistInfo?.tracks ? (
                   <div className="mt-3 w-min">
                     <button
                       onClick={() => {
@@ -201,7 +194,7 @@ const LibraryAlbum: NextPage = () => {
           </div>
 
           {/* displaying the tracks from albumData in a table */}
-          {albumInfo ? (
+          {artistInfo ? (
             <div>
               <div className="mt-8 select-none">
                 <div className="flex flex-row items-center justify-start gap-3">
@@ -239,12 +232,7 @@ const LibraryAlbum: NextPage = () => {
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
                       <tr className="text-slate-700 dark:text-white">
-                        <th
-                          onClick={() => setSortBy("trackNumber")}
-                          className="text-center w-[5%]"
-                        >
-                          Track
-                        </th>
+                        <th className="text-center w-[5%]">Track</th>
                         <th className="text-left w-1/2">Title</th>
                         <th className="w-3/12">
                           <span className="flex flex-row items-center justify-center">
@@ -254,9 +242,7 @@ const LibraryAlbum: NextPage = () => {
                         <th className="text-left w-3/12">Bit Rate</th>
                         <th className="text-center w-3/12">Plays</th>
                       </tr>
-                      {/* when table column header is clicked sort acsecnding/descending */}
                     </thead>
-
                     <tbody>
                       {tracksData?.map((track: any, index: number) => (
                         <tr
@@ -324,4 +310,4 @@ const LibraryAlbum: NextPage = () => {
   );
 };
 
-export default LibraryAlbum;
+export default LibraryArtist;

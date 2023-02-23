@@ -72,13 +72,13 @@ const BAudioPlayer = () => {
     }
   }, [currentProgress]);
 
-  console.log("playingTracl", playingTrack);
+  // console.log("playingTracl", playingTrack);
 
-  console.log(currentProgress);
-  console.log(
-    "queuheiuwrh",
-    queue ? queue[playingTrack?.parentIndexNumber + 1] : null
-  );
+  // console.log(currentProgress);
+  // console.log(
+  //   "queuheiuwrh",
+  //   queue ? queue[playingTrack?.parentIndexNumber + 1] : null
+  // );
 
   return (
     <div className="z-20 select-none">
@@ -121,7 +121,7 @@ const BAudioPlayer = () => {
                 </div>
               </div>
             </div>
-            <div className="w-2/3">
+            <div className="w-[55%]">
               <AudioPlayer
                 onListen={(e: any) =>
                   setCurrentProgress({

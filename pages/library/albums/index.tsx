@@ -13,7 +13,6 @@ import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { Menu } from "@headlessui/react";
 
 const LibraryAlbumsIndex: NextPage = () => {
-  const [artists, setArtists] = useState<any>(null);
   const [albums, setAlbums] = useState<any>(null);
   const [sortBy, setSortBy] = useState<
     | "Album"
@@ -34,12 +33,6 @@ const LibraryAlbumsIndex: NextPage = () => {
 
   const getJellyfinData = async () => {
     if (api) {
-      const artistsData: any = await getArtistsApi(api).getArtists({
-        userId: user?.Id,
-      });
-
-      setArtists(artistsData.data.Items);
-
       const items: any = await getItemsApi(api).getItemsByUserId({
         userId: user?.Id as any,
         sortBy: sortBy as any,
@@ -51,7 +44,7 @@ const LibraryAlbumsIndex: NextPage = () => {
 
       setAlbums(items.data.Items);
     } else {
-      // console.log("no api, haha you suck lol");
+      console.log("no api, haha you suck lol");
     }
   };
 
@@ -61,7 +54,7 @@ const LibraryAlbumsIndex: NextPage = () => {
 
   return (
     <div className="ml-3 pl-[17rem] pr-12">
-      <div className="pt-[4.5rem] pb-8">
+      <div className="pt-[4.5rem] pb-28">
         <div className="pt-6">
           <div className="flex justify-between flex-row">
             <h1 className="text-3xl font-semibold text-slate-700 dark:text-white">

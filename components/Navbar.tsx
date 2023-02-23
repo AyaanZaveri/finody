@@ -12,6 +12,7 @@ import { useRecoilState } from "recoil";
 import { useTheme } from "next-themes";
 import { Jellyfin } from "@jellyfin/sdk";
 import { useJellyfin } from "../hooks/handleJellyfin";
+import { bgColourState } from "../atoms/colourState";
 
 const Navbar = () => {
   const signOut = () => {
@@ -27,7 +28,8 @@ const Navbar = () => {
   const [searchRes, setSearchRes] = useState<any>();
   const [showSuggestions, setShowSuggestions] = useState<any>(false);
   const [mounted, setMounted] = useState(false);
-  // const [theme, setTheme] = useRecoilState(currentThemeState);
+
+  const [bgColour, setBgColour] = useRecoilState(bgColourState);
 
   const searchSuggestionsRef = useRef<any>();
 
@@ -88,8 +90,11 @@ const Navbar = () => {
 
   return (
     <div className="fixed z-10 w-full select-none border-b border-slate-100 dark:border-slate-800">
-      <div className="flex flex-col ml-36">
-        <div className="relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-32 backdrop-blur-md dark:bg-slate-900/50">
+      <div className="flex flex-col ml-60">
+        <div
+          className={`relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-10 backdrop-blur-md 
+        dark:bg-slate-900/50`}
+        >
           <div className="relative w-6/12 rounded-md">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <HiOutlineSearch className="text-gray-500 dark:text-slate-100 sm:text-sm" />

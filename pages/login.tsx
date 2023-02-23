@@ -13,7 +13,7 @@ const Login = () => {
     if (serverUrl.length < 0 && userName.length < 0)
       return;
     const jellyData = await jellyfinAuth(serverUrl, userName, password);
-    console.log("jellyData", jellyData);
+    // console.log("jellyData", jellyData);
     if (jellyData?.auth?.data?.User) {
       console.log("Login success");
       localStorage.setItem("serverUrl", serverUrl);
