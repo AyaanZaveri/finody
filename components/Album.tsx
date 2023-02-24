@@ -123,7 +123,7 @@ const Album = ({ album }: Props) => {
         </Tilt>
         <div className="flex flex-col justify-start">
           <button className="flex flex-row gap-3">
-            <span className="inline-flex items-center gap-1 text-start text-base font-semibold decoration-emerald-500 decoration-2 transition-colors duration-300 ease-in-out hover:underline">
+            <span className="inline-flex items-center gap-1 text-start text-base font-semibold decoration-sky-500 decoration-2 transition-colors duration-300 ease-in-out hover:underline">
               {album.title} {album.isExplicit ? <MdExplicit /> : null}
             </span>
           </button>
@@ -145,7 +145,7 @@ const Album = ({ album }: Props) => {
                 <HiHeart
                   className={`w-50 h-4 ${
                     true
-                      ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
+                      ? "text-sky-500 hover:text-sky-600 active:text-sky-700"
                       : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
                 />
@@ -164,7 +164,7 @@ const Album = ({ album }: Props) => {
                 <HiPlay
                   className={`w-50 h-4 ${
                     checkIfFavoriteExists(album?.browseId as string)
-                      ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
+                      ? "text-sky-500 hover:text-sky-600 active:text-sky-700"
                       : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
                 />

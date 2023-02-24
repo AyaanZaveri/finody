@@ -67,7 +67,7 @@ const Track = ({ track }: Props) => {
                 }}
                 // className={`w-50 h-4 ${
                 //   checkIfFavoriteExists(track?.videoId as string)
-                //     ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
+                //     ? "text-sky-500 hover:text-sky-600 active:text-sky-700"
                 //     : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                 // } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
               />

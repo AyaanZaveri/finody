@@ -57,7 +57,7 @@ const LibraryAlbumsIndex: NextPage = () => {
       <div className="pt-[4.5rem] pb-28">
         <div
           style={{
-            background: `linear-gradient(180deg, rgba(16, 185, 129, 0.75) 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, rgb(14, 165, 233, 0.75) 0%, rgba(0, 0, 0, 0) 75%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
@@ -71,7 +71,7 @@ const LibraryAlbumsIndex: NextPage = () => {
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button
-                    className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
+                    className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-sky-500/5 transition duration-300 ease-in-out hover:shadow-sky-500/10
                 dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 dark:active:bg-slate-700
                 "
                   >
@@ -104,7 +104,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -120,7 +120,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -136,7 +136,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -152,7 +152,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -168,7 +168,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -184,7 +184,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -200,7 +200,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -216,7 +216,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -232,7 +232,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
+                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
                               : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -252,7 +252,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                     setSortOrder("Ascending");
                   }
                 }}
-                className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
+                className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-sky-500/5 transition duration-300 ease-in-out hover:shadow-sky-500/10
                 dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 dark:active:bg-slate-700
                 "
               >

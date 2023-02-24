@@ -157,7 +157,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-sky-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-sky-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -179,12 +179,12 @@ const LibraryAlbum: NextPage = () => {
                         `/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`
                       )
                     }
-                    className="text-xl text-emerald-500 dark:text-emerald-400 hover:underline hover:decoration-emerald-600 hover:cursor-pointer dark:active:text-emerald-500 transition-colors ease-in-out duration-300"
+                    className="text-xl text-sky-500 dark:text-sky-400 hover:underline hover:decoration-sky-600 hover:cursor-pointer dark:active:text-sky-500 transition-colors ease-in-out duration-300"
                   >
                     {albumInfo?.AlbumArtist}
                   </button>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-slate-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-sky-500/20 shadow-xl w-min ring-1 ring-slate-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -192,7 +192,7 @@ const LibraryAlbum: NextPage = () => {
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
                   {albumInfo ? (
                     <div className="flex flex-col">
-                      <span className="text-emerald-500 dark:text-emerald-400">
+                      <span className="text-sky-500 dark:text-sky-400">
                         {albumInfo?.ChildCount} Tracks
                       </span>
                       <span className="text-slate-600 dark:text-white">
@@ -208,7 +208,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
                     <span className="text-slate-600 dark:text-white flex flex-row gap-2">
                       {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl hover:shadow-emerald-500/50 ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
+                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-sky-500/20 shadow-xl hover:shadow-sky-500/50 ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
                           <span>{genre}</span>
                         </div>
                       ))}
@@ -226,7 +226,7 @@ const LibraryAlbum: NextPage = () => {
                         //   id: albumBrowseId,
                         // });
                       }}
-                      className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-emerald-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-emerald-500/30 active:bg-emerald-600"
+                      className="inline-flex items-center gap-2 rounded-md bg-sky-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-sky-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-sky-500/30 active:bg-sky-600"
                     >
                       <PlayIcon className="h-4 w-4" />
                       Play
@@ -256,7 +256,7 @@ const LibraryAlbum: NextPage = () => {
                         // });
                       }}
                     >
-                      <PlayIcon className="h-5 w-5 text-emerald-500" />
+                      <PlayIcon className="h-5 w-5 text-sky-500" />
                     </button>
                     <button
                       onClick={() => {
@@ -298,7 +298,7 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md"
+                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-sky-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-sky-800/40 hover:cursor-pointer backdrop-blur-md"
                           onClick={() => {
                             getSongInfo(
                               track,
@@ -326,7 +326,7 @@ const LibraryAlbum: NextPage = () => {
                             </div>
                             {songLoading.id == track?.Id &&
                             songLoading.loading ? (
-                              <CgSpinner className="animate-spin h-5 w-5 text-emerald-500" />
+                              <CgSpinner className="animate-spin h-5 w-5 text-sky-500" />
                             ) : null}
                           </td>
                           <td className="text-center">

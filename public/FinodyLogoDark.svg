@@ -39,8 +39,8 @@
 <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_101_32" result="shape"/>
 </filter>
 <linearGradient id="paint0_linear_101_32" x1="-1.25944" y1="-11.8272" x2="55.9479" y2="25.2713" gradientUnits="userSpaceOnUse">
-<stop stop-color="#34D399"/>
-<stop offset="1" stop-color="#10B981"/>
+<stop stop-color="#38bdf8"/>
+<stop offset="1" stop-color="#0ea5e9"/>
 </linearGradient>
 <linearGradient id="paint1_linear_101_32" x1="7.07153" y1="7.07151" x2="31.3167" y2="31.3167" gradientUnits="userSpaceOnUse">
 <stop stop-color="#F8FAFC"/>
@@ -51,8 +51,8 @@
 <stop offset="1" stop-color="#0F172A"/>
 </linearGradient>
 <linearGradient id="paint3_linear_101_32" x1="48.216" y1="-5.3373" x2="90.0212" y2="70.5719" gradientUnits="userSpaceOnUse">
-<stop stop-color="#34D399"/>
-<stop offset="1" stop-color="#10B981"/>
+<stop stop-color="#38bdf8"/>
+<stop offset="1" stop-color="#0ea5e9"/>
 </linearGradient>
 <clipPath id="clip0_101_32">
 <rect width="10" height="10" fill="white" transform="matrix(0 1 -1 0 25.0001 14)"/>

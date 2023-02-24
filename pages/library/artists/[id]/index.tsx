@@ -159,7 +159,7 @@ const LibraryArtist: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/30 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-sky-500/30 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-sky-500/60"
                       src={`${serverUrl}/Items/${artistInfo?.Id}/Images/Primary?maxHeight=400&tag=${artistInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -177,7 +177,7 @@ const LibraryArtist: NextPage = () => {
                 <div className="flex flex-row items-center gap-2"
                   onClick={(() => router.push(`/artist/${artistInfo?.AlbumArtistId}`))}
                 >
-                  <span className="text-xl text-emerald-500 dark:text-emerald-400 transition-colors duration-500 ease-in-out cursor-pointer hover:underline hover:decoration-emerald-500 active:text-emerald-600">
+                  <span className="text-xl text-sky-500 dark:text-sky-400 transition-colors duration-500 ease-in-out cursor-pointer hover:underline hover:decoration-sky-500 active:text-sky-600">
                     {artistInfo?.AlbumArtist}
                   </span>
                   {artistInfo?.ProductionYear ? (
@@ -189,7 +189,7 @@ const LibraryArtist: NextPage = () => {
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
                   {artistInfo ? (
                     <div className="flex flex-col">
-                      <span className="text-emerald-500 dark:text-emerald-400">
+                      <span className="text-sky-500 dark:text-sky-400">
                         {artistInfo?.ChildCount} Tracks
                       </span>
                       <span className="text-slate-600 dark:text-white">
@@ -212,7 +212,7 @@ const LibraryArtist: NextPage = () => {
                         //   id: albumBrowseId,
                         // });
                       }}
-                      className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-emerald-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-emerald-500/30 active:bg-emerald-600"
+                      className="inline-flex items-center gap-2 rounded-md bg-sky-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-sky-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-sky-500/30 active:bg-sky-600"
                     >
                       <PlayIcon className="h-4 w-4" />
                       Play
@@ -242,7 +242,7 @@ const LibraryArtist: NextPage = () => {
                         // });
                       }}
                     >
-                      <PlayIcon className="h-5 w-5 text-emerald-500" />
+                      <PlayIcon className="h-5 w-5 text-sky-500" />
                     </button>
                     <button
                       onClick={() => {
@@ -277,7 +277,7 @@ const LibraryArtist: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md"
+                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-sky-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-sky-800/40 hover:cursor-pointer backdrop-blur-md"
                           onClick={() => {
                             getSongInfo(
                               track,
@@ -305,7 +305,7 @@ const LibraryArtist: NextPage = () => {
                             </div>
                             {songLoading.id == track?.Id &&
                             songLoading.loading ? (
-                              <CgSpinner className="animate-spin h-5 w-5 text-emerald-500" />
+                              <CgSpinner className="animate-spin h-5 w-5 text-sky-500" />
                             ) : null}
                           </td>
                           <td className="text-center">

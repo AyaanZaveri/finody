@@ -99,7 +99,7 @@ const Navbar = () => {
             </div>
             <form onSubmit={(e) => handleSearch(e)}>
               <input
-                className="w-full rounded-md border border-slate-200 bg-slate-100 pl-8 pr-12 shadow-2xl shadow-emerald-500/30 transition duration-300 ease-in-out hover:border-slate-300 hover:shadow-emerald-500/50 focus:border-emerald-500 focus:ring focus:ring-emerald-200 active:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-100 dark:hover:border-slate-600 dark:focus:border-emerald-700 dark:focus:ring-emerald-400/90 dark:active:bg-slate-900 sm:text-sm"
+                className="w-full rounded-md border border-slate-200 bg-slate-100 pl-8 pr-12 shadow-2xl shadow-sky-500/30 transition duration-300 ease-in-out hover:border-slate-300 hover:shadow-sky-500/50 focus:border-sky-500 focus:ring focus:ring-sky-200 active:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-100 dark:hover:border-slate-600 dark:focus:border-sky-700 dark:focus:ring-sky-400/90 dark:active:bg-slate-900 sm:text-sm"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => setSearch(e.target.value)}
@@ -113,7 +113,7 @@ const Navbar = () => {
                 {searchRes?.length > 0 &&
                 search?.length > 0 &&
                 showSuggestions ? (
-                  <div className="flex w-full select-none flex-col gap-1 border bg-slate-100 py-3 dark:bg-slate-800 dark:border-slate-700 overflow-hidden rounded-lg text-slate-700 shadow-2xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-500/20 dark:text-white">
+                  <div className="flex w-full select-none flex-col gap-1 border bg-slate-100 py-3 dark:bg-slate-800 dark:border-slate-700 overflow-hidden rounded-lg text-slate-700 shadow-2xl shadow-sky-500/10 transition duration-300 ease-in-out hover:shadow-sky-500/20 dark:text-white">
                     {searchRes?.slice(0, 5)?.map((item: any, index: any) => (
                       <div
                         onClick={() => {
@@ -123,7 +123,7 @@ const Navbar = () => {
                         }}
                         key={index}
                       >
-                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-emerald-400/20 hover:text-white active:bg-emerald-400/10 active:text-white">
+                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-sky-400/20 hover:text-white active:bg-sky-400/10 active:text-white">
                           <img
                             src={
                               item?.ImageTags?.Primary
@@ -155,10 +155,10 @@ const Navbar = () => {
                   : resolvedTheme == "dark"
                   ? "bg-slate-800 active:bg-slate-700"
                   : "bg-slate-800 active:bg-slate-700"
-              } gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-slate-600`}
+              } gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-sky-500/5 transition duration-300 ease-in-out hover:shadow-sky-500/10 dark:text-white dark:active:border-slate-600`}
             >
               <span className="text-[0.75rem]">{user?.Name}</span>
-              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center">
+              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-sky-400 to-sky-500 flex items-center justify-center">
                 <span className="text-[0.6rem] font-normal text-white">
                   {user?.Name?.charAt(0).toUpperCase()}
                 </span>
@@ -172,7 +172,7 @@ const Navbar = () => {
                   : resolvedTheme == "dark"
                   ? "bg-slate-800 active:bg-slate-700"
                   : "bg-slate-800 active:bg-slate-700"
-              } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+              } rounded-full p-1.5 shadow-xl shadow-sky-500/10 transition duration-300 ease-in-out hover:shadow-sky-300/20`}
             >
               <img src="/jellyfin.svg" alt="" />
             </button>
@@ -193,7 +193,7 @@ const Navbar = () => {
                 : resolvedTheme == "dark"
                 ? "bg-slate-800 active:bg-slate-600"
                 : "bg-slate-800 active:bg-slate-600"
-            } rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+            } rounded-full shadow-xl shadow-sky-500/10 transition duration-300 ease-in-out hover:shadow-sky-300/20`}
           >
             {theme == "light" ? (
               <SunIcon className="h-full w-full p-1.5 text-slate-700" />
