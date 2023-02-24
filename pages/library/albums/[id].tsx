@@ -132,6 +132,8 @@ const LibraryAlbum: NextPage = () => {
   //   }
   // }, [albumInfo]);
 
+  console.log(query.index)
+
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
       <div className="pt-[4.5rem] pb-24">

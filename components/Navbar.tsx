@@ -13,6 +13,8 @@ import { useTheme } from "next-themes";
 import { Jellyfin } from "@jellyfin/sdk";
 import { useJellyfin } from "../hooks/handleJellyfin";
 import { bgColourState } from "../atoms/colourState";
+import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
+import { getArtistsApi } from "@jellyfin/sdk/lib/utils/api/artists-api";
 
 const Navbar = () => {
   const signOut = () => {
@@ -22,7 +24,7 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  const { api, user } = useJellyfin();
+  const { api, user, serverUrl } = useJellyfin();
 
   const [search, setSearch] = useState<string>("");
   const [searchRes, setSearchRes] = useState<any>();
@@ -33,34 +35,20 @@ const Navbar = () => {
 
   const searchSuggestionsRef = useRef<any>();
 
-  // useEffect(() => {
-  //   window
-  //     .matchMedia("(prefers-color-scheme: dark)")
-  //     .addEventListener("change", (event) => {
-  //       const colorScheme = event.matches ? "dark" : "light";
-  //       setColorTheme(colorScheme);
-  //     });
-  // }, []);
-
   const getSearchSuggestions = (query: string) => {
-    if (query.length > 2) {
-      axios
-        .get(`${pipedApiUrl}/suggestions/?query=${query}`)
-        .then((res: any) => {
-          setSearchRes(res.data);
-        })
-        .catch((err: any) => {});
-    } else {
-      setSearchRes("");
-    }
-  };
-
-  const router = useRouter();
-
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    setShowSuggestions(false);
-    router.push(`/search?q=${search}`);
+    getItemsApi(api)
+      .getItems({
+        userId: user?.Id,
+        searchTerm: query,
+        limit: 5,
+        recursive: true,
+        enableTotalRecordCount: false,
+        imageTypeLimit: 1,
+        includeItemTypes: "Audio" as any,
+      })
+      .then((res) => {
+        setSearchRes(res.data.Items);
+      });
   };
 
   useEffect(() => {
@@ -69,6 +57,14 @@ const Navbar = () => {
       setShowSuggestions(true);
     }
   }, [search]);
+
+  const router = useRouter();
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    setShowSuggestions(false);
+    router.push(`/search?q=${search}`);
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", (event) => {
@@ -88,9 +84,11 @@ const Navbar = () => {
 
   const { theme, setTheme, resolvedTheme } = useTheme();
 
+  console.log(searchRes);
+
   return (
     <div className="fixed z-10 w-full select-none border-b border-slate-100 dark:border-slate-800">
-      <div className="flex flex-col ml-60">
+      <div className="flex flex-col ml-60 relative">
         <div
           className={`relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-10 backdrop-blur-md 
         dark:bg-slate-900/50`}
@@ -107,6 +105,46 @@ const Navbar = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
             </form>
+            <div className="pl-[17rem]">
+              <div
+                ref={searchSuggestionsRef}
+                className="w-full absolute top-[3rem] left-0 rounded-lg"
+              >
+                {searchRes?.length > 0 &&
+                search?.length > 0 &&
+                showSuggestions ? (
+                  <div className="flex w-full select-none flex-col gap-1 border bg-slate-100 py-3 dark:bg-slate-800 dark:border-slate-700 overflow-hidden rounded-lg text-slate-700 shadow-2xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-500/20 dark:text-white">
+                    {searchRes?.slice(0, 5)?.map((item: any, index: any) => (
+                      <div
+                        onClick={() => {
+                          setShowSuggestions(false);
+                          router.push(`/library/albums/${item?.AlbumId}?index=${item?.IndexNumber}`);
+                          window.location.reload();
+                        }}
+                        key={index}
+                      >
+                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-emerald-400/20 hover:text-white active:bg-emerald-400/10 active:text-white">
+                          <img
+                            src={
+                              item?.ImageTags?.Primary
+                                ? `${serverUrl}/Items/${item?.Id}/Images/Primary?maxHeight=100&tag=${item?.ImageTags?.Primary}&quality=90`
+                                : "/images/album-placeholder.png"
+                            }
+                            className="w-8 h-8 rounded object-cover mr-2"
+                          />
+                          <div className="flex flex-col">
+                            <span className="font-semibold">{item?.Name}</span>
+                            <span className="text-slate-300 text-xs">
+                              {item?.AlbumArtist}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
           {user?.Name ? (
             <button
@@ -175,27 +213,6 @@ const Navbar = () => {
               ""
             )}
           </button>
-        </div>
-        <div className="pl-[17rem]">
-          <div ref={searchSuggestionsRef} className="w-6/12">
-            {searchRes && showSuggestions ? (
-              <div className="flex w-full select-none flex-col gap-1 overflow-hidden rounded-lg bg-slate-100/90 py-2 text-slate-700 shadow-2xl shadow-emerald-500/10 backdrop-blur-md transition duration-300 ease-in-out hover:shadow-emerald-500/20 dark:bg-slate-800/90 dark:text-white">
-                {searchRes?.slice(0, 8)?.map((track: any, index: any) => (
-                  <div
-                    onClick={() => {
-                      setShowSuggestions(false);
-                      router.push(`/search?q=${track}`);
-                    }}
-                    key={index}
-                  >
-                    <span className="inline-flex w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-emerald-500 hover:text-white hover:shadow-xl hover:shadow-emerald-500/10 active:bg-emerald-600 active:text-white">
-                      {track}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </div>
         </div>
       </div>
     </div>

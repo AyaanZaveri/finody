@@ -22,7 +22,7 @@ const Album = ({ album }: Props) => {
       onClick={() => {
         router.push(`/library/albums/${album.Id}`);
       }}
-      className="group-one flex w-48 flex-col select-none items-center justify-between gap-3 rounded-xl p-4 pb-6 text-sm text-slate-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50 active:scale-95"
+      className="group-one flex w-48 flex-col select-none items-center justify-between gap-3 rounded-xl p-4 pb-6 text-sm text-slate-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-slate-100 active:bg-slate-100 dark:text-white dark:hover:bg-slate-800/50 dark:active:bg-slate-800/50 dark:bg-slate-800/30 active:scale-95"
     >
       <button className="flex flex-col gap-4 items-start">
         <div className="group relative flex items-center justify-center overflow-hidden rounded-md transition-all">

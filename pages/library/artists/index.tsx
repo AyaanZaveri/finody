@@ -182,7 +182,7 @@ const LibraryArtistsIndex: NextPage = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-row flex-wrap gap-x-8 gap-y-2 pt-4">
+          <div className="flex flex-row flex-wrap gap-x-8 gap-y-4 pt-4">
             {artists?.map((artist: any) => (
               <Artist artist={artist} />
             ))}
