@@ -43,13 +43,13 @@ const LibraryArtistsIndex: NextPage = () => {
       <div className="pt-[4.5rem] pb-8">
         <div
           style={{
-            background: `linear-gradient(180deg, rgb(14, 165, 233, 0.75) 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, rgb(245, 158, 11) 0%, rgba(0, 0, 0, 0) 75%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
         <div className="pt-6">
           <div className="flex justify-between flex-row">
-            <h1 className="text-3xl font-semibold text-slate-700 dark:text-white">
+            <h1 className="text-3xl font-semibold text-zinc-700 dark:text-white">
               Artists
             </h1>
             <div className="gap-2 flex flex-row">
@@ -57,8 +57,8 @@ const LibraryArtistsIndex: NextPage = () => {
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button
-                    className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-sky-500/5 transition duration-300 ease-in-out hover:shadow-sky-500/10
-                dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 dark:active:bg-slate-700
+                    className="inline-flex text-sm h-8 items-center justify-center border border-zinc-200 hover:border-zinc-300 active:border-zinc-300 bg-zinc-100 active:bg-zinc-300 gap-2 overflow-hidden rounded-full px-3 text-zinc-800 shadow-xl shadow-amber-500/5 transition duration-300 ease-in-out hover:shadow-amber-500/10
+                dark:bg-zinc-800 dark:text-white dark:border-zinc-700 dark:hover:border-zinc-600 dark:active:border-zinc-600 dark:active:bg-zinc-700
                 "
                   >
                     <span>
@@ -70,7 +70,7 @@ const LibraryArtistsIndex: NextPage = () => {
                     </span>
                   </Menu.Button>
                 </div>
-                <Menu.Items className="absolute z-20 right-0 w-56 mt-2 origin-top-right divide-y bg-slate-100 ring-1 ring-slate-200 divide-gray-100 rounded-md shadow-lg outline-none dark:bg-slate-800 dark:text-white dark:ring-slate-700 focus:outline-none">
+                <Menu.Items className="absolute z-20 right-0 w-56 mt-2 origin-top-right divide-y bg-zinc-100 ring-1 ring-zinc-200 divide-gray-100 rounded-md shadow-lg outline-none dark:bg-zinc-800 dark:text-white dark:ring-zinc-700 focus:outline-none">
                   <div className="p-2">
                     <Menu.Item>
                       {({ active }) => (
@@ -80,8 +80,8 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
-                              : "text-slate-800 dark:text-white"
+                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              : "text-zinc-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Album
@@ -96,8 +96,8 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
-                              : "text-slate-800 dark:text-white"
+                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              : "text-zinc-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Duration
@@ -112,8 +112,8 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
-                              : "text-slate-800 dark:text-white"
+                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              : "text-zinc-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Name
@@ -128,8 +128,8 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
-                              : "text-slate-800 dark:text-white"
+                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              : "text-zinc-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Recently Added
@@ -144,8 +144,8 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-sky-500 text-white active:bg-sky-600 transition-colors duration-100"
-                              : "text-slate-800 dark:text-white"
+                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              : "text-zinc-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Random
@@ -164,8 +164,8 @@ const LibraryArtistsIndex: NextPage = () => {
                     setSortOrder("Ascending");
                   }
                 }}
-                className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-sky-500/5 transition duration-300 ease-in-out hover:shadow-sky-500/10
-                dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 dark:active:bg-slate-700
+                className="inline-flex text-sm h-8 items-center justify-center border border-zinc-200 hover:border-zinc-300 active:border-zinc-300 bg-zinc-100 active:bg-zinc-300 gap-2 overflow-hidden rounded-full px-3 text-zinc-800 shadow-xl shadow-amber-500/5 transition duration-300 ease-in-out hover:shadow-amber-500/10
+                dark:bg-zinc-800 dark:text-white dark:border-zinc-700 dark:hover:border-zinc-600 dark:active:border-zinc-600 dark:active:bg-zinc-700
                 "
               >
                 {sortOrder === "Ascending" ? (

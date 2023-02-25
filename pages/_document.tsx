@@ -36,7 +36,7 @@ export default class MyDoc extends Document {
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/plyr@3.7.2/dist/plyr.css"
         />
-        <body className={`scrollbar box-border bg-white dark:bg-slate-900`}>
+        <body className={`scrollbar box-border bg-white dark:bg-zinc-900`}>
           <Main />
           <NextScript />
         </body>

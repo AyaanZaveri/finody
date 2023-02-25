@@ -18,13 +18,13 @@ const Video = ({ video }: Props) => {
   return (
     <div
       key={video.videoId}
-      className="group-one flex h-16 w-full flex-row items-center justify-between gap-3 rounded-md px-3 text-sm text-slate-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-slate-100 active:bg-slate-200 dark:text-white dark:hover:bg-slate-800 dark:active:bg-slate-800 dark:active:ring-1 dark:active:ring-slate-700"
+      className="group-one flex h-16 w-full flex-row items-center justify-between gap-3 rounded-md px-3 text-sm text-zinc-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-100 active:bg-zinc-200 dark:text-white dark:hover:bg-zinc-800 dark:active:bg-zinc-800 dark:active:ring-1 dark:active:ring-zinc-700"
       id={video.videoId}
     >
       <div className="flex flex-row gap-3">
         <div
           // onClick={() => getCurrentSong(video.videoId, "video")}
-          className="group-two relative flex cursor-pointer items-center justify-center overflow-hidden rounded-md bg-sky-200 transition-all dark:bg-sky-700"
+          className="group-two relative flex cursor-pointer items-center justify-center overflow-hidden rounded-md bg-amber-200 transition-all dark:bg-amber-700"
         >
           <PlayIcon className="absolute z-10 ml-0.5 h-5 w-5 text-white opacity-0 transition-all duration-300 ease-in-out group-one-hover:opacity-100 group-one-active:opacity-100 group-two-active:brightness-90" />
           <img
@@ -50,8 +50,8 @@ const Video = ({ video }: Props) => {
                 // onClick={handleFavorited}
                 // className={`w-50 h-4 ${
                 //   checkIfFavoriteExists(video?.videoId as string)
-                //     ? "text-sky-500 hover:text-sky-600 active:text-sky-700"
-                //     : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
+                //     ? "text-amber-500 hover:text-amber-600 active:text-amber-700"
+                //     : "text-zinc-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                 // } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
               />
             </span>

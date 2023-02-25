@@ -44,6 +44,8 @@ const LibraryAlbum: NextPage = () => {
   const [bgColor, setBgColor] = useRecoilState(bgColourState);
   const [bgUrl, setBgUrl] = useState<string>("");
 
+  const [queryIndex, setQueryIndex] = useState<string>("");
+
   useEffect(() => {
     setQueue(tracksData);
   }, [tracksData]);
@@ -91,7 +93,7 @@ const LibraryAlbum: NextPage = () => {
   useEffect(() => {
     getItems();
     getAlbumInfo();
-  }, [api]);
+  }, [api, user, query?.id, sortBy, sortOrder]);
 
   const router = useRouter();
 
@@ -124,15 +126,31 @@ const LibraryAlbum: NextPage = () => {
     // setBgColor(color.rgb);
   };
 
-  // useEffect(() => {
-  //   if (albumInfo) {
-  //     getAverageColor(
-  //       `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
-  //     );
-  //   }
-  // }, [albumInfo]);
+  useEffect(() => {
+    if (albumInfo) {
+      getAverageColor(
+        `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+      );
+    }
+  }, [albumInfo]);
 
-  console.log(query.index)
+  useEffect(() => {
+    if (albumInfo && query?.index) {
+      setQueryIndex(query?.index as string);
+    }
+  }, [query?.index]);
+
+  useEffect(() => {
+    if (albumInfo && queryIndex && tracksData.length > 0) {
+      // scroll down to the track using the index id
+      const element = document.getElementById(String(queryIndex));
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
+  }, [queryIndex]);
+
+  console.log(query.index);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
@@ -157,7 +175,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-sky-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-sky-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-amber-500/20 ring-2 ring-zinc-400/30 hover:ring-zinc-400 transition-all duration-1000 ease-in-out hover:shadow-amber-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -167,7 +185,7 @@ const LibraryAlbum: NextPage = () => {
                 ) : null}
               </Tilt>
             </div>
-            <div className="flex select-none flex-col gap-3 pt-3 text-slate-700 dark:text-white">
+            <div className="flex select-none flex-col gap-3 pt-3 text-zinc-700 dark:text-white">
               <span className="text-5xl font-bold break-words">
                 {albumInfo ? albumInfo?.Name : null}
               </span>
@@ -179,12 +197,12 @@ const LibraryAlbum: NextPage = () => {
                         `/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`
                       )
                     }
-                    className="text-xl text-sky-500 dark:text-sky-400 hover:underline hover:decoration-sky-600 hover:cursor-pointer dark:active:text-sky-500 transition-colors ease-in-out duration-300"
+                    className="text-xl text-amber-500 dark:text-amber-400 hover:underline hover:decoration-amber-600 hover:cursor-pointer dark:active:text-amber-500 transition-colors ease-in-out duration-300"
                   >
                     {albumInfo?.AlbumArtist}
                   </button>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-sky-500/20 shadow-xl w-min ring-1 ring-slate-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-zinc-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl w-min ring-1 ring-zinc-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -192,10 +210,10 @@ const LibraryAlbum: NextPage = () => {
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
                   {albumInfo ? (
                     <div className="flex flex-col">
-                      <span className="text-sky-500 dark:text-sky-400">
+                      <span className="text-amber-500 dark:text-amber-400">
                         {albumInfo?.ChildCount} Tracks
                       </span>
-                      <span className="text-slate-600 dark:text-white">
+                      <span className="text-zinc-600 dark:text-white">
                         {albumInfo?.RunTimeTicks
                           ? // convert runtimeticks to "x minutes, y seconds"
                             fancyTimeFormat(albumInfo?.RunTimeTicks / 10000000)
@@ -206,9 +224,9 @@ const LibraryAlbum: NextPage = () => {
                 </div>
                 {albumInfo?.Genres ? (
                   <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
-                    <span className="text-slate-600 dark:text-white flex flex-row gap-2">
+                    <span className="text-zinc-600 dark:text-white flex flex-row gap-2">
                       {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-sky-500/20 shadow-xl hover:shadow-sky-500/50 ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
+                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-zinc-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl hover:shadow-amber-500/50 ring-1 ring-zinc-700 hover:ring-zinc-600 transition duration-300 ease-in-out hover:cursor-pointer">
                           <span>{genre}</span>
                         </div>
                       ))}
@@ -226,7 +244,7 @@ const LibraryAlbum: NextPage = () => {
                         //   id: albumBrowseId,
                         // });
                       }}
-                      className="inline-flex items-center gap-2 rounded-md bg-sky-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-sky-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-sky-500/30 active:bg-sky-600"
+                      className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-amber-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-amber-500/30 active:bg-amber-600"
                     >
                       <PlayIcon className="h-4 w-4" />
                       Play
@@ -242,7 +260,7 @@ const LibraryAlbum: NextPage = () => {
             <div>
               <div className="mt-8 select-none">
                 <div className="flex flex-row items-center justify-start gap-3">
-                  <span className="text-2xl font-semibold text-slate-700 dark:text-white">
+                  <span className="text-2xl font-semibold text-zinc-700 dark:text-white">
                     Tracks
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -256,7 +274,7 @@ const LibraryAlbum: NextPage = () => {
                         // });
                       }}
                     >
-                      <PlayIcon className="h-5 w-5 text-sky-500" />
+                      <PlayIcon className="h-5 w-5 text-amber-500" />
                     </button>
                     <button
                       onClick={() => {
@@ -275,7 +293,7 @@ const LibraryAlbum: NextPage = () => {
                   <table cellPadding={14}>
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
-                      <tr className="text-slate-700 dark:text-white">
+                      <tr className="text-zinc-700 dark:text-white">
                         <th
                           onClick={() => setSortBy("trackNumber")}
                           className="text-center w-[5%]"
@@ -298,7 +316,11 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-sky-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-sky-800/40 hover:cursor-pointer backdrop-blur-md"
+                          className={`text-zinc-700 select-none dark:text-white hover:bg-zinc-100/50 dark:hover:bg-amber-800/20 transition duration-500 ease-in-out active:bg-zinc-200/50 dark:active:bg-amber-800/40 hover:cursor-pointer backdrop-blur-md ${
+                            String(queryIndex) == String(index + 1)
+                              ? "bg-amber-500/20"
+                              : ""
+                          }`}
                           onClick={() => {
                             getSongInfo(
                               track,
@@ -308,6 +330,7 @@ const LibraryAlbum: NextPage = () => {
                               setPlayingTrack
                             );
                           }}
+                          id={String(index + 1)}
                         >
                           <td className="text-center">{index + 1}</td>
                           <td className="text-left flex flex-row gap-4 items-center">
@@ -320,13 +343,13 @@ const LibraryAlbum: NextPage = () => {
                               <span className="font-semibold">
                                 {track?.Name}
                               </span>
-                              <span className="text-slate-600 dark:text-white">
+                              <span className="text-zinc-600 dark:text-white">
                                 {track?.AlbumArtist}
                               </span>
                             </div>
                             {songLoading.id == track?.Id &&
                             songLoading.loading ? (
-                              <CgSpinner className="animate-spin h-5 w-5 text-sky-500" />
+                              <CgSpinner className="animate-spin h-5 w-5 text-amber-500" />
                             ) : null}
                           </td>
                           <td className="text-center">

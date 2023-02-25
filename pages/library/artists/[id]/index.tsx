@@ -159,7 +159,7 @@ const LibraryArtist: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-sky-500/30 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-sky-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-amber-500/30 ring-2 ring-zinc-400/30 hover:ring-zinc-400 transition-all duration-1000 ease-in-out hover:shadow-amber-500/60"
                       src={`${serverUrl}/Items/${artistInfo?.Id}/Images/Primary?maxHeight=400&tag=${artistInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -169,7 +169,7 @@ const LibraryArtist: NextPage = () => {
                 ) : null}
               </Tilt>
             </div>
-            <div className="flex select-none flex-col gap-3 pt-5 text-slate-700 dark:text-white">
+            <div className="flex select-none flex-col gap-3 pt-5 text-zinc-700 dark:text-white">
               <span className="text-5xl font-bold break-words">
                 {artistInfo ? artistInfo?.Name : null}
               </span>
@@ -177,11 +177,11 @@ const LibraryArtist: NextPage = () => {
                 <div className="flex flex-row items-center gap-2"
                   onClick={(() => router.push(`/artist/${artistInfo?.AlbumArtistId}`))}
                 >
-                  <span className="text-xl text-sky-500 dark:text-sky-400 transition-colors duration-500 ease-in-out cursor-pointer hover:underline hover:decoration-sky-500 active:text-sky-600">
+                  <span className="text-xl text-amber-500 dark:text-amber-400 transition-colors duration-500 ease-in-out cursor-pointer hover:underline hover:decoration-amber-500 active:text-amber-600">
                     {artistInfo?.AlbumArtist}
                   </span>
                   {artistInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-lg w-min ring-1 ring-slate-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-zinc-800 text-white py-0.5 px-2.5 rounded-md shadow-lg w-min ring-1 ring-zinc-700">
                       <span>{artistInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -189,10 +189,10 @@ const LibraryArtist: NextPage = () => {
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
                   {artistInfo ? (
                     <div className="flex flex-col">
-                      <span className="text-sky-500 dark:text-sky-400">
+                      <span className="text-amber-500 dark:text-amber-400">
                         {artistInfo?.ChildCount} Tracks
                       </span>
-                      <span className="text-slate-600 dark:text-white">
+                      <span className="text-zinc-600 dark:text-white">
                         {artistInfo?.RunTimeTicks
                           ? // convert runtimeticks to "x minutes, y seconds"
                             fancyTimeFormat(artistInfo?.RunTimeTicks / 10000000)
@@ -212,7 +212,7 @@ const LibraryArtist: NextPage = () => {
                         //   id: albumBrowseId,
                         // });
                       }}
-                      className="inline-flex items-center gap-2 rounded-md bg-sky-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-sky-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-sky-500/30 active:bg-sky-600"
+                      className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-amber-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-amber-500/30 active:bg-amber-600"
                     >
                       <PlayIcon className="h-4 w-4" />
                       Play
@@ -228,7 +228,7 @@ const LibraryArtist: NextPage = () => {
             <div>
               <div className="mt-8 select-none">
                 <div className="flex flex-row items-center justify-start gap-3">
-                  <span className="text-2xl font-semibold text-slate-700 dark:text-white">
+                  <span className="text-2xl font-semibold text-zinc-700 dark:text-white">
                     Tracks
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -242,7 +242,7 @@ const LibraryArtist: NextPage = () => {
                         // });
                       }}
                     >
-                      <PlayIcon className="h-5 w-5 text-sky-500" />
+                      <PlayIcon className="h-5 w-5 text-amber-500" />
                     </button>
                     <button
                       onClick={() => {
@@ -261,7 +261,7 @@ const LibraryArtist: NextPage = () => {
                   <table cellPadding={14}>
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
-                      <tr className="text-slate-700 dark:text-white">
+                      <tr className="text-zinc-700 dark:text-white">
                         <th className="text-center w-[5%]">Track</th>
                         <th className="text-left w-1/2">Title</th>
                         <th className="w-3/12">
@@ -277,7 +277,7 @@ const LibraryArtist: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className="text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-sky-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-sky-800/40 hover:cursor-pointer backdrop-blur-md"
+                          className="text-zinc-700 select-none dark:text-white hover:bg-zinc-100/50 dark:hover:bg-amber-800/20 transition duration-500 ease-in-out active:bg-zinc-200/50 dark:active:bg-amber-800/40 hover:cursor-pointer backdrop-blur-md"
                           onClick={() => {
                             getSongInfo(
                               track,
@@ -299,13 +299,13 @@ const LibraryArtist: NextPage = () => {
                               <span className="font-semibold">
                                 {track?.Name}
                               </span>
-                              <span className="text-slate-600 dark:text-white">
+                              <span className="text-zinc-600 dark:text-white">
                                 {track?.AlbumArtist}
                               </span>
                             </div>
                             {songLoading.id == track?.Id &&
                             songLoading.loading ? (
-                              <CgSpinner className="animate-spin h-5 w-5 text-sky-500" />
+                              <CgSpinner className="animate-spin h-5 w-5 text-amber-500" />
                             ) : null}
                           </td>
                           <td className="text-center">

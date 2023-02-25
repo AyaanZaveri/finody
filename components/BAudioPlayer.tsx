@@ -83,8 +83,8 @@ const BAudioPlayer = () => {
   return (
     <div className="z-20 select-none">
       {playingTrack?.url ? (
-        <div className="fixed bottom-0 border-t border-slate-100 dark:border-slate-800 flex h-24 w-full items-center justify-center bg-white/75 backdrop-blur-md dark:bg-slate-900/75 z-30">
-          <div className="flex w-full flex-row items-center justify-center gap-3 text-sm text-slate-700 dark:text-white">
+        <div className="fixed bottom-0 border-t border-zinc-100 dark:border-zinc-800 flex h-24 w-full items-center justify-center bg-white/75 backdrop-blur-md dark:bg-zinc-900/75 z-30">
+          <div className="flex w-full flex-row items-center justify-center gap-3 text-sm text-zinc-700 dark:text-white">
             <div className="absolute left-0 flex flex-row gap-3 pl-4">
               <div className="group relative flex items-center justify-center overflow-hidden transition-all">
                 <Tilt
