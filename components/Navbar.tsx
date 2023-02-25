@@ -63,7 +63,7 @@ const Navbar = () => {
   const handleSearch = (e: any, item: any) => {
     e.preventDefault();
     setShowSuggestions(false);
-    router.push(`/library/albums/${item?.AlbumId}?index=${item?.IndexNumber}`);
+    router.push(`/library/albums/${item?.AlbumId}?indexNumber=${item?.IndexNumber}`);
   };
 
   useEffect(() => {
