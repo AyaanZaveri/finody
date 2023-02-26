@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-$rhap_theme-color: #f59e0b !default; // Color of all buttons and volume/progress indicators
+$rhap_theme-color: #10b981 !default; // Color of all buttons and volume/progress indicators
 $rhap_font-family: "Rubik", sans-serif !default; // Font family of current time and duration
 @import "react-h5-audio-player/src/styles.scss";
 
@@ -39,7 +39,7 @@ body {
 }
 
 .rhap_main-controls-button {
-  color: #f59e0b;
+  color: #10b981;
 }
 
 .rhap_stacked .rhap_controls-section {
@@ -65,15 +65,59 @@ body {
 }
 @keyframes backAndForth {
   55% {
-    transform: tranzincX(calc(-100% + 200px));
+    transform: transtoneX(calc(-100% + 200px));
   }
   90% {
-    transform: tranzincX(0);
+    transform: transtoneX(0);
   }
   100% {
-    transform: tranzincX(0);
+    transform: transtoneX(0);
   }
 }
+
+:root {
+  --background: theme('colors.white');
+  --background-secondary: theme('colors.gray.50');
+
+  --primary-dark: theme('colors.gray.900');
+  --primary-medium: theme('colors.gray.700');
+  --primary-light: theme('colors.gray.500');
+}
+
+[data-theme='dark'] {
+  --background: theme('colors.black');
+  --background-secondary: theme('colors.gray.800');
+
+  --accent-dark: theme('colors.fuchsia.900');
+  --accent-medium: theme('colors.fuchsia.700');
+  --accent-light: theme('colors.fuchsia.500');
+
+  --primary-dark: theme('colors.gray.300');
+  --primary-medium: theme('colors.gray.200');
+  --primary-light: theme('colors.gray.100');
+}
+
+[data-theme='emerald'] {
+  --background: theme('colors.white');
+
+  --accent-dark: theme('colors.emerald.900');
+  --accent-medium: theme('colors.emerald.700');
+  --accent-light: theme('colors.emerald.500');
+}
+
+[data-theme='pink'] {
+  --background: theme('colors.gray.900');
+  --background-secondary: theme('colors.gray.800');
+
+  --accent-dark: theme('colors.pink.900');
+  --accent-medium: theme('colors.pink.700');
+  --accent-light: theme('colors.pink.500');
+
+  --primary-dark: theme('colors.gray.300');
+  --primary-medium: theme('colors.gray.200');
+  --primary-light: theme('colors.gray.100');
+}
+
 
 @layer utilities {
   /* Scroll thumb styles */
@@ -81,13 +125,13 @@ body {
     @apply w-[0.3rem];
   }
   .scrollbar::-webkit-scrollbar-thumb {
-    @apply rounded-lg bg-amber-800;
+    @apply rounded-lg bg-emerald-800;
   }
   .scrollbar::-webkit-scrollbar-thumb:active {
-    @apply bg-zinc-800;
+    @apply bg-stone-800;
   }
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-amber-900;
+    @apply bg-emerald-900;
   }
 
   /* Scroll track styles (Background) */
