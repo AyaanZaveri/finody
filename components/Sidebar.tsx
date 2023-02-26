@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
 
-  // const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   const [bgColour, setBgColour] = useRecoilState(bgColourState);
 
@@ -30,14 +30,13 @@ const Sidebar = () => {
       <img
         draggable="false"
         onClick={() => router.push("/")}
-        // src={`${
-        //   resolvedTheme == "dark"
-        //     ? "/FinodyLogoDark.svg"
-        //     : resolvedTheme == "light"
-        //     ? "/FinodyLogoLight.svg"
-        //     : "/FinodyLogoDark.svg"
-        // }`}
-        src="/FinodyLogoLight.svg"
+        src={`${
+          resolvedTheme == "dark"
+            ? "/FinodyLogoDark.svg"
+            : resolvedTheme == "light"
+            ? "/FinodyLogoLight.svg"
+            : "/FinodyLogoDark.svg"
+        }`}
         className="absolute left-3 top-0 block h-16 select-none py-4 mt-1 pl-2 hover:cursor-pointer"
         alt=""
       />

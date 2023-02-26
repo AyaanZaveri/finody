@@ -56,8 +56,6 @@ const LibraryAlbum: NextPage = () => {
   const [sortBy, setSortBy] = useState<string>("SortName");
   const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
-  const myRef = useRef<any>(null);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       setServerUrl(localStorage.getItem("serverUrl") || "");
@@ -137,19 +135,22 @@ const LibraryAlbum: NextPage = () => {
   }, [albumInfo]);
 
   useEffect(() => {
-    if (albumInfo && query?.indexNumber) {
-      setQueryIndex(query?.indexNumber as string);
+    if (albumInfo && query?.index) {
+      setQueryIndex(query?.index as string);
     }
-  }, [query?.indexNumber]);
+  }, [query?.index]);
 
   useEffect(() => {
-    if (queryIndex && albumInfo && tracksData) {
+    if (albumInfo && queryIndex && tracksData.length > 0) {
+      // scroll down to the track using the index id
+      const element = document.getElementById(String(queryIndex));
+      if (element) {
+        element.scrollIntoView();
+      }
     }
   }, [queryIndex]);
 
-  console.log(query.indexNumber);
-
-  const executeScroll = () => myRef.current.scrollIntoView();
+  console.log(query.index);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
@@ -191,12 +192,10 @@ const LibraryAlbum: NextPage = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-2">
                   <button
-                    onClick={
-                      // () =>
-                      // router.push(
-                      //   `/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`
-                      // )
-                      executeScroll
+                    onClick={() =>
+                      router.push(
+                        `/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`
+                      )
                     }
                     className="text-xl text-emerald-500 dark:text-emerald-400 hover:underline hover:decoration-emerald-600 hover:cursor-pointer dark:active:text-emerald-500 transition-colors ease-in-out duration-300"
                   >
@@ -331,16 +330,10 @@ const LibraryAlbum: NextPage = () => {
                               setPlayingTrack
                             );
                           }}
-                          ref={
-                            String(queryIndex) == String(index+2)
-                              ? myRef
-                              : null
-                          }
+                          id={String(index + 1)}
                         >
                           <td className="text-center">{index + 1}</td>
-                          <td
-                            className="text-left flex flex-row gap-4 items-center"
-                          >
+                          <td className="text-left flex flex-row gap-4 items-center">
                             <img
                               src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
                               alt=""

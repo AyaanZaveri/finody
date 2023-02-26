@@ -6,8 +6,6 @@ import Artist from "../../../components/Jellyfin/Artist";
 import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { Menu } from "@headlessui/react";
-import ThemeChanger from "../../../components/ThemeChanger";
-import { useTheme } from "next-themes";
 
 const LibraryArtistsIndex: NextPage = () => {
   const [artists, setArtists] = useState<any>(null);
@@ -40,10 +38,6 @@ const LibraryArtistsIndex: NextPage = () => {
     getJellyfinData();
   }, [user, sortBy, sortOrder]);
 
-  const { theme } = useTheme();
-
-  console.log("theme", theme)
-
   return (
     <div className="ml-3 pl-[17rem] pr-12">
       <div className="pt-[4.5rem] pb-8">
@@ -54,9 +48,8 @@ const LibraryArtistsIndex: NextPage = () => {
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
         <div className="pt-6">
-          <ThemeChanger />
           <div className="flex justify-between flex-row">
-            <h1 className="text-3xl font-semibold text-stone-900">
+            <h1 className="text-3xl font-semibold text-stone-700 dark:text-white">
               Artists
             </h1>
             <div className="gap-2 flex flex-row">

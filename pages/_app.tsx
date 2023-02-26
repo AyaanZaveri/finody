@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className="font-rubik">
       <RecoilRoot>
-        <ThemeProvider themes={["default", "dark", "emerald", "amber"]}>
+        <ThemeProvider attribute="class">
           <Layout>
             <Component {...pageProps} />
           </Layout>

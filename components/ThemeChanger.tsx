@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+// ./components/ThemeChanger.js
+import { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 
-const themes = [
-  { name: "Default" },
-  { name: "Night" },
-  { name: "Emerald" },
-  { name: "Amber" },
-];
+const themes = [{ name: 'Light' }, { name: 'Dark' }, { name: 'Emerald' }, { name: 'Pink' }];
 
 const ThemeChanger = () => {
   const [mounted, setMounted] = useState(false);
