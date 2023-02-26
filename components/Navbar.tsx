@@ -63,7 +63,9 @@ const Navbar = () => {
   const handleSearch = (e: any, item: any) => {
     e.preventDefault();
     setShowSuggestions(false);
-    router.push(`/library/albums/${item?.AlbumId}?indexNumber=${item?.IndexNumber}`);
+    router.push(
+      `/library/albums/${item?.AlbumId}?indexNumber=${item?.IndexNumber}`
+    );
   };
 
   useEffect(() => {
@@ -81,8 +83,6 @@ const Navbar = () => {
   if (!mounted) {
     return null;
   }
-
-  const { theme, setTheme, resolvedTheme } = useTheme();
 
   console.log(searchRes);
 
@@ -145,13 +145,16 @@ const Navbar = () => {
           {user?.Name ? (
             <button
               onClick={() => signOut()}
-              className={`absolute right-10 m-3 mr-4 inline-flex h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 ${
-                resolvedTheme == "light"
-                  ? "bg-stone-100 active:bg-stone-300"
-                  : resolvedTheme == "dark"
-                  ? "bg-stone-800 active:bg-stone-700"
-                  : "bg-stone-800 active:bg-stone-700"
-              } gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-stone-600`}
+              className={`absolute right-10 m-3 mr-4 inline-flex h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 
+              bg-stone-100 active:bg-stone-300
+               gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-stone-600`}
+              // ${
+              //   resolvedTheme == "light"
+              //     ? "bg-stone-100 active:bg-stone-300"
+              //     : resolvedTheme == "dark"
+              //     ? "bg-stone-800 active:bg-stone-700"
+              //     : "bg-stone-800 active:bg-stone-700"
+              // }
             >
               <span className="text-[0.75rem]">{user?.Name}</span>
               <div className="h-4 w-4 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center">
@@ -162,18 +165,21 @@ const Navbar = () => {
             </button>
           ) : (
             <button
-              className={`absolute right-10 m-3 mr-4 h-8 w-8 border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 ${
-                resolvedTheme == "light"
-                  ? "bg-stone-100 active:bg-stone-300"
-                  : resolvedTheme == "dark"
-                  ? "bg-stone-800 active:bg-stone-700"
-                  : "bg-stone-800 active:bg-stone-700"
-              } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+              className={`absolute right-10 m-3 mr-4 h-8 w-8 border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 
+              bg-stone-100 active:bg-stone-300
+              rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+              // ${
+              //   resolvedTheme == "light"
+              //     ? "bg-stone-100 active:bg-stone-300"
+              //     : resolvedTheme == "dark"
+              //     ? "bg-stone-800 active:bg-stone-700"
+              //     : "bg-stone-800 active:bg-stone-700"
+              // }
             >
               <img src="/jellyfin.svg" alt="" />
             </button>
           )}
-          <button
+          {/* <button
             onClick={() =>
               theme == "light"
                 ? setTheme("dark")
@@ -208,7 +214,7 @@ const Navbar = () => {
             ) : (
               ""
             )}
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

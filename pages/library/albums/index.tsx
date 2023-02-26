@@ -12,7 +12,6 @@ import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { Menu } from "@headlessui/react";
 import { useTheme } from "next-themes";
-import ThemeChanger from "../../../components/ThemeChanger";
 
 const LibraryAlbumsIndex: NextPage = () => {
   const [albums, setAlbums] = useState<any>(null);
@@ -65,10 +64,9 @@ const LibraryAlbumsIndex: NextPage = () => {
         ></div>
         <div className="pt-6">
           <div className="flex justify-between flex-row">
-            <h1 className="text-3xl font-semibold text-stone-700 dark:text-white">
+            <h1 className="text-3xl font-semibold">
               Albums
             </h1>
-            <ThemeChanger />
             <div className="gap-2 flex flex-row">
               {/* create a custom dropdown menu to change the sortBy using menu from headlessui */}
               <Menu as="div" className="relative inline-block text-left">

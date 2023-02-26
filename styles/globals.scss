@@ -76,48 +76,67 @@ body {
 }
 
 :root {
-  --background: theme('colors.white');
-  --background-secondary: theme('colors.gray.50');
+  --background: theme(colors.white);
+  --background-secondary: theme(colors.gray.50);
 
-  --primary-dark: theme('colors.gray.900');
-  --primary-medium: theme('colors.gray.700');
-  --primary-light: theme('colors.gray.500');
+  --primary-a: theme(colors.gray.900);
+  --primary-b: theme(colors.gray.700);
+  --primary-c: theme(colors.gray.500);
 }
 
-[data-theme='dark'] {
-  --background: theme('colors.black');
-  --background-secondary: theme('colors.gray.800');
+[data-theme="night"] {
+  --background: theme(colors.black)
+  --background-secondary: theme(colors.gray.800);
 
-  --accent-dark: theme('colors.fuchsia.900');
-  --accent-medium: theme('colors.fuchsia.700');
-  --accent-light: theme('colors.fuchsia.500');
+  --accent-a: theme(colors.blue.900);
+  --accent-b: theme(colors.blue.700);
+  --accent-c: theme(colors.blue.500);
 
-  --primary-dark: theme('colors.gray.300');
-  --primary-medium: theme('colors.gray.200');
-  --primary-light: theme('colors.gray.100');
+  --primary-a: theme(colors.gray.300);
+  --primary-b: theme(colors.gray.200);
+  --primary-c: theme(colors.gray.100);
 }
 
-[data-theme='emerald'] {
-  --background: theme('colors.white');
-
-  --accent-dark: theme('colors.emerald.900');
-  --accent-medium: theme('colors.emerald.700');
-  --accent-light: theme('colors.emerald.500');
+[data-theme="emerald"] {
+  --background: theme(colors.white);
+  --primary-50: theme(colors.emerald.50);
+  --primary-100: theme(colors.emerald.100);
+  --primary-200: theme(colors.emerald.200);
+  --primary-300: theme(colors.emerald.300);
+  --primary-400: theme(colors.emerald.400);
+  --primary-500: theme(colors.emerald.500);
+  --primary-600: theme(colors.emerald.600);
+  --primary-700: theme(colors.emerald.700);
+  --primary-800: theme(colors.emerald.800);
+  --primary-900: theme(colors.emerald.900);
+  --secondary-50: theme(colors.stone.50);
+  --secondary-100: theme(colors.stone.100);
+  --secondary-200: theme(colors.stone.200);
+  --secondary-300: theme(colors.stone.300);
+  --secondary-400: theme(colors.stone.400);
+  --secondary-500: theme(colors.stone.500);
+  --secondary-600: theme(colors.stone.600);
+  --secondary-700: theme(colors.stone.700);
+  --secondary-800: theme(colors.stone.800);
+  --secondary-900: theme(colors.stone.900);
 }
 
-[data-theme='pink'] {
-  --background: theme('colors.gray.900');
-  --background-secondary: theme('colors.gray.800');
+[data-theme="amber"] {
+  --background: theme(colors.stone.900);
+  --background-secondary: theme(colors.stone.800);
 
-  --accent-dark: theme('colors.pink.900');
-  --accent-medium: theme('colors.pink.700');
-  --accent-light: theme('colors.pink.500');
+  --accent-a: theme(colors.amber.300);
+  --accent-b: theme(colors.amber.700);
+  --accent-c: theme(colors.amber.500);
 
-  --primary-dark: theme('colors.gray.300');
-  --primary-medium: theme('colors.gray.200');
-  --primary-light: theme('colors.gray.100');
+  --primary-a: theme(colors.stone.300);
+  --primary-b: theme(colors.stone.200);
+  --primary-c: theme(colors.stone.100);
+
+  --secondary-a: theme(colors.stone.300);
+  --secondary-b: theme(colors.stone.200);
+  --secondary-c: theme(colors.stone.100);
 }
-
 
 @layer utilities {
   /* Scroll thumb styles */
