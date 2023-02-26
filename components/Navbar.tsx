@@ -87,19 +87,19 @@ const Navbar = () => {
   console.log(searchRes);
 
   return (
-    <div className="fixed z-10 w-full select-none border-b border-stone-100 dark:border-stone-800">
+    <div className="fixed z-10 w-full select-none border-b border-zinc-100 dark:border-zinc-800">
       <div className="flex flex-col ml-60 relative">
         <div
           className={`relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-10 backdrop-blur-md 
-        dark:bg-stone-900/50`}
+        dark:bg-zinc-900/50`}
         >
           <div className="relative w-6/12 rounded-md">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <HiOutlineSearch className="text-gray-500 dark:text-stone-100 sm:text-sm" />
+              <HiOutlineSearch className="text-gray-500 dark:text-zinc-100 sm:text-sm" />
             </div>
             <form>
               <input
-                className="w-full rounded-md border border-stone-200 bg-stone-100 pl-8 pr-12 shadow-2xl shadow-emerald-500/30 transition duration-300 ease-in-out hover:border-stone-300 hover:shadow-emerald-500/50 focus:border-emerald-500 focus:ring focus:ring-emerald-200 active:bg-stone-200 dark:border-stone-700 dark:bg-stone-800 dark:text-white dark:placeholder:text-stone-100 dark:hover:border-stone-600 dark:focus:border-emerald-700 dark:focus:ring-emerald-400/90 dark:active:bg-stone-900 sm:text-sm"
+                className="w-full rounded-md border border-zinc-200 bg-zinc-100 pl-8 pr-12 shadow-2xl shadow-amber-500/30 transition duration-300 ease-in-out hover:border-zinc-300 hover:shadow-amber-500/50 focus:border-amber-500 focus:ring focus:ring-amber-200 active:bg-zinc-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-100 dark:hover:border-zinc-600 dark:focus:border-amber-700 dark:focus:ring-amber-400/90 dark:active:bg-zinc-900 sm:text-sm"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => setSearch(e.target.value)}
@@ -113,13 +113,13 @@ const Navbar = () => {
                 {searchRes?.length > 0 &&
                 search?.length > 0 &&
                 showSuggestions ? (
-                  <div className="flex w-full select-none flex-col gap-1 border bg-stone-100 py-3 dark:bg-stone-800 dark:border-stone-700 overflow-hidden rounded-lg text-stone-700 shadow-2xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-500/20 dark:text-white">
+                  <div className="flex w-full select-none flex-col gap-1 border bg-zinc-100 py-3 dark:bg-zinc-800 dark:border-zinc-700 overflow-hidden rounded-lg text-zinc-700 shadow-2xl shadow-amber-500/10 transition duration-300 ease-in-out hover:shadow-amber-500/20 dark:text-white">
                     {searchRes?.slice(0, 5)?.map((item: any, index: any) => (
                       <div
                         onClick={(e: any) => handleSearch(e, item)}
                         key={index}
                       >
-                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-emerald-400/20 hover:text-white active:bg-emerald-400/10 active:text-white">
+                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-amber-400/20 hover:text-white active:bg-amber-400/10 active:text-white">
                           <img
                             src={
                               item?.ImageTags?.Primary
@@ -130,7 +130,7 @@ const Navbar = () => {
                           />
                           <div className="flex flex-col">
                             <span className="font-semibold">{item?.Name}</span>
-                            <span className="text-stone-300 text-xs">
+                            <span className="text-zinc-300 text-xs">
                               {item?.AlbumArtist}
                             </span>
                           </div>
@@ -145,16 +145,16 @@ const Navbar = () => {
           {user?.Name ? (
             <button
               onClick={() => signOut()}
-              className={`absolute right-10 m-3 mr-4 inline-flex h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 ${
+              className={`absolute right-10 m-3 mr-4 inline-flex h-8 items-center justify-center border border-zinc-200 hover:border-zinc-300 active:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600 ${
                 resolvedTheme == "light"
-                  ? "bg-stone-100 active:bg-stone-300"
+                  ? "bg-zinc-100 active:bg-zinc-300"
                   : resolvedTheme == "dark"
-                  ? "bg-stone-800 active:bg-stone-700"
-                  : "bg-stone-800 active:bg-stone-700"
-              } gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-stone-600`}
+                  ? "bg-zinc-800 active:bg-zinc-700"
+                  : "bg-zinc-800 active:bg-zinc-700"
+              } gap-2 overflow-hidden rounded-full px-3 text-zinc-800 shadow-xl shadow-amber-500/5 transition duration-300 ease-in-out hover:shadow-amber-500/10 dark:text-white dark:active:border-zinc-600`}
             >
               <span className="text-[0.75rem]">{user?.Name}</span>
-              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center">
+              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center">
                 <span className="text-[0.6rem] font-normal text-white">
                   {user?.Name?.charAt(0).toUpperCase()}
                 </span>
@@ -162,13 +162,13 @@ const Navbar = () => {
             </button>
           ) : (
             <button
-              className={`absolute right-10 m-3 mr-4 h-8 w-8 border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 ${
+              className={`absolute right-10 m-3 mr-4 h-8 w-8 border border-zinc-200 hover:border-zinc-300 active:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600 dark:active:border-zinc-600 ${
                 resolvedTheme == "light"
-                  ? "bg-stone-100 active:bg-stone-300"
+                  ? "bg-zinc-100 active:bg-zinc-300"
                   : resolvedTheme == "dark"
-                  ? "bg-stone-800 active:bg-stone-700"
-                  : "bg-stone-800 active:bg-stone-700"
-              } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+                  ? "bg-zinc-800 active:bg-zinc-700"
+                  : "bg-zinc-800 active:bg-zinc-700"
+              } rounded-full p-1.5 shadow-xl shadow-amber-500/10 transition duration-300 ease-in-out hover:shadow-amber-300/20`}
             >
               <img src="/jellyfin.svg" alt="" />
             </button>
@@ -183,26 +183,26 @@ const Navbar = () => {
                 ? setTheme("light")
                 : ""
             }
-            className={`absolute right-0 m-3 mr-4 h-8 border border-stone-200 hover:border-stone-300 active:border-stone-300 dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 ${
+            className={`absolute right-0 m-3 mr-4 h-8 border border-zinc-200 hover:border-zinc-300 active:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600 dark:active:border-zinc-600 ${
               resolvedTheme == "light"
-                ? "bg-stone-100 active:bg-stone-300"
+                ? "bg-zinc-100 active:bg-zinc-300"
                 : resolvedTheme == "dark"
-                ? "bg-stone-800 active:bg-stone-600"
-                : "bg-stone-800 active:bg-stone-600"
-            } rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
+                ? "bg-zinc-800 active:bg-zinc-600"
+                : "bg-zinc-800 active:bg-zinc-600"
+            } rounded-full shadow-xl shadow-amber-500/10 transition duration-300 ease-in-out hover:shadow-amber-300/20`}
           >
             {theme == "light" ? (
-              <SunIcon className="h-full w-full p-1.5 text-stone-700" />
+              <SunIcon className="h-full w-full p-1.5 text-zinc-700" />
             ) : theme == "dark" ? (
               <MoonIcon className="h-full w-full p-2 text-white" />
             ) : theme == "system" ? (
               <ComputerDesktopIcon
                 className={`h-full w-full p-[7px] ${
                   resolvedTheme == "light"
-                    ? "text-stone-700"
+                    ? "text-zinc-700"
                     : resolvedTheme == "dark"
                     ? "text-white"
-                    : "text-stone-700"
+                    : "text-zinc-700"
                 }`}
               />
             ) : (

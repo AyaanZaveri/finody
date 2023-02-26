@@ -48,7 +48,7 @@ const Home: NextPage = () => {
     <div className="ml-3 pl-[17rem] pr-12">
       <div className="pt-[4.5rem] pb-8">
         <div className="pt-6">
-          <h1 className="text-3xl font-semibold text-stone-700 dark:text-white">
+          <h1 className="text-3xl font-semibold text-zinc-700 dark:text-white">
             Artists & Albums
           </h1>
           <div className="flex flex-row flex-wrap gap-x-8 gap-y-2 pt-4">

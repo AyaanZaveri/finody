@@ -130,7 +130,7 @@ const Search = () => {
             <div className="flex flex-row items-start pr-6">
               {topResults.length > 0 ? (
                 <div className="flex w-3/4 flex-col justify-center gap-3">
-                  <span className="w-full items-start justify-start text-2xl font-semibold text-stone-700 dark:text-white">
+                  <span className="w-full items-start justify-start text-2xl font-semibold text-zinc-700 dark:text-white">
                     Top Result
                   </span>
                   {topResults?.map((result: any, index: number) => (
@@ -140,7 +140,7 @@ const Search = () => {
               ) : null}
               {songs.length > 0 ? (
                 <div className="flex w-full flex-col justify-center gap-3">
-                  <span className="w-min items-start justify-start text-2xl font-semibold text-stone-700 dark:text-white">
+                  <span className="w-min items-start justify-start text-2xl font-semibold text-zinc-700 dark:text-white">
                     Tracks
                   </span>
                   <div className="flex flex-col gap-2">
@@ -153,7 +153,7 @@ const Search = () => {
             </div>
             {albums.length > 0 ? (
               <div className="flex flex-col justify-center gap-3">
-                <span className="w-min items-start justify-start text-2xl font-semibold text-stone-700 dark:text-white">
+                <span className="w-min items-start justify-start text-2xl font-semibold text-zinc-700 dark:text-white">
                   Albums
                 </span>
                 <div className="flex flex-row flex-wrap gap-6">
@@ -165,7 +165,7 @@ const Search = () => {
             ) : null}
             {videos.length > 0 ? (
               <div className="flex w-3/4 flex-col justify-center gap-3">
-                <span className="w-min items-start justify-start text-2xl font-semibold text-stone-700 dark:text-white">
+                <span className="w-min items-start justify-start text-2xl font-semibold text-zinc-700 dark:text-white">
                   Videos
                 </span>
                 <div className="flex flex-col gap-2">
@@ -177,7 +177,7 @@ const Search = () => {
             ) : null}
             {artists.length > 0 ? (
               <div className="flex w-3/4 flex-col justify-center gap-3">
-                <span className="w-min items-start justify-start text-2xl font-semibold text-stone-700 dark:text-white">
+                <span className="w-min items-start justify-start text-2xl font-semibold text-zinc-700 dark:text-white">
                   Artists
                 </span>
                 <div className="flex flex-col gap-2">
