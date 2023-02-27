@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { HomeModernIcon, MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import {
+  IoAlbums,
   IoDisc,
   IoHome,
   IoMusicalNotes,
@@ -13,6 +14,9 @@ import { useRecoilState } from "recoil";
 import { currentTrackState } from "../atoms/playState";
 import { useTheme } from "next-themes";
 import { bgColourState } from "../atoms/colourState";
+import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
+import { useJellyfin } from "../hooks/handleJellyfin";
+import { sidebarWidthState } from "../atoms/sidebarAtom";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -23,10 +27,73 @@ const Sidebar = () => {
 
   const [bgColour, setBgColour] = useRecoilState(bgColourState);
 
+  const [playlists, setPlaylists] = useState<any>([]);
+
+  const { api, user, serverUrl } = useJellyfin();
+
+  const getPlaylistsData = async () => {
+    if (api) {
+      const items: any = await getItemsApi(api).getItemsByUserId({
+        userId: user?.Id as any,
+        recursive: true,
+        excludeLocationTypes: "Virtual" as any,
+        includeItemTypes: "Playlist" as any,
+        sortBy: "SortName" as any,
+        sortOrder: "Ascending" as any,
+        startIndex: 0,
+      });
+
+      setPlaylists(items.data.Items);
+    } else {
+      console.log("no api, haha you suck lol");
+    }
+  };
+
+  useEffect(() => {
+    getPlaylistsData();
+  }, [api]);
+
+  console.log(playlists);
+
+  const sidebarRef = useRef<any>(null);
+  const [isResizing, setIsResizing] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useRecoilState(sidebarWidthState);
+
+  const startResizing = useCallback((mouseDownEvent: any) => {
+    setIsResizing(true);
+  }, []);
+
+  const stopResizing = useCallback(() => {
+    setIsResizing(false);
+  }, []);
+
+  const resize = useCallback(
+    (mouseMoveEvent: any) => {
+      if (isResizing) {
+        setSidebarWidth(
+          mouseMoveEvent.clientX -
+            sidebarRef.current.getBoundingClientRect().left
+        );
+      }
+    },
+    [isResizing]
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("mousemove", resize);
+      window.addEventListener("mouseup", stopResizing);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("mousemove", resize);
+        window.removeEventListener("mouseup", stopResizing);
+      }
+    };
+  }, [resize, stopResizing]);
+
   return (
-    <div
-      className={`flex items-center h-full z-20 backdrop:w-56 fixed select-none`}
-    >
+    <div className={`flex items-center h-full z-20 fixed select-none`}>
       <img
         draggable="false"
         onClick={() => router.push("/")}
@@ -40,7 +107,12 @@ const Sidebar = () => {
         className="absolute left-3 top-0 block h-16 select-none py-4 mt-1 pl-2 hover:cursor-pointer"
         alt=""
       />
-      <div className="border-r border-zinc-100 dark:border-zinc-800 w-60 to-amber-500/20 h-full flex flex-col justify-start items-start">
+      <div
+        className="border-r border-zinc-100 dark:border-zinc-800 to-amber-500/20 h-full flex flex-col justify-start items-start"
+        ref={sidebarRef}
+        style={{ width: sidebarWidth }}
+        onMouseDown={(e) => e.preventDefault()}
+      >
         <div className="px-2 w-full flex flex-col gap-1 pt-24">
           <div
             onClick={() => router.push("/")}
@@ -74,12 +146,42 @@ const Sidebar = () => {
             className="relative inline-flex w-full text-zinc-700 dark:text-white hover:shadow-xl hover:text-white hover:shadow-amber-500/30 items-center hover:bg-amber-500 active:bg-amber-600 py-1 break-all rounded-md px-4 transition duration-300 ease-in-out hover:cursor-pointer"
           >
             <span className="inline-flex gap-2 items-center transition-none">
-              <IoDisc className="w-4 h-4" />
+              <IoAlbums className="w-4 h-4" />
               Albums
             </span>
           </div>
+          <div
+            onClick={() => router.push("/library/playlists")}
+            className="relative mt-8 inline-flex w-full text-zinc-700 dark:text-white hover:shadow-xl hover:text-white hover:shadow-amber-500/30 items-center hover:bg-amber-500 active:bg-amber-600 py-1 break-all rounded-md px-4 transition duration-300 ease-in-out hover:cursor-pointer"
+          >
+            <span className="inline-flex gap-2 items-center transition-none">
+              <IoDisc className="w-4 h-4" />
+              Playlists
+            </span>
+          </div>
+          {playlists.map((playlist: any) => (
+            <div
+              onClick={() => router.push(`/library/playlists/${playlist.Id}`)}
+              key={playlist.Id}
+              className="relative mt-1 hover:underline hover:decoration-2 hover:decoration-amber-500 inline-flex w-full text-zinc-700 dark:text-white hover:text-white items-center py-1 break-all rounded-md px-4 transition duration-300 ease-in-out hover:cursor-pointer"
+            >
+              <img
+                src={`${serverUrl}/Items/${playlist.Id}/Images/Primary?maxHeight=100&maxWidth=100&tag=${playlist.ImageTags.Primary}&quality=90`}
+                alt=""
+                className="w-6 h-6 rounded mr-3"
+              />
+              <span className="inline-flex gap-2 items-center transition-none">
+                {playlist.Name}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
+      <div
+        className="absolute top-0 hover:bg-amber-500 active:bg-amber-600 h-full w-1 cursor-col-resize"
+        onMouseDown={startResizing}
+        style={{ left: sidebarWidth }}
+      ></div>
     </div>
   );
 };

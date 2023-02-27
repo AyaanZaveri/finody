@@ -25,9 +25,8 @@ import { useFastAverageColor } from "../../../hooks/useFastAverageColor";
 import { getSongInfo } from "../../../utils/getSongInfo";
 import { FastAverageColor } from "fast-average-color";
 import { bgColourState } from "../../../atoms/colourState";
-import { sidebarWidthState } from "../../../atoms/sidebarAtom";
 
-const LibraryAlbum: NextPage = () => {
+const LibraryPlaylist: NextPage = () => {
   const { query } = useRouter();
   const [tracksData, setTracksData] = useState<any>();
   const [albumInfo, setAlbumInfo] = useState<any>();
@@ -37,8 +36,6 @@ const LibraryAlbum: NextPage = () => {
     id: "",
     loading: false,
   });
-
-  const [sidebarWidth, setSidebarWidth] = useRecoilState(sidebarWidthState);
 
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
@@ -160,9 +157,8 @@ const LibraryAlbum: NextPage = () => {
         <div
           style={{
             background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
-            left: sidebarWidth,
           }}
-          className="absolute top-[4.5rem] w-full h-full -z-10 opacity-25 dark:opacity-75"
+          className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
         <div className="pt-16 w-full">
           <div className="flex w-full flex-row items-start gap-12">
@@ -195,6 +191,13 @@ const LibraryAlbum: NextPage = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-2">
                   <button
+                    onClick={
+                      // () =>
+                      // router.push(
+                      //   `/library/artists/${albumInfo?.AlbumArtists[0]?.Id}`
+                      // )
+                      executeScroll
+                    }
                     className="text-xl text-amber-500 dark:text-amber-400 hover:underline hover:decoration-amber-600 hover:cursor-pointer dark:active:text-amber-500 transition-colors ease-in-out duration-300"
                   >
                     {albumInfo?.AlbumArtist}
@@ -388,4 +391,4 @@ const LibraryAlbum: NextPage = () => {
   );
 };
 
-export default LibraryAlbum;
+export default LibraryPlaylist;

@@ -15,6 +15,7 @@ import { useJellyfin } from "../hooks/handleJellyfin";
 import { bgColourState } from "../atoms/colourState";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { getArtistsApi } from "@jellyfin/sdk/lib/utils/api/artists-api";
+import { sidebarWidthState } from "../atoms/sidebarAtom";
 
 const Navbar = () => {
   const signOut = () => {
@@ -25,6 +26,8 @@ const Navbar = () => {
   };
 
   const { api, user, serverUrl } = useJellyfin();
+
+  const [sidebarWidth, setSidebarWidth] = useRecoilState(sidebarWidthState);
 
   const [search, setSearch] = useState<string>("");
   const [searchRes, setSearchRes] = useState<any>();
@@ -88,7 +91,11 @@ const Navbar = () => {
 
   return (
     <div className="fixed z-10 w-full select-none border-b border-zinc-100 dark:border-zinc-800">
-      <div className="flex flex-col ml-60 relative">
+      <div className="flex flex-col relative"
+        style={{
+          marginLeft: sidebarWidth,
+        }}
+      >
         <div
           className={`relative flex h-[4.5rem] w-full flex-row items-center bg-white/75 pl-10 backdrop-blur-md 
         dark:bg-zinc-900/50`}

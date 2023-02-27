@@ -11,10 +11,8 @@ import { jellyfinAuth } from "../../../utils/jellyfinAuth";
 import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { HiSortAscending, HiSortDescending } from "react-icons/hi";
 import { Menu } from "@headlessui/react";
-import { useRecoilState } from "recoil";
-import { sidebarWidthState } from "../../../atoms/sidebarAtom";
 
-const LibraryAlbumsIndex: NextPage = () => {
+const LibraryPlaylistsIndex: NextPage = () => {
   const [albums, setAlbums] = useState<any>(null);
   const [sortBy, setSortBy] = useState<
     | "Album"
@@ -30,8 +28,6 @@ const LibraryAlbumsIndex: NextPage = () => {
   const [sortOrder, setSortOrder] = useState<"Ascending" | "Descending">(
     "Ascending"
   );
-
-  const [sidebarWidth, setSidebarWidth] = useRecoilState(sidebarWidthState);
 
   const { api, user } = useJellyfin();
 
@@ -62,24 +58,15 @@ const LibraryAlbumsIndex: NextPage = () => {
         <div
           style={{
             background: `linear-gradient(180deg, rgb(245, 158, 11) 0%, rgba(0, 0, 0, 0) 75%)`,
-            left: sidebarWidth,
           }}
-          className="absolute top-[4.5rem] w-full h-full -z-10 opacity-25 dark:opacity-75"
+          className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
-        <div className="pt-6" style={{
-          left: sidebarWidth,
-        }}>
-          <div className="flex justify-between flex-row" style={{
-          left: sidebarWidth,
-        }}>
-            <h1 className="text-3xl font-semibold text-zinc-700 dark:text-white" style={{
-          left: sidebarWidth,
-        }}>
+        <div className="pt-6">
+          <div className="flex justify-between flex-row">
+            <h1 className="text-3xl font-semibold text-zinc-700 dark:text-white">
               Albums
             </h1>
-            <div className="gap-2 flex flex-row" style={{
-          left: sidebarWidth,
-        }}>
+            <div className="gap-2 flex flex-row">
               {/* create a custom dropdown menu to change the sortBy using menu from headlessui */}
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -294,4 +281,4 @@ const LibraryAlbumsIndex: NextPage = () => {
   );
 };
 
-export default LibraryAlbumsIndex;
+export default LibraryPlaylistsIndex;
