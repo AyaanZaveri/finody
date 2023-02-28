@@ -74,6 +74,12 @@ const Sidebar = () => {
           mouseMoveEvent.clientX -
             sidebarRef.current.getBoundingClientRect().left
         );
+      } 
+      if (sidebarWidth < 240) {
+        setSidebarWidth(240);
+      } 
+      if (sidebarWidth > 400) {
+        setSidebarWidth(400);
       }
     },
     [isResizing]
@@ -91,6 +97,8 @@ const Sidebar = () => {
       }
     };
   }, [resize, stopResizing]);
+
+  console.log(sidebarWidth);
 
   return (
     <div className={`flex items-center h-full z-20 fixed select-none`}>
@@ -178,7 +186,9 @@ const Sidebar = () => {
         </div>
       </div>
       <div
-        className="absolute top-0 hover:bg-amber-500 active:bg-amber-600 h-full w-1 cursor-col-resize"
+        className={`absolute top-0 h-full w-1 cursor-col-resize ${
+          sidebarWidth < 240 || sidebarWidth > 400 ? "hover:bg-red-500 active:bg-red-600": "hover:bg-amber-500 active:bg-amber-600"
+        }`}
         onMouseDown={startResizing}
         style={{ left: sidebarWidth }}
       ></div>

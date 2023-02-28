@@ -155,7 +155,9 @@ const LibraryAlbum: NextPage = () => {
   const executeScroll = () => myRef.current.scrollIntoView();
 
   return (
-    <div className={`ml-3 pl-[17rem] pr-12`}>
+    <div className={`ml-12 pr-12`} style={{
+      paddingLeft: sidebarWidth
+    }}>
       <div className="pt-[4.5rem] pb-24">
         <div
           style={{
