@@ -33,12 +33,12 @@ const Login = () => {
     <div className="ml-3 pl-[17rem] pr-12">
       <div className="pt-[4.5rem] pb-8">
         <div className="pt-6">
-          <h1 className="text-3xl font-semibold text-zinc-700 dark:text-white pb-6">
+          <h1 className="text-3xl font-semibold text-stone-700 dark:text-white pb-6">
             Jellyfin Login
           </h1>
           <form className="flex flex-col gap-y-3 text-base">
             <label
-              className="text-zinc-700 dark:text-white"
+              className="text-stone-700 dark:text-white"
               htmlFor="serverUrl"
             >
               Server URL
@@ -48,11 +48,11 @@ const Login = () => {
               name="serverUrl"
               id="serverUrl"
               value={serverUrl}
-              className="w-2/3 text-zinc-500 text-base rounded-md border-none outline-none shadow-sm ring-1 ring-gray-300 focus:bg-gray-100 focus:ring-gray-500 dark:text-white dark:ring-gray-700 dark:bg-gray-800 dark:focus:ring-gray-500 dark:focus:bg-gray-700 transiton duration-200"
+              className="w-2/3 text-stone-500 text-base rounded-md border-none outline-none shadow-sm ring-1 ring-gray-300 focus:bg-gray-100 focus:ring-gray-500 dark:text-white dark:ring-gray-700 dark:bg-gray-800 dark:focus:ring-gray-500 dark:focus:bg-gray-700 transiton duration-200"
               onChange={(e) => setServerUrl(e.target.value)}
             />
             <label
-              className="text-zinc-700 dark:text-white"
+              className="text-stone-700 dark:text-white"
               htmlFor="userName"
             >
               Username
@@ -62,11 +62,11 @@ const Login = () => {
               name="userName"
               id="userName"
               value={userName}
-              className="w-2/3 text-zinc-500 text-base rounded-md border-none outline-none shadow-sm ring-1 ring-gray-300 focus:bg-gray-100 focus:ring-gray-500 dark:text-white dark:ring-gray-700 dark:bg-gray-800 dark:focus:ring-gray-500 dark:focus:bg-gray-700 transiton duration-200"
+              className="w-2/3 text-stone-500 text-base rounded-md border-none outline-none shadow-sm ring-1 ring-gray-300 focus:bg-gray-100 focus:ring-gray-500 dark:text-white dark:ring-gray-700 dark:bg-gray-800 dark:focus:ring-gray-500 dark:focus:bg-gray-700 transiton duration-200"
               onChange={(e) => setUserName(e.target.value)}
             />
             <label
-              className="text-zinc-700 dark:text-white"
+              className="text-stone-700 dark:text-white"
               htmlFor="password"
             >
               Password
@@ -76,7 +76,7 @@ const Login = () => {
               name="password"
               id="password"
               value={password}
-              className="w-2/3 text-zinc-500 text-base rounded-md border-none outline-none shadow-sm ring-1 ring-gray-300 focus:bg-gray-100 focus:ring-gray-500 dark:text-white dark:ring-gray-700 dark:bg-gray-800 dark:focus:ring-gray-500 dark:focus:bg-gray-700 transiton duration-200"
+              className="w-2/3 text-stone-500 text-base rounded-md border-none outline-none shadow-sm ring-1 ring-gray-300 focus:bg-gray-100 focus:ring-gray-500 dark:text-white dark:ring-gray-700 dark:bg-gray-800 dark:focus:ring-gray-500 dark:focus:bg-gray-700 transiton duration-200"
               onChange={(e) => setPassword(e.target.value)}
             />
 

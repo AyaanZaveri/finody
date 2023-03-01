@@ -17,7 +17,7 @@ import { CgSpinner } from "react-icons/cg";
 import {
   currentTrackState,
   playState,
-  queueState,
+  musicQueueState,
 } from "../../../atoms/playState";
 import { getConfigurationApi } from "@jellyfin/sdk/lib/utils/api/configuration-api";
 import { PlayCommand } from "@jellyfin/sdk/lib/generated-client/models";
@@ -42,16 +42,11 @@ const LibraryAlbum: NextPage = () => {
 
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
-  const [queue, setQueue] = useRecoilState(queueState);
 
   const [bgColor, setBgColor] = useRecoilState(bgColourState);
   const [bgUrl, setBgUrl] = useState<string>("");
 
   const [queryIndex, setQueryIndex] = useState<string>("");
-
-  useEffect(() => {
-    setQueue(tracksData);
-  }, [tracksData]);
 
   const { api, user, data } = useJellyfin();
 
@@ -59,8 +54,10 @@ const LibraryAlbum: NextPage = () => {
   const [sortBy, setSortBy] = useState<string>("SortName");
   const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
-  const myRef = useRef<any>(null);
+  const [musicQueue, setMusicQueue] = useRecoilState(musicQueueState);
 
+  const myRef = useRef<any>(null);
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       setServerUrl(localStorage.getItem("serverUrl") || "");
@@ -80,10 +77,10 @@ const LibraryAlbum: NextPage = () => {
       sortBy: sortBy as any,
       sortOrder: sortOrder as any,
     });
-
+    
     setTracksData((await items)?.data?.Items);
   };
-
+  
   const getAlbumInfo = async () => {
     if (!api) return;
     const info = getItemsApi(api).getItemsByUserId({
@@ -91,51 +88,55 @@ const LibraryAlbum: NextPage = () => {
       ids: query?.id as any,
       fields: ["Genres", "DateCreated", "ChildCount"] as any,
     });
-
+    
     setAlbumInfo((await info)?.data?.Items![0]);
   };
-
+  
   useEffect(() => {
     getItems();
     getAlbumInfo();
   }, [api, user, query?.id, sortBy, sortOrder]);
-
+  
   const router = useRouter();
-
+  
   const fac = new FastAverageColor();
-
+  
   const getAverageColor = (url: string) => {
     const response = axios
-      .get(url, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        },
+    .get(url, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      fac
+      .getColorAsync(res.request?.responseURL, {
+        algorithm: "dominant",
+        ignoredColor: [
+          [255, 255, 255, 255, 55], // White
+          [0, 0, 0, 255, 20], // Black
+          [0, 0, 0, 0, 20], // Transparent
+        ],
+        mode: "speed",
       })
-      .then((res) => {
-        console.log(res);
-        fac
-          .getColorAsync(res.request?.responseURL, {
-            algorithm: "dominant",
-            ignoredColor: [
-              [255, 255, 255, 255, 55], // White
-              [0, 0, 0, 255, 20], // Black
-              [0, 0, 0, 0, 20], // Transparent
-            ],
-            mode: "speed",
-          })
-          .then((color) => {
-            setBgColor(color.rgb);
-          });
+      .then((color) => {
+        setBgColor(color.rgb);
       });
+    });
     // setBgColor(color.rgb);
   };
+
+  useEffect(() => {
+    setMusicQueue(tracksData);
+  }, [tracksData])
 
   useEffect(() => {
     if (albumInfo) {
       getAverageColor(
         `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
-      );
+        );
     }
   }, [albumInfo]);
 
@@ -152,7 +153,9 @@ const LibraryAlbum: NextPage = () => {
 
   console.log(query.indexNumber);
 
-  const executeScroll = () => myRef.current.scrollIntoView();
+  // const executeScroll = () => myRef.current.scrollIntoView();
+
+  console.log("musicQueue", musicQueue);
 
   return (
     <div className={`ml-12 pr-12`} style={{
@@ -180,7 +183,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-amber-500/20 ring-2 ring-zinc-400/30 hover:ring-zinc-400 transition-all duration-1000 ease-in-out hover:shadow-amber-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-amber-500/20 ring-2 ring-stone-400/30 hover:ring-stone-400 transition-all duration-1000 ease-in-out hover:shadow-amber-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -190,7 +193,7 @@ const LibraryAlbum: NextPage = () => {
                 ) : null}
               </Tilt>
             </div>
-            <div className="flex select-none flex-col gap-3 pt-3 text-zinc-700 dark:text-white">
+            <div className="flex select-none flex-col gap-3 pt-3 text-stone-700 dark:text-white">
               <span className="text-5xl font-bold break-words">
                 {albumInfo ? albumInfo?.Name : null}
               </span>
@@ -202,7 +205,7 @@ const LibraryAlbum: NextPage = () => {
                     {albumInfo?.AlbumArtist}
                   </button>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-zinc-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl w-min ring-1 ring-zinc-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl w-min ring-1 ring-stone-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -213,7 +216,7 @@ const LibraryAlbum: NextPage = () => {
                       <span className="text-amber-500 dark:text-amber-400">
                         {albumInfo?.ChildCount} Tracks
                       </span>
-                      <span className="text-zinc-600 dark:text-white">
+                      <span className="text-stone-600 dark:text-white">
                         {albumInfo?.RunTimeTicks
                           ? // convert runtimeticks to "x minutes, y seconds"
                             fancyTimeFormat(albumInfo?.RunTimeTicks / 10000000)
@@ -224,9 +227,9 @@ const LibraryAlbum: NextPage = () => {
                 </div>
                 {albumInfo?.Genres ? (
                   <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
-                    <span className="text-zinc-600 dark:text-white flex flex-row gap-2">
+                    <span className="text-stone-600 dark:text-white flex flex-row gap-2">
                       {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-zinc-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl hover:shadow-amber-500/50 ring-1 ring-zinc-700 hover:ring-zinc-600 transition duration-300 ease-in-out hover:cursor-pointer">
+                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl hover:shadow-amber-500/50 ring-1 ring-stone-700 hover:ring-stone-600 transition duration-300 ease-in-out hover:cursor-pointer">
                           <span>{genre}</span>
                         </div>
                       ))}
@@ -260,7 +263,7 @@ const LibraryAlbum: NextPage = () => {
             <div>
               <div className="mt-8 select-none">
                 <div className="flex flex-row items-center justify-start gap-3">
-                  <span className="text-2xl font-semibold text-zinc-700 dark:text-white">
+                  <span className="text-2xl font-semibold text-stone-700 dark:text-white">
                     Tracks
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -293,7 +296,7 @@ const LibraryAlbum: NextPage = () => {
                   <table cellPadding={14}>
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
-                      <tr className="text-zinc-700 dark:text-white">
+                      <tr className="text-stone-700 dark:text-white">
                         <th
                           onClick={() => setSortBy("trackNumber")}
                           className="text-center w-[5%]"
@@ -316,7 +319,7 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className={`text-zinc-700 select-none dark:text-white hover:bg-zinc-100/50 dark:hover:bg-amber-800/20 transition duration-500 ease-in-out active:bg-zinc-200/50 dark:active:bg-amber-800/40 hover:cursor-pointer backdrop-blur-md ${
+                          className={`text-stone-700 select-none dark:text-white hover:bg-stone-100/50 dark:hover:bg-amber-800/20 transition duration-500 ease-in-out active:bg-stone-200/50 dark:active:bg-amber-800/40 hover:cursor-pointer backdrop-blur-md ${
                             String(queryIndex) == String(index + 1)
                               ? "bg-amber-500/20"
                               : ""
@@ -349,7 +352,7 @@ const LibraryAlbum: NextPage = () => {
                               <span className="font-semibold">
                                 {track?.Name}
                               </span>
-                              <span className="text-zinc-600 dark:text-white">
+                              <span className="text-stone-600 dark:text-white">
                                 {track?.AlbumArtist}
                               </span>
                             </div>

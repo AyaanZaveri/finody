@@ -1,12 +1,12 @@
 import { atom } from "recoil";
 
 export const playState = atom({
-  key: 'playState',
+  key: 'play',
   default: false,
 });
 
 export const currentTrackState = atom({
-  key: 'currentTrackState',
+  key: 'currentTrack',
   default: {
     id: '',
     title: '',
@@ -19,7 +19,7 @@ export const currentTrackState = atom({
   },
 });
 
-export const queueState = atom({
-  key: 'queueState',
+export const musicQueueState = atom({
+  key: 'musicQueue',
   default: [],
 });

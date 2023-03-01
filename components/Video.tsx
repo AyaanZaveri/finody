@@ -18,7 +18,7 @@ const Video = ({ video }: Props) => {
   return (
     <div
       key={video.videoId}
-      className="group-one flex h-16 w-full flex-row items-center justify-between gap-3 rounded-md px-3 text-sm text-zinc-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-zinc-100 active:bg-zinc-200 dark:text-white dark:hover:bg-zinc-800 dark:active:bg-zinc-800 dark:active:ring-1 dark:active:ring-zinc-700"
+      className="group-one flex h-16 w-full flex-row items-center justify-between gap-3 rounded-md px-3 text-sm text-stone-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-stone-100 active:bg-stone-200 dark:text-white dark:hover:bg-stone-800 dark:active:bg-stone-800 dark:active:ring-1 dark:active:ring-stone-700"
       id={video.videoId}
     >
       <div className="flex flex-row gap-3">
@@ -51,7 +51,7 @@ const Video = ({ video }: Props) => {
                 // className={`w-50 h-4 ${
                 //   checkIfFavoriteExists(video?.videoId as string)
                 //     ? "text-amber-500 hover:text-amber-600 active:text-amber-700"
-                //     : "text-zinc-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
+                //     : "text-stone-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                 // } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
               />
             </span>
