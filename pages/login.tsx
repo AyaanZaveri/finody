@@ -83,7 +83,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => handleJellyfin()}
-              className="bg-amber-500 text-white rounded-md py-2 w-2/3 hover:bg-amber-600 active:bg-amber-700 transition duration-200"
+              className="bg-emerald-500 text-white rounded-md py-2 w-2/3 hover:bg-emerald-600 active:bg-emerald-700 transition duration-200"
             >
               Login
             </button>

@@ -36,7 +36,7 @@ const Artist = (artist: any) => {
         </div>
         <div className="flex flex-col justify-center gap-1.5">
           <div className="flex flex-row">
-            <span className="inline-flex items-center gap-1 text-3xl font-semibold text-stone-700 decoration-amber-500 transition duration-300 ease-in-out hover:underline dark:text-white">
+            <span className="inline-flex items-center gap-1 text-3xl font-semibold text-stone-700 decoration-emerald-500 transition duration-300 ease-in-out hover:underline dark:text-white">
               "artistName"
             </span>
           </div>
@@ -50,14 +50,14 @@ const Artist = (artist: any) => {
               }}
               className={`h-4 w-4 ${
                 true
-                  ? "text-amber-500 hover:text-amber-600 active:text-amber-700"
+                  ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
                   : "text-stone-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
               } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
             />
           </div>
         </div>
       </div>
-      <button className="absolute right-0 bottom-0 m-4 rounded-full bg-amber-500 p-3 text-white opacity-0 transition duration-300 ease-in-out hover:bg-amber-600 active:bg-amber-700 group-one-hover:opacity-100 group-one-active:opacity-100">
+      <button className="absolute right-0 bottom-0 m-4 rounded-full bg-emerald-500 p-3 text-white opacity-0 transition duration-300 ease-in-out hover:bg-emerald-600 active:bg-emerald-700 group-one-hover:opacity-100 group-one-active:opacity-100">
         <PlayIcon className="ml-0.5 h-6 w-6" />
       </button>
     </div>

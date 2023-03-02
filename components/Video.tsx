@@ -24,7 +24,7 @@ const Video = ({ video }: Props) => {
       <div className="flex flex-row gap-3">
         <div
           // onClick={() => getCurrentSong(video.videoId, "video")}
-          className="group-two relative flex cursor-pointer items-center justify-center overflow-hidden rounded-md bg-amber-200 transition-all dark:bg-amber-700"
+          className="group-two relative flex cursor-pointer items-center justify-center overflow-hidden rounded-md bg-emerald-200 transition-all dark:bg-emerald-700"
         >
           <PlayIcon className="absolute z-10 ml-0.5 h-5 w-5 text-white opacity-0 transition-all duration-300 ease-in-out group-one-hover:opacity-100 group-one-active:opacity-100 group-two-active:brightness-90" />
           <img
@@ -50,7 +50,7 @@ const Video = ({ video }: Props) => {
                 // onClick={handleFavorited}
                 // className={`w-50 h-4 ${
                 //   checkIfFavoriteExists(video?.videoId as string)
-                //     ? "text-amber-500 hover:text-amber-600 active:text-amber-700"
+                //     ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
                 //     : "text-stone-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                 // } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
               />

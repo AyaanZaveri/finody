@@ -39,7 +39,7 @@ const Artist = ({ artist }: Props) => {
         </div>
         <div className="flex flex-col justify-center">
           <button className="flex flex-row gap-3">
-            <span className="inline-flex items-center gap-1 text-center text-base font-semibold decoration-amber-500 decoration-2 hover:underline">
+            <span className="inline-flex items-center gap-1 text-center text-base font-semibold decoration-emerald-500 decoration-2 hover:underline">
               {artist.Name}
             </span>
           </button>

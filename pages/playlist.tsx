@@ -132,7 +132,7 @@ const Playlist: NextPage = () => {
                 <div className="h-[16.5rem] w-[16.5rem]">
                   <img
                     draggable={false}
-                    className="select-none rounded-xl shadow-2xl shadow-amber-500/20"
+                    className="select-none rounded-xl shadow-2xl shadow-emerald-500/20"
                     src={
                       albumData?.thumbnails[albumData?.thumbnails.length - 1]
                         ?.url
@@ -159,7 +159,7 @@ const Playlist: NextPage = () => {
                 </div>
                 <div className="inline-flex items-center gap-2">
                   {albumData ? (
-                    <span className="text-amber-400">
+                    <span className="text-emerald-400">
                       {albumData?.trackCount} Tracks ·{" "}
                       {albumData?.duration
                         ? titleCase(albumData?.duration)
@@ -182,7 +182,7 @@ const Playlist: NextPage = () => {
                         />
                         <button
                           onClick={() => setShowMore(false)}
-                          className="text-sm text-amber-400 transition-colors duration-300 hover:text-amber-500"
+                          className="text-sm text-emerald-400 transition-colors duration-300 hover:text-emerald-500"
                         >
                           Show Less
                         </button>
@@ -204,7 +204,7 @@ const Playlist: NextPage = () => {
                         />
                         <button
                           onClick={() => setShowMore(true)}
-                          className="text-sm text-amber-400 transition-colors duration-300 ease-in-out hover:text-amber-500"
+                          className="text-sm text-emerald-400 transition-colors duration-300 ease-in-out hover:text-emerald-500"
                         >
                           Show More
                         </button>
@@ -223,7 +223,7 @@ const Playlist: NextPage = () => {
                         //   id: albumBrowseId,
                         // });
                       }}
-                      className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-amber-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-amber-500/30 active:bg-amber-600"
+                      className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-emerald-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-emerald-500/30 active:bg-emerald-600"
                     >
                       <PlayIcon className="h-4 w-4" />
                       Play

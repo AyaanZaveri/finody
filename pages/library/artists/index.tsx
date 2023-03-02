@@ -43,7 +43,7 @@ const LibraryArtistsIndex: NextPage = () => {
       <div className="pt-[4.5rem] pb-8">
         <div
           style={{
-            background: `linear-gradient(180deg, rgb(245, 158, 11) 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, rgb(16, 185, 129) 0%, rgba(0, 0, 0, 0) 75%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
@@ -57,7 +57,7 @@ const LibraryArtistsIndex: NextPage = () => {
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button
-                    className="inline-flex text-sm h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 bg-stone-100 active:bg-stone-300 gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-amber-500/5 transition duration-300 ease-in-out hover:shadow-amber-500/10
+                    className="inline-flex text-sm h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 bg-stone-100 active:bg-stone-300 gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
                 dark:bg-stone-800 dark:text-white dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 dark:active:bg-stone-700
                 "
                   >
@@ -80,7 +80,7 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
                               : "text-stone-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -96,7 +96,7 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
                               : "text-stone-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -112,7 +112,7 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
                               : "text-stone-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -128,7 +128,7 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
                               : "text-stone-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -144,7 +144,7 @@ const LibraryArtistsIndex: NextPage = () => {
                           }}
                           className={`${
                             active
-                              ? "bg-amber-500 text-white active:bg-amber-600 transition-colors duration-100"
+                              ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
                               : "text-stone-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
@@ -164,7 +164,7 @@ const LibraryArtistsIndex: NextPage = () => {
                     setSortOrder("Ascending");
                   }
                 }}
-                className="inline-flex text-sm h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 bg-stone-100 active:bg-stone-300 gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-amber-500/5 transition duration-300 ease-in-out hover:shadow-amber-500/10
+                className="inline-flex text-sm h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 bg-stone-100 active:bg-stone-300 gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
                 dark:bg-stone-800 dark:text-white dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 dark:active:bg-stone-700
                 "
               >

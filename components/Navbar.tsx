@@ -106,7 +106,7 @@ const Navbar = () => {
             </div>
             <form>
               <input
-                className="w-full rounded-md border border-stone-200 bg-stone-100 pl-8 pr-12 shadow-2xl shadow-amber-500/30 transition duration-300 ease-in-out hover:border-stone-300 hover:shadow-amber-500/50 focus:border-amber-500 focus:ring focus:ring-amber-200 active:bg-stone-200 dark:border-stone-700 dark:bg-stone-800 dark:text-white dark:placeholder:text-stone-100 dark:hover:border-stone-600 dark:focus:border-amber-700 dark:focus:ring-amber-400/90 dark:active:bg-stone-900 sm:text-sm"
+                className="w-full rounded-md border border-stone-200 bg-stone-100 pl-8 pr-12 shadow-2xl shadow-emerald-500/30 transition duration-300 ease-in-out hover:border-stone-300 hover:shadow-emerald-500/50 focus:border-emerald-500 focus:ring focus:ring-emerald-200 active:bg-stone-200 dark:border-stone-700 dark:bg-stone-800 dark:text-white dark:placeholder:text-stone-100 dark:hover:border-stone-600 dark:focus:border-emerald-700 dark:focus:ring-emerald-400/90 dark:active:bg-stone-900 sm:text-sm"
                 type="text"
                 placeholder="Search"
                 onChange={(e) => setSearch(e.target.value)}
@@ -120,13 +120,13 @@ const Navbar = () => {
                 {searchRes?.length > 0 &&
                 search?.length > 0 &&
                 showSuggestions ? (
-                  <div className="flex w-full select-none flex-col gap-1 border bg-stone-100 py-3 dark:bg-stone-800 dark:border-stone-700 overflow-hidden rounded-lg text-stone-700 shadow-2xl shadow-amber-500/10 transition duration-300 ease-in-out hover:shadow-amber-500/20 dark:text-white">
+                  <div className="flex w-full select-none flex-col gap-1 border bg-stone-100 py-3 dark:bg-stone-800 dark:border-stone-700 overflow-hidden rounded-lg text-stone-700 shadow-2xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-500/20 dark:text-white">
                     {searchRes?.slice(0, 5)?.map((item: any, index: any) => (
                       <div
                         onClick={(e: any) => handleSearch(e, item)}
                         key={index}
                       >
-                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-amber-400/20 hover:text-white active:bg-amber-400/10 active:text-white">
+                        <div className="flex flex-row items-center w-full cursor-pointer py-2 px-4 text-sm transition hover:bg-emerald-400/20 hover:text-white active:bg-emerald-400/10 active:text-white">
                           <img
                             src={
                               item?.ImageTags?.Primary
@@ -158,10 +158,10 @@ const Navbar = () => {
                   : resolvedTheme == "dark"
                   ? "bg-stone-800 active:bg-stone-700"
                   : "bg-stone-800 active:bg-stone-700"
-              } gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-amber-500/5 transition duration-300 ease-in-out hover:shadow-amber-500/10 dark:text-white dark:active:border-stone-600`}
+              } gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10 dark:text-white dark:active:border-stone-600`}
             >
               <span className="text-[0.75rem]">{user?.Name}</span>
-              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center">
+              <div className="h-4 w-4 rounded-full bg-gradient-to-br from-purple-400 to-sky-500 flex items-center justify-center">
                 <span className="text-[0.6rem] font-normal text-white">
                   {user?.Name?.charAt(0).toUpperCase()}
                 </span>
@@ -175,7 +175,7 @@ const Navbar = () => {
                   : resolvedTheme == "dark"
                   ? "bg-stone-800 active:bg-stone-700"
                   : "bg-stone-800 active:bg-stone-700"
-              } rounded-full p-1.5 shadow-xl shadow-amber-500/10 transition duration-300 ease-in-out hover:shadow-amber-300/20`}
+              } rounded-full p-1.5 shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
             >
               <img src="/jellyfin.svg" alt="" />
             </button>
@@ -196,7 +196,7 @@ const Navbar = () => {
                 : resolvedTheme == "dark"
                 ? "bg-stone-800 active:bg-stone-600"
                 : "bg-stone-800 active:bg-stone-600"
-            } rounded-full shadow-xl shadow-amber-500/10 transition duration-300 ease-in-out hover:shadow-amber-300/20`}
+            } rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20`}
           >
             {theme == "light" ? (
               <SunIcon className="h-full w-full p-1.5 text-stone-700" />

@@ -57,7 +57,7 @@ const LibraryAlbum: NextPage = () => {
   const [musicQueue, setMusicQueue] = useRecoilState(musicQueueState);
 
   const myRef = useRef<any>(null);
-  
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setServerUrl(localStorage.getItem("serverUrl") || "");
@@ -77,10 +77,10 @@ const LibraryAlbum: NextPage = () => {
       sortBy: sortBy as any,
       sortOrder: sortOrder as any,
     });
-    
+
     setTracksData((await items)?.data?.Items);
   };
-  
+
   const getAlbumInfo = async () => {
     if (!api) return;
     const info = getItemsApi(api).getItemsByUserId({
@@ -88,55 +88,55 @@ const LibraryAlbum: NextPage = () => {
       ids: query?.id as any,
       fields: ["Genres", "DateCreated", "ChildCount"] as any,
     });
-    
+
     setAlbumInfo((await info)?.data?.Items![0]);
   };
-  
+
   useEffect(() => {
     getItems();
     getAlbumInfo();
   }, [api, user, query?.id, sortBy, sortOrder]);
-  
+
   const router = useRouter();
-  
+
   const fac = new FastAverageColor();
-  
+
   const getAverageColor = (url: string) => {
     const response = axios
-    .get(url, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      fac
-      .getColorAsync(res.request?.responseURL, {
-        algorithm: "dominant",
-        ignoredColor: [
-          [255, 255, 255, 255, 55], // White
-          [0, 0, 0, 255, 20], // Black
-          [0, 0, 0, 0, 20], // Transparent
-        ],
-        mode: "speed",
+      .get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
       })
-      .then((color) => {
-        setBgColor(color.rgb);
+      .then((res) => {
+        console.log(res);
+        fac
+          .getColorAsync(res.request?.responseURL, {
+            algorithm: "dominant",
+            ignoredColor: [
+              [255, 255, 255, 255, 55], // White
+              [0, 0, 0, 255, 20], // Black
+              [0, 0, 0, 0, 20], // Transparent
+            ],
+            mode: "speed",
+          })
+          .then((color) => {
+            setBgColor(color.rgb);
+          });
       });
-    });
     // setBgColor(color.rgb);
   };
 
   useEffect(() => {
     setMusicQueue(tracksData);
-  }, [tracksData])
+  }, [tracksData]);
 
   useEffect(() => {
     if (albumInfo) {
       getAverageColor(
         `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
-        );
+      );
     }
   }, [albumInfo]);
 
@@ -157,10 +157,15 @@ const LibraryAlbum: NextPage = () => {
 
   console.log("musicQueue", musicQueue);
 
+  const color = "emerald";
+
   return (
-    <div className={`ml-12 pr-12`} style={{
-      paddingLeft: sidebarWidth
-    }}>
+    <div
+      className={`ml-12 pr-12`}
+      style={{
+        paddingLeft: sidebarWidth,
+      }}
+    >
       <div className="pt-[4.5rem] pb-24">
         <div
           style={{
@@ -183,7 +188,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-amber-500/20 ring-2 ring-stone-400/30 hover:ring-stone-400 transition-all duration-1000 ease-in-out hover:shadow-amber-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-stone-400/30 hover:ring-stone-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -200,12 +205,12 @@ const LibraryAlbum: NextPage = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-2">
                   <button
-                    className="text-xl text-amber-500 dark:text-amber-400 hover:underline hover:decoration-amber-600 hover:cursor-pointer dark:active:text-amber-500 transition-colors ease-in-out duration-300"
+                    className={`text-xl dark:text-emerald-400 hover:underline hover:decoration-emerald-600 hover:cursor-pointer dark:active:text-emerald-500 transition-colors ease-in-out duration-300`}
                   >
                     {albumInfo?.AlbumArtist}
                   </button>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl w-min ring-1 ring-stone-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-stone-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -213,7 +218,7 @@ const LibraryAlbum: NextPage = () => {
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
                   {albumInfo ? (
                     <div className="flex flex-col">
-                      <span className="text-amber-500 dark:text-amber-400">
+                      <span className="text-emerald-500 dark:text-emerald-400">
                         {albumInfo?.ChildCount} Tracks
                       </span>
                       <span className="text-stone-600 dark:text-white">
@@ -229,7 +234,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
                     <span className="text-stone-600 dark:text-white flex flex-row gap-2">
                       {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl hover:shadow-amber-500/50 ring-1 ring-stone-700 hover:ring-stone-600 transition duration-300 ease-in-out hover:cursor-pointer">
+                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl hover:shadow-emerald-500/50 ring-1 ring-stone-700 hover:ring-stone-600 transition duration-300 ease-in-out hover:cursor-pointer">
                           <span>{genre}</span>
                         </div>
                       ))}
@@ -247,7 +252,7 @@ const LibraryAlbum: NextPage = () => {
                         //   id: albumBrowseId,
                         // });
                       }}
-                      className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-amber-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-amber-500/30 active:bg-amber-600"
+                      className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-4 py-1.5 text-sm text-white shadow-lg shadow-emerald-500/20 transition duration-300 ease-in-out hover:shadow-xl hover:shadow-emerald-500/30 active:bg-emerald-600"
                     >
                       <PlayIcon className="h-4 w-4" />
                       Play
@@ -277,7 +282,7 @@ const LibraryAlbum: NextPage = () => {
                         // });
                       }}
                     >
-                      <PlayIcon className="h-5 w-5 text-amber-500" />
+                      <PlayIcon className="h-5 w-5 text-emerald-500" />
                     </button>
                     <button
                       onClick={() => {
@@ -319,9 +324,9 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className={`text-stone-700 select-none dark:text-white hover:bg-stone-100/50 dark:hover:bg-amber-800/20 transition duration-500 ease-in-out active:bg-stone-200/50 dark:active:bg-amber-800/40 hover:cursor-pointer backdrop-blur-md ${
+                          className={`text-stone-700 select-none dark:text-white hover:bg-stone-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-stone-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md ${
                             String(queryIndex) == String(index + 1)
-                              ? "bg-amber-500/20"
+                              ? "bg-emerald-500/20"
                               : ""
                           }`}
                           onClick={() => {
@@ -334,15 +339,13 @@ const LibraryAlbum: NextPage = () => {
                             );
                           }}
                           ref={
-                            String(queryIndex) == String(index+2)
+                            String(queryIndex) == String(index + 2)
                               ? myRef
                               : null
                           }
                         >
                           <td className="text-center">{index + 1}</td>
-                          <td
-                            className="text-left flex flex-row gap-4 items-center"
-                          >
+                          <td className="text-left flex flex-row gap-4 items-center">
                             <img
                               src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
                               alt=""
@@ -358,7 +361,7 @@ const LibraryAlbum: NextPage = () => {
                             </div>
                             {songLoading.id == track?.Id &&
                             songLoading.loading ? (
-                              <CgSpinner className="animate-spin h-5 w-5 text-amber-500" />
+                              <CgSpinner className="animate-spin h-5 w-5 text-emerald-500" />
                             ) : null}
                           </td>
                           <td className="text-center">

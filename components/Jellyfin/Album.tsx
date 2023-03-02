@@ -39,19 +39,19 @@ const Album = ({ album }: Props) => {
         </div>
         <div className="flex flex-col justify-start">
           <button className="flex flex-col text-start items-start">
-            <span className="inline-flex items-center gap-1 text-start text-xl font-semibold decoration-amber-500 decoration-2 hover:underline">
+            <span className="inline-flex items-center gap-1 text-start text-xl font-semibold decoration-emerald-500 decoration-2 hover:underline">
               {album.Name}
             </span>
             <span
               onClick={() =>
                 router.push(`/library/artists/${album.ArtistItems[0].Id}`)
               }
-              className="inline-flex items-center gap-1 text-start text-sm font-normal decoration-amber-500 decoration-2 hover:underline"
+              className="inline-flex items-center gap-1 text-start text-sm font-normal decoration-emerald-500 decoration-2 hover:underline"
             >
               {album.ArtistItems[0].Name}
             </span>
             {/* show the production year in a chip */}
-            <span className="inline-flex mt-1.5 items-center gap-1 text-start text-xs font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-amber-500/20 shadow-xl w-min ring-1 ring-stone-700">
+            <span className="inline-flex mt-1.5 items-center gap-1 text-start text-xs font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-stone-700">
               {album.ProductionYear}
             </span>
           </button>
