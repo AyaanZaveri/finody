@@ -188,7 +188,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="h-[16.5rem] w-[16.5rem]">
                     <img
                       draggable={false}
-                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-stone-400/30 hover:ring-stone-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
+                      className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
@@ -198,7 +198,7 @@ const LibraryAlbum: NextPage = () => {
                 ) : null}
               </Tilt>
             </div>
-            <div className="flex select-none flex-col gap-3 pt-3 text-stone-700 dark:text-white">
+            <div className="flex select-none flex-col gap-3 pt-3 text-slate-700 dark:text-white">
               <span className="text-5xl font-bold break-words">
                 {albumInfo ? albumInfo?.Name : null}
               </span>
@@ -210,7 +210,7 @@ const LibraryAlbum: NextPage = () => {
                     {albumInfo?.AlbumArtist}
                   </button>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-stone-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-slate-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -221,7 +221,7 @@ const LibraryAlbum: NextPage = () => {
                       <span className="text-emerald-500 dark:text-emerald-400">
                         {albumInfo?.ChildCount} Tracks
                       </span>
-                      <span className="text-stone-600 dark:text-white">
+                      <span className="text-slate-600 dark:text-white">
                         {albumInfo?.RunTimeTicks
                           ? // convert runtimeticks to "x minutes, y seconds"
                             fancyTimeFormat(albumInfo?.RunTimeTicks / 10000000)
@@ -232,9 +232,9 @@ const LibraryAlbum: NextPage = () => {
                 </div>
                 {albumInfo?.Genres ? (
                   <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
-                    <span className="text-stone-600 dark:text-white flex flex-row gap-2">
+                    <span className="text-slate-600 dark:text-white flex flex-row gap-2">
                       {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-stone-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl hover:shadow-emerald-500/50 ring-1 ring-stone-700 hover:ring-stone-600 transition duration-300 ease-in-out hover:cursor-pointer">
+                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl hover:shadow-emerald-500/50 ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
                           <span>{genre}</span>
                         </div>
                       ))}
@@ -268,7 +268,7 @@ const LibraryAlbum: NextPage = () => {
             <div>
               <div className="mt-8 select-none">
                 <div className="flex flex-row items-center justify-start gap-3">
-                  <span className="text-2xl font-semibold text-stone-700 dark:text-white">
+                  <span className="text-2xl font-semibold text-slate-700 dark:text-white">
                     Tracks
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -301,7 +301,7 @@ const LibraryAlbum: NextPage = () => {
                   <table cellPadding={14}>
                     <thead>
                       {/* add track number, title, duration, bit rate, plays  */}
-                      <tr className="text-stone-700 dark:text-white">
+                      <tr className="text-slate-700 dark:text-white">
                         <th
                           onClick={() => setSortBy("trackNumber")}
                           className="text-center w-[5%]"
@@ -324,7 +324,7 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className={`text-stone-700 select-none dark:text-white hover:bg-stone-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-stone-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md ${
+                          className={`text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md ${
                             String(queryIndex) == String(index + 1)
                               ? "bg-emerald-500/20"
                               : ""
@@ -355,7 +355,7 @@ const LibraryAlbum: NextPage = () => {
                               <span className="font-bold">
                                 {track?.Name}
                               </span>
-                              <span className="text-stone-600 dark:text-white">
+                              <span className="text-slate-600 dark:text-white">
                                 {track?.AlbumArtist}
                               </span>
                             </div>

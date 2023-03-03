@@ -142,7 +142,7 @@ const Playlist: NextPage = () => {
                 </div>
               ) : null}
             </Tilt>
-            <div className="flex select-none flex-col gap-4 pt-3 text-stone-700 dark:text-white">
+            <div className="flex select-none flex-col gap-4 pt-3 text-slate-700 dark:text-white">
               <span className="text-4xl font-semibold">{albumData?.title}</span>
               <div className="flex flex-col">
                 <div className="inline-flex items-center gap-2">
@@ -172,7 +172,7 @@ const Playlist: NextPage = () => {
                     {albumData?.description ? (
                       <div>
                         <div
-                          className="mt-3 text-stone-700 dark:text-white"
+                          className="mt-3 text-slate-700 dark:text-white"
                           dangerouslySetInnerHTML={{
                             __html: albumData?.description?.replaceAll(
                               /\n/g,
@@ -194,7 +194,7 @@ const Playlist: NextPage = () => {
                     {albumData?.description ? (
                       <div>
                         <div
-                          className="mt-3 text-stone-700 line-clamp-2 dark:text-white"
+                          className="mt-3 text-slate-700 line-clamp-2 dark:text-white"
                           dangerouslySetInnerHTML={{
                             __html: albumData?.description?.replaceAll(
                               /\n/g,

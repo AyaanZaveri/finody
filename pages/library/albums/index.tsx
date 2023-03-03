@@ -72,7 +72,7 @@ const LibraryAlbumsIndex: NextPage = () => {
           <div className="flex justify-between flex-row" style={{
           left: sidebarWidth,
         }}>
-            <h1 className="text-3xl font-bold text-stone-700 dark:text-white" style={{
+            <h1 className="text-3xl font-bold text-slate-700 dark:text-white" style={{
           left: sidebarWidth,
         }}>
               Albums
@@ -84,8 +84,8 @@ const LibraryAlbumsIndex: NextPage = () => {
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button
-                    className="inline-flex text-sm h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 bg-stone-100 active:bg-stone-300 gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
-                dark:bg-stone-800 dark:text-white dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 dark:active:bg-stone-700
+                    className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
+                dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 dark:active:bg-slate-700
                 "
                   >
                     <span>
@@ -107,7 +107,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                     </span>
                   </Menu.Button>
                 </div>
-                <Menu.Items className="absolute z-20 right-0 w-56 mt-2 origin-top-right divide-y bg-stone-100 ring-1 ring-stone-200 divide-gray-100 rounded-md shadow-lg outline-none dark:bg-stone-800 dark:text-white dark:ring-stone-700 focus:outline-none">
+                <Menu.Items className="absolute z-20 right-0 w-56 mt-2 origin-top-right divide-y bg-slate-100 ring-1 ring-slate-200 divide-gray-100 rounded-md shadow-lg outline-none dark:bg-slate-800 dark:text-white dark:ring-slate-700 focus:outline-none">
                   <div className="p-2">
                     <Menu.Item>
                       {({ active }) => (
@@ -118,7 +118,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Album
@@ -134,7 +134,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Album Artist
@@ -150,7 +150,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Community Rating
@@ -166,7 +166,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Critic Rating
@@ -182,7 +182,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Release Date
@@ -198,7 +198,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Date Played
@@ -214,7 +214,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Play Count
@@ -230,7 +230,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Name
@@ -246,7 +246,7 @@ const LibraryAlbumsIndex: NextPage = () => {
                           className={`${
                             active
                               ? "bg-emerald-500 text-white active:bg-emerald-600 transition-colors duration-100"
-                              : "text-stone-800 dark:text-white"
+                              : "text-slate-800 dark:text-white"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm transition-colors duration-100`}
                         >
                           Random
@@ -265,8 +265,8 @@ const LibraryAlbumsIndex: NextPage = () => {
                     setSortOrder("Ascending");
                   }
                 }}
-                className="inline-flex text-sm h-8 items-center justify-center border border-stone-200 hover:border-stone-300 active:border-stone-300 bg-stone-100 active:bg-stone-300 gap-2 overflow-hidden rounded-full px-3 text-stone-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
-                dark:bg-stone-800 dark:text-white dark:border-stone-700 dark:hover:border-stone-600 dark:active:border-stone-600 dark:active:bg-stone-700
+                className="inline-flex text-sm h-8 items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 bg-slate-100 active:bg-slate-300 gap-2 overflow-hidden rounded-full px-3 text-slate-800 shadow-xl shadow-emerald-500/5 transition duration-300 ease-in-out hover:shadow-emerald-500/10
+                dark:bg-slate-800 dark:text-white dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 dark:active:bg-slate-700
                 "
               >
                 {sortOrder === "Ascending" ? (

@@ -25,7 +25,7 @@ const Track = ({ track }: Props) => {
         // });
       }}
       key={track.videoId}
-      className="group-one flex h-16 w-full flex-row items-center justify-between gap-3 rounded-md px-3 text-sm text-stone-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-stone-100 active:bg-stone-200 dark:text-white dark:hover:bg-stone-800 dark:active:bg-stone-800 dark:active:ring-1 dark:active:ring-stone-700"
+      className="group-one flex h-16 w-full flex-row items-center justify-between gap-3 rounded-md px-3 text-sm text-slate-700 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-slate-100 active:bg-slate-200 dark:text-white dark:hover:bg-slate-800 dark:active:bg-slate-800 dark:active:ring-1 dark:active:ring-slate-700"
     >
       <div className="flex flex-row gap-3">
         <div
@@ -68,7 +68,7 @@ const Track = ({ track }: Props) => {
                 // className={`w-50 h-4 ${
                 //   checkIfFavoriteExists(track?.videoId as string)
                 //     ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
-                //     : "text-stone-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
+                //     : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                 // } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
               />
             </span>

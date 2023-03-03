@@ -65,13 +65,13 @@ body {
 }
 @keyframes backAndForth {
   55% {
-    transform: transtoneX(calc(-100% + 200px));
+    transform: translateX(calc(-100% + 200px));
   }
   90% {
-    transform: transtoneX(0);
+    transform: translateX(0);
   }
   100% {
-    transform: transtoneX(0);
+    transform: translateX(0);
   }
 }
 
@@ -84,7 +84,7 @@ body {
     @apply rounded-lg bg-emerald-800;
   }
   .scrollbar::-webkit-scrollbar-thumb:active {
-    @apply bg-stone-800;
+    @apply bg-slate-800;
   }
   .scrollbar::-webkit-scrollbar-thumb:hover {
     @apply bg-emerald-900;

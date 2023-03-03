@@ -102,7 +102,7 @@ const Album = ({ album }: Props) => {
         router.push(`/playlist?list=${albumData?.audioPlaylistId}`)
       }
       key={album.videoId}
-      className="group-one flex w-48 flex-col items-center justify-between gap-3 rounded-xl bg-white p-4 pb-8 text-sm text-stone-700 ring-1 ring-stone-100 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-stone-100 active:ring-stone-200 dark:bg-stone-900 dark:text-white dark:ring-1 dark:ring-stone-800 dark:hover:bg-stone-800 dark:active:ring-1 dark:active:ring-stone-700"
+      className="group-one flex w-48 flex-col items-center justify-between gap-3 rounded-xl bg-white p-4 pb-8 text-sm text-slate-700 ring-1 ring-slate-100 transition-all duration-300 ease-in-out hover:cursor-pointer hover:bg-slate-100 active:ring-slate-200 dark:bg-slate-900 dark:text-white dark:ring-1 dark:ring-slate-800 dark:hover:bg-slate-800 dark:active:ring-1 dark:active:ring-slate-700"
     >
       <button className="flex flex-col gap-4">
         <Tilt
@@ -134,7 +134,7 @@ const Album = ({ album }: Props) => {
               ))}
             </span>
             <div className="inline-flex items-center gap-1">
-              <span className="rounded-full bg-stone-700 px-3 py-0.5 text-xs font-normal text-white">
+              <span className="rounded-full bg-slate-700 px-3 py-0.5 text-xs font-normal text-white">
                 {titleCase(album?.year)}
               </span>
               <button
@@ -146,7 +146,7 @@ const Album = ({ album }: Props) => {
                   className={`w-50 h-4 ${
                     true
                       ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
-                      : "text-stone-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
+                      : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:hover:text-rose-500"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
                 />
               </button>
@@ -165,12 +165,12 @@ const Album = ({ album }: Props) => {
                   className={`w-50 h-4 ${
                     checkIfFavoriteExists(album?.browseId as string)
                       ? "text-emerald-500 hover:text-emerald-600 active:text-emerald-700"
-                      : "text-stone-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
+                      : "text-slate-700 opacity-0 hover:text-rose-500 active:text-rose-600 dark:hover:text-rose-500 dark:active:text-rose-600 group-one-hover:opacity-100 group-one-active:opacity-100 dark:text-white dark:text-white dark:hover:text-rose-500 dark:active:text-rose-600"
                   } mb-0.5 transition duration-300 ease-in-out hover:cursor-pointer`}
                 />
               </button> */}
             </div>
-            {/* <span className="rounded-full bg-stone-700 px-3 py-0.5 text-xs font-normal text-white">
+            {/* <span className="rounded-full bg-slate-700 px-3 py-0.5 text-xs font-normal text-white">
               {albumData?.tracks?.length} Songs
               {/* {"\n" + albumData?.title}
               {"\n" + curPlay?.length}
