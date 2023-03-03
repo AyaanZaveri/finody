@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 $rhap_theme-color: #10b981 !default; // Color of all buttons and volume/progress indicators
-$rhap_font-family: "Rubik", sans-serif !default; // Font family of current time and duration
+$rhap_font-family: "Poppins", sans-serif !default; // Font family of current time and duration
 @import "react-h5-audio-player/src/styles.scss";
 
 html {

@@ -39,7 +39,7 @@ const Album = ({ album }: Props) => {
         </div>
         <div className="flex flex-col justify-start">
           <button className="flex flex-col text-start items-start">
-            <span className="inline-flex items-center gap-1 text-start text-xl font-semibold decoration-emerald-500 decoration-2 hover:underline">
+            <span className="inline-flex items-center gap-1 text-start text-xl font-bold decoration-emerald-500 decoration-2 hover:underline">
               {album.Name}
             </span>
             <span

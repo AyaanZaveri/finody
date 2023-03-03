@@ -72,7 +72,7 @@ const LibraryAlbumsIndex: NextPage = () => {
           <div className="flex justify-between flex-row" style={{
           left: sidebarWidth,
         }}>
-            <h1 className="text-3xl font-semibold text-stone-700 dark:text-white" style={{
+            <h1 className="text-3xl font-bold text-stone-700 dark:text-white" style={{
           left: sidebarWidth,
         }}>
               Albums

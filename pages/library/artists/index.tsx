@@ -49,7 +49,7 @@ const LibraryArtistsIndex: NextPage = () => {
         ></div>
         <div className="pt-6">
           <div className="flex justify-between flex-row">
-            <h1 className="text-3xl font-semibold text-stone-700 dark:text-white">
+            <h1 className="text-3xl font-bold text-stone-700 dark:text-white">
               Artists
             </h1>
             <div className="gap-2 flex flex-row">

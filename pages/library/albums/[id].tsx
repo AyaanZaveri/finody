@@ -352,7 +352,7 @@ const LibraryAlbum: NextPage = () => {
                               className="h-10 w-10 rounded-md"
                             />
                             <div className="flex flex-col">
-                              <span className="font-semibold">
+                              <span className="font-bold">
                                 {track?.Name}
                               </span>
                               <span className="text-stone-600 dark:text-white">
