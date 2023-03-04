@@ -95,7 +95,7 @@ const LibraryAlbum: NextPage = () => {
   };
 
   const getArtistAlbums = async () => {
-    if (!api) return;
+    if (!api && !albumInfo?.AlbumArtists?.[0]?.Id) return;
     const items = getItemsApi(api).getItems({
       userId: user?.Id,
       includeItemTypes: ["MusicAlbum"] as any,
@@ -120,7 +120,7 @@ const LibraryAlbum: NextPage = () => {
   const fac = new FastAverageColor();
 
   const getAverageColor = (url: string) => {
-    const response = axios
+    axios
       .get(url, {
         headers: {
           "Access-Control-Allow-Origin": "*",
