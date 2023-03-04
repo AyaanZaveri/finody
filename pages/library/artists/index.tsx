@@ -43,7 +43,7 @@ const LibraryArtistsIndex: NextPage = () => {
       <div className="pt-[4.5rem] pb-8">
         <div
           style={{
-            background: `linear-gradient(180deg, rgb(16, 185, 129) 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, rgb(16, 185, 129) 0%, rgba(0, 0, 0, 0) 100%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>

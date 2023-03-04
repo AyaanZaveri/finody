@@ -61,7 +61,7 @@ const LibraryAlbumsIndex: NextPage = () => {
       <div className="pt-[4.5rem] pb-28">
         <div
           style={{
-            background: `linear-gradient(180deg, rgb(16, 185, 129) 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, rgb(16, 185, 129) 0%, rgba(0, 0, 0, 0) 100%)`,
             left: sidebarWidth,
           }}
           className="absolute top-[4.5rem] w-full h-full -z-10 opacity-25 dark:opacity-75"

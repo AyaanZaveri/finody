@@ -150,7 +150,7 @@ const LibraryPlaylist: NextPage = () => {
       <div className="pt-[4.5rem] pb-24">
         <div
           style={{
-            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 75%)`,
+            background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 100%)`,
           }}
           className="absolute top-[4.5rem] left-60 w-full h-full -z-10 opacity-25 dark:opacity-75"
         ></div>
