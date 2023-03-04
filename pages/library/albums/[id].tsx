@@ -26,11 +26,13 @@ import { getSongInfo } from "../../../utils/getSongInfo";
 import { FastAverageColor } from "fast-average-color";
 import { bgColourState } from "../../../atoms/colourState";
 import { sidebarWidthState } from "../../../atoms/sidebarAtom";
+import Album from "../../../components/Jellyfin/Album";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
   const [tracksData, setTracksData] = useState<any>();
   const [albumInfo, setAlbumInfo] = useState<any>();
+  const [artistAlbums, setArtistAlbums] = useState<any>();
   const [srcLoaded, setSrcLoaded] = useState<boolean>(true);
 
   const [songLoading, setSongLoading] = useState({
@@ -92,9 +94,25 @@ const LibraryAlbum: NextPage = () => {
     setAlbumInfo((await info)?.data?.Items![0]);
   };
 
+  const getArtistAlbums = async () => {
+    if (!api) return;
+    const items = getItemsApi(api).getItems({
+      userId: user?.Id,
+      includeItemTypes: ["MusicAlbum"] as any,
+      limit: 10,
+      recursive: true,
+      sortOrder: "Descending" as any,
+      startIndex: 0,
+      albumArtistIds: albumInfo?.AlbumArtists?.[0]?.Id,
+    });
+
+    setArtistAlbums((await items)?.data?.Items);
+  };
+
   useEffect(() => {
     getItems();
     getAlbumInfo();
+    getArtistAlbums();
   }, [api, user, query?.id, sortBy, sortOrder]);
 
   const router = useRouter();
@@ -113,7 +131,7 @@ const LibraryAlbum: NextPage = () => {
         console.log(res);
         fac
           .getColorAsync(res.request?.responseURL, {
-            algorithm: "sqrt",
+            algorithm: "dominant",
             ignoredColor: [
               [255, 255, 255, 255, 55], // White
               [0, 0, 0, 255, 20], // Black
@@ -158,6 +176,8 @@ const LibraryAlbum: NextPage = () => {
   console.log("musicQueue", musicQueue);
 
   const color = "emerald";
+
+  console.log("artistAlbums", artistAlbums);
 
   return (
     <div
@@ -205,7 +225,7 @@ const LibraryAlbum: NextPage = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row items-center gap-2">
                   <button
-                    className={`text-xl dark:text-emerald-400 hover:underline hover:decoration-emerald-600 hover:cursor-pointer dark:active:text-emerald-500 transition-colors ease-in-out duration-300`}
+                    className={`text-xl font-semibold dark:text-emerald-300 hover:underline hover:decoration-emerald-500 hover:cursor-pointer dark:active:text-emerald-400 transition-colors ease-in-out duration-300`}
                   >
                     {albumInfo?.AlbumArtist}
                   </button>
@@ -218,7 +238,7 @@ const LibraryAlbum: NextPage = () => {
                 <div className="inline-flex items-center gap-2 text-lg font-medium mt-2">
                   {albumInfo ? (
                     <div className="flex flex-col">
-                      <span className="text-emerald-500 dark:text-emerald-400">
+                      <span className="text-emerald-500 dark:text-emerald-300">
                         {albumInfo?.ChildCount} Tracks
                       </span>
                       <span className="text-slate-600 dark:text-white">
@@ -324,7 +344,7 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className={`text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer ${
+                          className={`text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition duration-200 ease-in-out active:bg-slate-200/50 dark:active:bg-slate-800/80 hover:cursor-pointer ${
                             String(queryIndex) == String(index + 1)
                               ? "bg-emerald-500/20"
                               : ""
@@ -349,12 +369,10 @@ const LibraryAlbum: NextPage = () => {
                             <img
                               src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
                               alt=""
-                              className="h-10 w-10 rounded-md"
+                              className="h-12 w-12 rounded-md"
                             />
                             <div className="flex flex-col">
-                              <span className="font-bold">
-                                {track?.Name}
-                              </span>
+                              <span className="font-bold">{track?.Name}</span>
                               <span className="text-slate-600 dark:text-white">
                                 {track?.AlbumArtist}
                               </span>
@@ -387,6 +405,21 @@ const LibraryAlbum: NextPage = () => {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            </div>
+          ) : null}
+          {artistAlbums && artistAlbums?.length > 0 && albumInfo ? (
+            <div className="mt-4 flex flex-col gap-4">
+              <span className="text-2xl font-medium">
+                More from{" "}
+                <span className="font-bold">{albumInfo?.AlbumArtist}</span>
+              </span>
+              <div className="flex flex-row gap-4">
+                {artistAlbums && artistAlbums?.length > 0 && albumInfo
+                  ? artistAlbums?.map((album: any, index: number) => (
+                      <Album album={album} />
+                    ))
+                  : null}
               </div>
             </div>
           ) : null}
