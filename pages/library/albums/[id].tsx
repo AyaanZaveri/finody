@@ -112,7 +112,6 @@ const LibraryAlbum: NextPage = () => {
   useEffect(() => {
     getItems();
     getAlbumInfo();
-    getArtistAlbums();
   }, [api, user, query?.id, sortBy, sortOrder]);
 
   const router = useRouter();
@@ -131,7 +130,7 @@ const LibraryAlbum: NextPage = () => {
         console.log(res);
         fac
           .getColorAsync(res.request?.responseURL, {
-            algorithm: "dominant",
+            algorithm: "sqrt",
             ignoredColor: [
               [255, 255, 255, 255, 55], // White
               [0, 0, 0, 255, 20], // Black
@@ -176,6 +175,10 @@ const LibraryAlbum: NextPage = () => {
   console.log("musicQueue", musicQueue);
 
   const color = "emerald";
+
+  useEffect(() => {
+    getArtistAlbums();
+  }, [api, user, albumInfo]);
 
   console.log("artistAlbums", artistAlbums);
 
