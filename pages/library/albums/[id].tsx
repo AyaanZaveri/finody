@@ -324,7 +324,7 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className={`text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer backdrop-blur-md ${
+                          className={`text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-emerald-800/20 transition duration-500 ease-in-out active:bg-slate-200/50 dark:active:bg-emerald-800/40 hover:cursor-pointer ${
                             String(queryIndex) == String(index + 1)
                               ? "bg-emerald-500/20"
                               : ""
