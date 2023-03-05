@@ -2,7 +2,7 @@ import { PlayIcon, PlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { MdExplicit } from "react-icons/md";
 import { useRecoilState } from "recoil";
 import { titleCase } from "title-case";
@@ -12,7 +12,7 @@ import { getAudioApi } from "@jellyfin/sdk/lib/utils/api/audio-api";
 import { getUniversalAudioApi } from "@jellyfin/sdk/lib/utils/api/universal-audio-api";
 import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
-import { HiClock } from "react-icons/hi";
+import { HiClock, HiDotsHorizontal, HiPlus } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
 import {
   currentTrackState,
@@ -27,6 +27,7 @@ import { FastAverageColor } from "fast-average-color";
 import { bgColourState } from "../../../atoms/colourState";
 import { sidebarWidthState } from "../../../atoms/sidebarAtom";
 import Album from "../../../components/Jellyfin/Album";
+import { Menu, Transition } from "@headlessui/react";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -57,6 +58,13 @@ const LibraryAlbum: NextPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
   const [musicQueue, setMusicQueue] = useRecoilState(musicQueueState);
+
+  const [menuOpen, setMenuOpen] = useState<
+    { id: string; open: boolean } | undefined
+  >({
+    id: "",
+    open: false,
+  });
 
   const myRef = useRef<any>(null);
 
@@ -405,6 +413,51 @@ const LibraryAlbum: NextPage = () => {
                           </td>
                           <td className="text-center">
                             {track?.UserData?.PlayCount}
+                          </td>
+                          <td>
+                            <Menu as="div" className="relative inline-block">
+                              <div>
+                                <Menu.Button className="inline-flex justify-center w-full rounded-md shadow-sm px-4 py-2 text-sm font-medium text-white hover:bg-slate-900/50 transition duration-200 ease-in-out">
+                                  <span className="sr-only">
+                                    Open options menu
+                                  </span>
+                                  <HiDotsHorizontal className="h-5 w-5" />
+                                </Menu.Button>
+                              </div>
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="absolute z-50 right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                  <div className="px-1 py-1 ">
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <button
+                                          onClick={() => {
+                                            // addToPlaylist(track);
+                                          }}
+                                          className={`${
+                                            active
+                                              ? "bg-emerald-500 text-white"
+                                              : "text-gray-900"
+                                          } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                        >
+                                          <span className="flex flex-row items-center gap-2">
+                                            <HiPlus className="w-5 h-5" />
+                                            <span>Add to playlist</span>
+                                          </span>
+                                        </button>
+                                      )}
+                                    </Menu.Item>
+                                  </div>
+                                </Menu.Items>
+                              </Transition>
+                            </Menu>
                           </td>
                         </tr>
                       ))}
