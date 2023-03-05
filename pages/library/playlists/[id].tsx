@@ -107,7 +107,7 @@ const LibraryPlaylist: NextPage = () => {
         console.log(res);
         fac
           .getColorAsync(res.request?.responseURL, {
-            algorithm: "sqrt",
+            algorithm: "dominant",
             ignoredColor: [
               [255, 255, 255, 255, 55], // White
               [0, 0, 0, 255, 20], // Black
