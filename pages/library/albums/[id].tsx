@@ -119,7 +119,7 @@ const LibraryAlbum: NextPage = () => {
   const fac = new FastAverageColor();
 
   const getAverageColor = (url: string) => {
-    axios
+    const request = axios
       .get(url, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -140,8 +140,9 @@ const LibraryAlbum: NextPage = () => {
           })
           .then((color) => {
             setBgColor(color.rgb);
-          }).catch((err) => {
-            console.log("oof", err)
+          })
+          .catch((err) => {
+            console.log("oof", err);
           });
       });
     // setBgColor(color.rgb);

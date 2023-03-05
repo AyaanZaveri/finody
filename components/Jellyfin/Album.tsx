@@ -53,7 +53,7 @@ const Album = ({ album }: Props) => {
                   {album.ArtistItems[0].Name}
                 </span>
                 {/* show the production year in a chip */}
-                <span className="inline-flex mt-1.5 items-center gap-1 text-start text-xs font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-slate-700">
+                <span className="inline-flex mt-1.5 items-center gap-1 text-start text-xs font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md w-min ring-1 ring-slate-700">
                   {album.ProductionYear}
                 </span>
               </button>
@@ -76,7 +76,7 @@ const Album = ({ album }: Props) => {
                   <div className="w-40 h-4 bg-slate-800/30 animate-pulse"></div>
                 </span>
                 {/* show the production year in a chip */}
-                <span className="inline-flex mt-1.5 items-center gap-1 text-start text-xs font-normal text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-10 h-4 bg-slate-800/30 animate-pulse">
+                <span className="inline-flex mt-1.5 items-center gap-1 text-start text-xs font-normal text-white py-0.5 px-2.5 rounded-md w-10 h-4 bg-slate-800/30 animate-pulse">
                 </span>
               </button>
             </div>
