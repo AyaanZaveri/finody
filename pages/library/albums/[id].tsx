@@ -140,6 +140,8 @@ const LibraryAlbum: NextPage = () => {
           })
           .then((color) => {
             setBgColor(color.rgb);
+          }).catch((err) => {
+            console.log("oof", err)
           });
       });
     // setBgColor(color.rgb);
