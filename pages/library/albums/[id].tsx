@@ -8,7 +8,7 @@ import { useRecoilState } from "recoil";
 import { titleCase } from "title-case";
 import Tilt from "react-parallax-tilt";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
-import { getAudioApi } from "@jellyfin/sdk/lib/utils/api/audio-api";
+import { getPlaylistsApi } from "@jellyfin/sdk/lib/utils/api/playlists-api";
 import { getUniversalAudioApi } from "@jellyfin/sdk/lib/utils/api/universal-audio-api";
 import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
@@ -28,7 +28,7 @@ import { FastAverageColor } from "fast-average-color";
 import { bgColourState } from "../../../atoms/colourState";
 import { sidebarWidthState } from "../../../atoms/sidebarAtom";
 import Album from "../../../components/Jellyfin/Album";
-import { Menu, Transition } from "@headlessui/react";
+import { Dialog, Menu, Transition } from "@headlessui/react";
 
 const LibraryAlbum: NextPage = () => {
   const { query } = useRouter();
@@ -59,8 +59,21 @@ const LibraryAlbum: NextPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
   const [musicQueue, setMusicQueue] = useRecoilState(musicQueueState);
+  const [userPlaylists, setUserPlaylists] = useState<any>([]);
 
   const myRef = useRef<any>(null);
+
+  const [playlistModal, setPlaylistModal] = useState<any>({
+    isOpen: false,
+    id: "",
+    trackName: "",
+  });
+
+  const [playlistToast, setPlaylistToast] = useState<any>({
+    isOpen: false,
+    playlistName: "",
+    trackName: "",
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -186,6 +199,53 @@ const LibraryAlbum: NextPage = () => {
   }, [api, user, albumInfo]);
 
   console.log("artistAlbums", artistAlbums);
+
+  const getUserPlaylists = async () => {
+    if (!api) return;
+    const items = getItemsApi(api).getItems({
+      userId: user?.Id,
+      includeItemTypes: ["Playlist"] as any,
+      recursive: true,
+      sortOrder: "Descending" as any,
+      startIndex: 0,
+    });
+
+    setUserPlaylists((await items)?.data?.Items);
+  };
+
+  useEffect(() => {
+    getUserPlaylists();
+  }, [api, user]);
+
+  const showPlaylistToast = (playlistName: string, trackName: string) => {
+    // show toast for 2 seconds
+    setPlaylistToast({
+      isOpen: true,
+      playlistName: playlistName,
+      trackName: trackName,
+    });
+
+    setTimeout(() => {
+      setPlaylistToast({
+        isOpen: false,
+        playlistName: "",
+        trackName: "",
+      });
+    }, 2000);
+  };
+
+  const addTrackToPlaylist = async (playlist: any, track: any) => {
+    if (!api) return;
+    const items = await getPlaylistsApi(api).addToPlaylist({
+      playlistId: playlist?.Id,
+      userId: user?.Id,
+      ids: [track?.id],
+    });
+
+    console.log("dkfosdkp", items);
+
+    showPlaylistToast("", track?.trackName);
+  };
 
   return (
     <div
@@ -456,9 +516,16 @@ const LibraryAlbum: NextPage = () => {
                                         <button
                                           className={`${
                                             active
-                                              ? "bg-emerald-500/50 active:bg-emerald-500/80"
+                                              ? "bg-emerald-500/50 active:bg-emerald-500/80 transition duration-300 ease-in-out"
                                               : "text-white"
                                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                          onClick={() => {
+                                            setPlaylistModal({
+                                              isOpen: true,
+                                              id: track?.Id,
+                                              trackName: track?.Name,
+                                            });
+                                          }}
                                         >
                                           <span className="flex flex-row items-center gap-2">
                                             <HiPlus className="w-5 h-5" />
@@ -472,7 +539,7 @@ const LibraryAlbum: NextPage = () => {
                                         <button
                                           className={`${
                                             active
-                                              ? "bg-emerald-500/50 active:bg-emerald-500/80"
+                                              ? "bg-emerald-500/50 active:bg-emerald-500/80 transition duration-300 ease-in-out"
                                               : "text-white"
                                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                         >
@@ -496,6 +563,103 @@ const LibraryAlbum: NextPage = () => {
               </div>
             </div>
           ) : null}
+          {/* {playlistModal ? (
+            <Dialog
+              open={playlistModal}
+              onClose={() => setPlaylistModal(false)}
+            >
+              <Dialog.Panel>
+                <Dialog.Title>Deactivate account</Dialog.Title>
+                <Dialog.Description>
+                  This will permanently deactivate your account
+                </Dialog.Description>
+
+                <p>
+                  Are you sure you want to deactivate your account? All of your
+                  data will be permanently removed. This action cannot be
+                  undone.
+                </p>
+
+                <button onClick={() => setPlaylistModal(false)}>
+                  Deactivate
+                </button>
+                <button onClick={() => setPlaylistModal(false)}>
+                  Cancel
+                </button>
+              </Dialog.Panel>
+            </Dialog>
+          ) : null}
+           */}
+          {
+            <Transition
+              show={playlistModal.isOpen}
+              enter="transition duration-100 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+              as={Fragment}
+            >
+              <Dialog
+                open={playlistModal.isOpen}
+                onClose={() =>
+                  setPlaylistModal({
+                    ...playlistModal,
+                    isOpen: false,
+                  })
+                }
+                className={`fixed z-50 inset-0 overflow-y-auto font-poppins ${
+                  playlistModal ? "block" : "hidden"
+                }`}
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-black/30" />
+                <div className="flex items-center justify-center min-h-screen">
+                  <div className="bg-slate-900/70 backdrop-blur-md rounded-md p-4 w-96">
+                    <Dialog.Title className="text-xl font-bold">
+                      Add to playlist
+                    </Dialog.Title>
+                    <Dialog.Description className="text-sm text-emerald-300">
+                      Select a playlist to add this song to
+                    </Dialog.Description>
+                    <div className="flex flex-col gap-2 mt-4">
+                      {userPlaylists?.length > 0 ? (
+                        userPlaylists.map((playlist: any) => (
+                          <span>
+                            <button
+                              className="flex flex-row items-center gap-2 w-full p-2 rounded-md hover:bg-slate-900/50 transition duration-200 ease-in-out"
+                              onClick={() => {
+                                addTrackToPlaylist(playlist, playlistModal);
+                                setPlaylistModal({
+                                  isOpen: false,
+                                  id: null,
+                                  trackName: null,
+                                });
+                              }}
+                            >
+                              <span className="flex flex-row items-center gap-2">
+                                <TbPlaylistAdd className="w-5 h-5" />
+                                <span>{playlist.Name}</span>
+                              </span>
+                            </button>
+                          </span>
+                        ))
+                      ) : (
+                        <div className="flex flex-col gap-2">
+                          <span className="text-sm font-medium">
+                            You don't have any playlists yet
+                          </span>
+                          <span className="text-sm text-slate-600">
+                            Create a playlist to add this song to
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Dialog>
+            </Transition>
+          }
           {artistAlbums && artistAlbums?.length > 0 && albumInfo ? (
             <div className="mt-4 flex flex-col gap-4">
               <span className="text-2xl font-medium">
@@ -508,6 +672,17 @@ const LibraryAlbum: NextPage = () => {
                       <Album album={album} />
                     ))
                   : null}
+              </div>
+            </div>
+          ) : null}
+          {playlistToast.isOpen ? (
+            <div className="fixed bottom-4 right-4">
+              <div className="flex flex-row items-center gap-2 p-4 bg-emerald-500/80 backdrop-blur-md rounded-md">
+                <TbPlaylistAdd className="w-5 h-5" />
+                <span className="text-sm font-medium">
+                  Added {playlistToast.trackName} to{" "}
+                  {playlistToast.playlistName}
+                </span>
               </div>
             </div>
           ) : null}
