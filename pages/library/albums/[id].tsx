@@ -12,8 +12,9 @@ import { getAudioApi } from "@jellyfin/sdk/lib/utils/api/audio-api";
 import { getUniversalAudioApi } from "@jellyfin/sdk/lib/utils/api/universal-audio-api";
 import { useJellyfin } from "../../../hooks/handleJellyfin";
 import { fancyTimeFormat } from "../../../utils/fancyTimeFormat";
-import { HiClock, HiDotsHorizontal, HiPlus } from "react-icons/hi";
+import { HiClock, HiDotsHorizontal, HiPlay, HiPlus } from "react-icons/hi";
 import { CgSpinner } from "react-icons/cg";
+import { TbPlaylistAdd } from "react-icons/tb";
 import {
   currentTrackState,
   playState,
@@ -58,13 +59,6 @@ const LibraryAlbum: NextPage = () => {
   const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
   const [musicQueue, setMusicQueue] = useRecoilState(musicQueueState);
-
-  const [menuOpen, setMenuOpen] = useState<
-    { id: string; open: boolean } | undefined
-  >({
-    id: "",
-    open: false,
-  });
 
   const myRef = useRef<any>(null);
 
@@ -244,7 +238,7 @@ const LibraryAlbum: NextPage = () => {
                     {albumInfo?.AlbumArtist}
                   </button>
                   {albumInfo?.ProductionYear ? (
-                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl w-min ring-1 ring-slate-700">
+                    <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md w-min ring-1 ring-slate-700">
                       <span>{albumInfo?.ProductionYear}</span>
                     </div>
                   ) : null}
@@ -268,7 +262,7 @@ const LibraryAlbum: NextPage = () => {
                   <div className="inline-flex items-center gap-2 text-lg font-medium mt-3">
                     <span className="text-slate-600 dark:text-white flex flex-row gap-2">
                       {albumInfo?.Genres?.map((genre: string) => (
-                        <div className="inline-flex items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md shadow-emerald-500/20 shadow-xl hover:shadow-emerald-500/50 ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
+                        <div className="inline-flex hover:scale-105 items-center gap-1 text-start text-sm font-normal bg-slate-800 text-white py-0.5 px-2.5 rounded-md ring-1 ring-slate-700 hover:ring-slate-600 transition duration-300 ease-in-out hover:cursor-pointer">
                           <span>{genre}</span>
                         </div>
                       ))}
@@ -358,12 +352,13 @@ const LibraryAlbum: NextPage = () => {
                       {tracksData?.map((track: any, index: number) => (
                         <tr
                           key={index}
-                          className={`text-slate-700 select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition duration-200 ease-in-out active:bg-slate-200/50 dark:active:bg-slate-800/80 hover:cursor-pointer ${
+                          tabIndex={0}
+                          className={`text-slate-700 group select-none dark:text-white hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition duration-200 ease-in-out active:bg-slate-800/80 hover:cursor-pointer ${
                             String(queryIndex) == String(index + 1)
                               ? "bg-emerald-500/20"
                               : ""
                           }`}
-                          onClick={() => {
+                          onDoubleClick={() => {
                             getSongInfo(
                               track,
                               api,
@@ -378,7 +373,28 @@ const LibraryAlbum: NextPage = () => {
                               : null
                           }
                         >
-                          <td className="text-center">{index + 1}</td>
+                          {/* show the index number but if group is hovered show play button */}
+                          <td className="text-center">
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <span className="text-slate-600 dark:text-white group-hover:hidden">
+                                {index + 1}
+                              </span>
+                              <button
+                                onClick={() => {
+                                  getSongInfo(
+                                    track,
+                                    api,
+                                    serverUrl,
+                                    setIsPlaying,
+                                    setPlayingTrack
+                                  );
+                                }}
+                                className="group-hover:scale-105 transition duration-300 ease-in-out group-hover:block hidden"
+                              >
+                                <PlayIcon className="h-5 w-5 text-emerald-500 hover:text-emerald-600 hover:scale-125 active:hover-emerald-700 transition duration-200 ease-in-out" />
+                              </button>
+                            </div>
+                          </td>
                           <td className="text-left flex flex-row gap-4 items-center">
                             <img
                               src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
@@ -417,7 +433,7 @@ const LibraryAlbum: NextPage = () => {
                           <td>
                             <Menu as="div" className="relative inline-block">
                               <div>
-                                <Menu.Button className="inline-flex justify-center w-full rounded-md shadow-sm px-4 py-2 text-sm font-medium text-white hover:bg-slate-900/50 transition duration-200 ease-in-out">
+                                <Menu.Button className="inline-flex justify-center w-full rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-slate-900/50 transition duration-200 ease-in-out">
                                   <span className="sr-only">
                                     Open options menu
                                   </span>
@@ -433,23 +449,36 @@ const LibraryAlbum: NextPage = () => {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                               >
-                                <Menu.Items className="absolute z-50 right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Items className="absolute z-50 right-0 w-56 mt-2 origin-top-right ring-1 ring-slate-700/50 bg-slate-800/50 backdrop-blur-sm divide-y divide-gray-100 rounded-md shadow-2xl focus:outline-none">
                                   <div className="px-1 py-1 ">
                                     <Menu.Item>
                                       {({ active }) => (
                                         <button
-                                          onClick={() => {
-                                            // addToPlaylist(track);
-                                          }}
                                           className={`${
                                             active
-                                              ? "bg-emerald-500 text-white"
-                                              : "text-gray-900"
+                                              ? "bg-emerald-500/50 active:bg-emerald-500/80"
+                                              : "text-white"
                                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                                         >
                                           <span className="flex flex-row items-center gap-2">
                                             <HiPlus className="w-5 h-5" />
                                             <span>Add to playlist</span>
+                                          </span>
+                                        </button>
+                                      )}
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <button
+                                          className={`${
+                                            active
+                                              ? "bg-emerald-500/50 active:bg-emerald-500/80"
+                                              : "text-white"
+                                          } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                        >
+                                          <span className="flex flex-row items-center gap-2">
+                                            <TbPlaylistAdd className="w-5 h-5" />
+                                            <span>Add to queue</span>
                                           </span>
                                         </button>
                                       )}
