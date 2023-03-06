@@ -68,7 +68,7 @@ const BAudioPlayer = () => {
           .onPlaybackProgress({
             userId: user?.Id,
             itemId: [playingTrack?.id] as any,
-            positionTicks: currentProgress?.new * 10000,
+            positionTicks: currentProgress?.new * 1000,
           })
           .then((res) => console.log(res))
           .catch((err) => console.log(err));
