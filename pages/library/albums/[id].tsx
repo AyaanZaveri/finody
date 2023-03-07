@@ -139,10 +139,8 @@ const LibraryAlbum: NextPage = () => {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Credentials": true
       },
-      withCredentials: true // set the withCredentials option to true
+      withCredentials: false // set the withCredentials option to false
       })
       .then((res) => {
         console.log(res);
