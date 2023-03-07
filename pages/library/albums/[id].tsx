@@ -140,11 +140,14 @@ const LibraryAlbum: NextPage = () => {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+          "Access-Control-Allow-Headers":
+            "Origin, X-Requested-With, Content-Type, Accept",
         },
       })
       .then((res) => {
-        // console.log(res);
+        if (res.status !== 200) return;
+        if (res.request?.responseURL?.length <= 0) return;
+
         fac
           .getColorAsync(res.request?.responseURL, {
             algorithm: "dominant",
