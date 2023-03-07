@@ -28,7 +28,7 @@ export const useFastAverageColor = (
           return setColor(color.rgb);
         })
         .catch((e) => {
-          console.log("Error fetching average color", e);
+          // console.log("Error fetching average color", e);
           return setColor("rgba(0, 0, 0, 0)");
         });
     } else if (srcLoaded) {

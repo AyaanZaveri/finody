@@ -19,5 +19,5 @@ export const getSongInfo = async (track: any, api: any, serverUrl: any, setIsPla
     parentIndexNumber: track.ParentIndexNumber,
   });
 
-  console.log("got em");
+  // console.log("got em");
 };

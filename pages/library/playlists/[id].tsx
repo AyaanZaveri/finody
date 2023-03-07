@@ -104,7 +104,7 @@ const LibraryPlaylist: NextPage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         fac
           .getColorAsync(res.request?.responseURL, {
             algorithm: "dominant",
@@ -141,7 +141,7 @@ const LibraryPlaylist: NextPage = () => {
     }
   }, [queryIndex]);
 
-  console.log(query.indexNumber);
+  // console.log(query.indexNumber);
 
   const executeScroll = () => myRef.current.scrollIntoView();
 

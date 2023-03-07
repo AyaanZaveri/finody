@@ -36,7 +36,7 @@ const Home: NextPage = () => {
 
       setAlbums(items.data.Items);
     } else {
-      console.log("no api, haha you suck lol");
+      // console.log("no api, haha you suck lol");
     }
   };
 

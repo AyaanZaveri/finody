@@ -87,7 +87,7 @@ const Navbar = () => {
 
   const { theme, setTheme, resolvedTheme } = useTheme();
 
-  console.log(searchRes);
+  // console.log(searchRes);
 
   return (
     <div className="fixed z-10 w-full select-none border-b border-slate-100 dark:border-slate-800">

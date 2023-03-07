@@ -45,7 +45,7 @@ const Sidebar = () => {
 
       setPlaylists(items.data.Items);
     } else {
-      console.log("no api, haha you suck lol");
+      // console.log("no api, haha you suck lol");
     }
   };
 
@@ -53,7 +53,7 @@ const Sidebar = () => {
     getPlaylistsData();
   }, [api]);
 
-  console.log(playlists);
+  // console.log(playlists);
 
   const sidebarRef = useRef<any>(null);
   const [isResizing, setIsResizing] = useState(false);
@@ -92,7 +92,7 @@ const Sidebar = () => {
     };
   }, [resize, stopResizing]);
 
-  console.log(sidebarWidth);
+  // console.log(sidebarWidth);
 
   const constrainSidebarWidth = (num: number) => {
     if (num < 240) {

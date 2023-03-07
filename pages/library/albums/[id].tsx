@@ -134,16 +134,17 @@ const LibraryAlbum: NextPage = () => {
   const fac = new FastAverageColor();
 
   const getAverageColor = (url: string) => {
+    if (!fac && url?.length <= 0) return;
     const request = axios
       .get(url, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      },
-      withCredentials: false // set the withCredentials option to false
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+        },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         fac
           .getColorAsync(res.request?.responseURL, {
             algorithm: "dominant",
@@ -158,10 +159,9 @@ const LibraryAlbum: NextPage = () => {
             setBgColor(color.rgb);
           })
           .catch((err) => {
-            console.log("oof", err);
+            // console.log("oof", err);
           });
       });
-    // setBgColor(color.rgb);
   };
 
   useEffect(() => {
@@ -187,11 +187,11 @@ const LibraryAlbum: NextPage = () => {
     }
   }, [queryIndex]);
 
-  console.log(query.indexNumber);
+  // console.log(query.indexNumber);
 
   // const executeScroll = () => myRef.current.scrollIntoView();
 
-  console.log("musicQueue", musicQueue);
+  // console.log("musicQueue", musicQueue);
 
   const color = "emerald";
 
@@ -199,7 +199,7 @@ const LibraryAlbum: NextPage = () => {
     getArtistAlbums();
   }, [api, user, albumInfo]);
 
-  console.log("artistAlbums", artistAlbums);
+  // console.log("artistAlbums", artistAlbums);
 
   const getUserPlaylists = async () => {
     if (!api) return;
@@ -243,7 +243,7 @@ const LibraryAlbum: NextPage = () => {
       ids: [track?.id],
     });
 
-    console.log("dkfosdkp", items);
+    // console.log("dkfosdkp", items);
 
     showPlaylistToast("", track?.trackName);
   };

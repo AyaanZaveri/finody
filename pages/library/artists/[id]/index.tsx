@@ -108,7 +108,7 @@ const LibraryArtist: NextPage = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         fac
           .getColorAsync(res.request?.responseURL, {
             algorithm: "dominant",
@@ -128,7 +128,7 @@ const LibraryArtist: NextPage = () => {
 
   const router = useRouter();
 
-  console.log("artistInfo", artistInfo);
+  // console.log("artistInfo", artistInfo);
 
   return (
     <div className={`ml-3 pl-[17rem] pr-12`}>
