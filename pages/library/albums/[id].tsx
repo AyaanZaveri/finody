@@ -289,12 +289,12 @@ const LibraryAlbum: NextPage = () => {
 
   return (
     <div
-      className={`ml-12 pr-12 ${playingTrack ? "pb-20" : "pb-12"}`}
+      className={`ml-12 pr-12`}
       style={{
         paddingLeft: sidebarWidth,
       }}
     >
-      <div className="pt-[4.5rem]">
+      <div className={`pt-[4.5rem] ${playingTrack?.url ? "pb-32" : "pb-12"}`}>
         <div
           style={{
             background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 100%)`,
