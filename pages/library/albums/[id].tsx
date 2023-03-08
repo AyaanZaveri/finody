@@ -708,7 +708,7 @@ const LibraryAlbum: NextPage = () => {
             </Transition>
           }
           {artistAlbums && artistAlbums?.length > 0 && albumInfo ? (
-            <div className="mt-4 flex flex-col gap-4">
+            <div className="mt-4 flex flex-col gap-4 select-none">
               <span className="text-2xl font-medium">
                 Discover{" "}
                 <span className="font-bold">{albumInfo?.AlbumArtist}</span>
