@@ -289,12 +289,12 @@ const LibraryAlbum: NextPage = () => {
 
   return (
     <div
-      className={`ml-12 pr-12`}
+      className={`ml-12 pr-12 ${playingTrack ? "pb-20" : "pb-12"}`}
       style={{
         paddingLeft: sidebarWidth,
       }}
     >
-      <div className="pt-[4.5rem] pb-24">
+      <div className="pt-[4.5rem]">
         <div
           style={{
             background: `linear-gradient(180deg, ${bgColor} 0%, rgba(0, 0, 0, 0) 100%)`,
@@ -706,7 +706,7 @@ const LibraryAlbum: NextPage = () => {
           {artistAlbums && artistAlbums?.length > 0 && albumInfo ? (
             <div className="mt-4 flex flex-col gap-4">
               <span className="text-2xl font-medium">
-                More from{" "}
+                Discover {" "}
                 <span className="font-bold">{albumInfo?.AlbumArtist}</span>
               </span>
               <div className="flex flex-row gap-4">
