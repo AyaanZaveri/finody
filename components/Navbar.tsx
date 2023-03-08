@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineMusicNote, HiOutlineSearch } from "react-icons/hi";
 import { pipedApiUrl, tildaApiUrl } from "../utils/apiUrl";
 import { useRouter } from "next/router";
 import {
@@ -16,6 +16,7 @@ import { bgColourState } from "../atoms/colourState";
 import { getItemsApi } from "@jellyfin/sdk/lib/utils/api/items-api";
 import { getArtistsApi } from "@jellyfin/sdk/lib/utils/api/artists-api";
 import { sidebarWidthState } from "../atoms/sidebarAtom";
+import { musicQueueState } from "../atoms/playState";
 
 const Navbar = () => {
   const signOut = () => {
@@ -66,7 +67,9 @@ const Navbar = () => {
   const handleSearch = (e: any, item: any) => {
     e.preventDefault();
     setShowSuggestions(false);
-    router.push(`/library/albums/${item?.AlbumId}?indexNumber=${item?.IndexNumber}`);
+    router.push(
+      `/library/albums/${item?.AlbumId}?indexNumber=${item?.IndexNumber}`
+    );
   };
 
   useEffect(() => {
@@ -91,7 +94,8 @@ const Navbar = () => {
 
   return (
     <div className="fixed z-10 w-full select-none border-b border-slate-100 dark:border-slate-800">
-      <div className="flex flex-col relative"
+      <div
+        className="flex flex-col relative"
         style={{
           marginLeft: sidebarWidth,
         }}

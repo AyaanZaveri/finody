@@ -720,7 +720,7 @@ const LibraryAlbum: NextPage = () => {
                 Discover{" "}
                 <span className="font-bold">{albumInfo?.AlbumArtist}</span>
               </span>
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-row gap-4 overflow-x-auto">
                 {artistAlbums && artistAlbums?.length > 0 && albumInfo
                   ? artistAlbums?.map((album: any, index: number) => (
                       <Album album={album} />

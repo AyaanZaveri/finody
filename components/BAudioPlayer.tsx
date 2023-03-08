@@ -31,12 +31,15 @@ import {
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api/playstate-api";
 import { useJellyfin } from "../hooks/handleJellyfin";
 import { getSongInfo } from "../utils/getSongInfo";
+import { QueueListIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Dialog } from "@headlessui/react";
 
 const BAudioPlayer = () => {
   const player = useRef<any>();
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
   const [queue, setQueue] = useRecoilState<any>(musicQueueState);
+  const [showQueue, setShowQueue] = useState(false);
   const [currentProgress, setCurrentProgress] = useState(0);
 
   const { user, api, serverUrl } = useJellyfin();
@@ -203,6 +206,74 @@ const BAudioPlayer = () => {
                 }}
               />
             </div>
+            <div className="absolute right-0 flex flex-row gap-3 pr-8">
+              <div className="flex flex-row gap-3">
+                <div className="flex flex-row gap-3">
+                  <button
+                    onClick={() => setShowQueue(!showQueue)}
+                    className="h-10 w-10 inline-flex items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 bg-slate-800 active:bg-slate-600 rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20"
+                  >
+                    <QueueListIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            {showQueue ? (
+              // make a small widget using Dialog that shows the queue on the right side above the queue button
+              <Dialog
+                open={showQueue}
+                onClose={() => setShowQueue(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                className="z-50 fixed right-8 bottom-20 bg-slate-900/75 backdrop-blur-md scrollbar h-[22rem] overflow-y-auto w-72 rounded-lg ring-1 ring-slate-800"
+              >
+                <div className="py-6 px-4">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex flex-row gap-3">
+                      <span className="font-semibold inline-flex items-center text-2xl ml-3">
+                        Queue
+                        <QueueListIcon className="w-5 h-5 inline-block ml-2" />
+                      </span>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      {queue.map((track: any, index: number) => (
+                        <div
+                          key={index}
+                          className="flex flex-row gap-3 items-center justify-between hover:bg-slate-800/80 hover:scale-[1.02] transition duration-200 ease-in-out p-3 rounded-lg cursor-pointer"
+                        >
+                          <div className="flex flex-row gap-2.5 items-center">
+                            <div className="group relative flex items-center justify-center overflow-hidden transition-all">
+                              <Tilt
+                                glareEnable={true}
+                                glareMaxOpacity={0.8}
+                                glareColor="#ffffff"
+                                glarePosition="bottom"
+                                glareBorderRadius="6px"
+                              >
+                                <img
+                                  draggable={false}
+                                  className="w-10 rounded-md"
+                                  src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
+                                  alt=""
+                                />
+                              </Tilt>
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <span className="font-semibold">
+                                {track?.Name}
+                              </span>
+                              <span className="font-normal text-xs">
+                                {track?.AlbumArtist}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Dialog>
+            ) : null}
           </div>
         </div>
       ) : null}
