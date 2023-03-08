@@ -15,7 +15,7 @@ export const currentTrackState = atom({
     duration: 0,
     cover: '',
     url: '',
-    parentIndexNumber: 0,
+    index: 0,
   },
 });
 

@@ -304,7 +304,7 @@ const LibraryAlbum: NextPage = () => {
         ></div>
         <div className="pt-16 w-full">
           <div className="flex w-full flex-row items-start gap-12">
-            <div className="transition-all duration-1000 ease-in-out hover:scale-105">
+            <div className="transition-all duration-1000 ease-in-out hover:scale-[1.03]">
               <Tilt
                 glareEnable={true}
                 glareMaxOpacity={0.8}
@@ -464,8 +464,11 @@ const LibraryAlbum: NextPage = () => {
                               api,
                               serverUrl,
                               setIsPlaying,
-                              setPlayingTrack
+                              setPlayingTrack,
+                              index
                             );
+                            setQueue(tracksData);
+                            console.log("tracktrack", track);
                           }}
                           ref={
                             String(queryIndex) == String(index + 2)
@@ -486,7 +489,8 @@ const LibraryAlbum: NextPage = () => {
                                     api,
                                     serverUrl,
                                     setIsPlaying,
-                                    setPlayingTrack
+                                    setPlayingTrack,
+                                    index
                                   );
                                 }}
                                 className="group-hover:scale-105 transition duration-300 ease-in-out group-hover:block hidden"
@@ -706,7 +710,7 @@ const LibraryAlbum: NextPage = () => {
           {artistAlbums && artistAlbums?.length > 0 && albumInfo ? (
             <div className="mt-4 flex flex-col gap-4">
               <span className="text-2xl font-medium">
-                Discover {" "}
+                Discover{" "}
                 <span className="font-bold">{albumInfo?.AlbumArtist}</span>
               </span>
               <div className="flex flex-row gap-4">

@@ -36,11 +36,8 @@ const BAudioPlayer = () => {
   const player = useRef<any>();
   const [isPlaying, setIsPlaying] = useRecoilState(playState);
   const [playingTrack, setPlayingTrack] = useRecoilState(currentTrackState);
-  const [musicQueue, setMusicQueue] = useRecoilState<any>(musicQueueState);
-  const [currentProgress, setCurrentProgress] = useState({
-    old: 0,
-    new: 0,
-  });
+  const [queue, setQueue] = useRecoilState<any>(musicQueueState);
+  const [currentProgress, setCurrentProgress] = useState(0);
 
   const { user, api, serverUrl } = useJellyfin();
 
@@ -62,17 +59,15 @@ const BAudioPlayer = () => {
 
   useEffect(() => {
     if (!api && !user) return;
-    if (currentProgress?.new !== currentProgress?.old) {
-      if (isPlaying && playingTrack?.url) {
-        getPlaystateApi(api)
-          .onPlaybackProgress({
-            userId: user?.Id,
-            itemId: [playingTrack?.id] as any,
-            positionTicks: currentProgress?.new * 1000,
-          })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
-      }
+    if (isPlaying && playingTrack?.url) {
+      getPlaystateApi(api)
+        .onPlaybackProgress({
+          userId: user?.Id,
+          itemId: [playingTrack?.id] as any,
+          positionTicks: currentProgress,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     }
   }, [currentProgress]);
 
@@ -81,20 +76,38 @@ const BAudioPlayer = () => {
   // console.log(currentProgress);
   // console.log(
   //   "queuheiuwrh",
-  //   queue ? queue[playingTrack?.parentIndexNumber + 1] : null
+  //   queue ? queue[playingTrack?.index + 1] : null
   // );
 
-  console.log(musicQueue)
+  console.log("queuequeue", playingTrack);
 
-  const handleEnd = () => {
+  const handleNext = () => {
+    if (!queue) return;
+    if (playingTrack.index == queue?.length - 1) return;
     getSongInfo(
-      musicQueue[playingTrack?.parentIndexNumber + 1],
+      queue[playingTrack?.index + 1],
       api,
-      serverUrl,
+      serverUrl as string,
       setIsPlaying,
-      setPlayingTrack
+      setPlayingTrack,
+      playingTrack?.index + 1
     );
   };
+
+  const handlePrev = () => {
+    if (!queue) return;
+    if (playingTrack.index == 0) return;
+    getSongInfo(
+      queue[playingTrack?.index - 1],
+      api,
+      serverUrl as string,
+      setIsPlaying,
+      setPlayingTrack,
+      playingTrack?.index - 1
+    );
+  };
+
+  console.log("curprog", currentProgress);
 
   return (
     <div className="z-20 select-none">
@@ -139,21 +152,22 @@ const BAudioPlayer = () => {
             </div>
             <div className="w-[55%]">
               <AudioPlayer
-                onListen={(e: any) =>
-                  setCurrentProgress({
-                    old: currentProgress?.new,
-                    new: e?.timeStamp,
-                  })
+                // get the current time of the audio
+                onListen={(e) =>
+                  setCurrentProgress(
+                    (e.target as HTMLAudioElement)?.currentTime
+                  )
                 }
+                listenInterval={1000}
                 onPause={() => setIsPlaying(false)}
                 onPlay={() => setIsPlaying(true)}
                 ref={player}
                 autoPlay={true}
                 showSkipControls={true}
                 src={playingTrack?.url}
-                onEnded={handleEnd}
-                // onClickNext={handleNext}
-                // onClickPrevious={handlePrev}
+                onEnded={handleNext}
+                onClickNext={handleNext}
+                onClickPrevious={handlePrev}
                 className="outline-none"
                 customIcons={{
                   forward: <FastForward24Filled />,
