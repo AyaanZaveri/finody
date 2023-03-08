@@ -322,7 +322,8 @@ const LibraryPlaylist: NextPage = () => {
                               api,
                               serverUrl,
                               setIsPlaying,
-                              setPlayingTrack
+                              setPlayingTrack,
+                              index
                             );
                           }}
                           ref={

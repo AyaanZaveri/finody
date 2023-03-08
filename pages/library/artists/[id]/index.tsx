@@ -278,7 +278,8 @@ const LibraryArtist: NextPage = () => {
                               api,
                               serverUrl,
                               setIsPlaying,
-                              setPlayingTrack
+                              setPlayingTrack,
+                              index
                             );
                           }}
                         >
