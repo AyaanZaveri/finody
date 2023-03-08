@@ -58,7 +58,7 @@ const LibraryAlbum: NextPage = () => {
   const [sortBy, setSortBy] = useState<string>("SortName");
   const [sortOrder, setSortOrder] = useState<string>("Ascending");
 
-  const [musicQueue, setMusicQueue] = useRecoilState(musicQueueState);
+  const [queue, setQueue] = useRecoilState<any>(musicQueueState);
   const [userPlaylists, setUserPlaylists] = useState<any>([]);
 
   const myRef = useRef<any>(null);
@@ -133,49 +133,76 @@ const LibraryAlbum: NextPage = () => {
 
   const fac = new FastAverageColor();
 
-  const getAverageColor = (url: string) => {
-    if (!fac && url?.length <= 0) return;
-    const request = axios
-      .get(url, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          "Access-Control-Allow-Headers":
-            "Origin, X-Requested-With, Content-Type, Accept",
-        },
-      })
-      .then((res) => {
-        if (res.status !== 200) return;
-        if (res.request?.responseURL?.length <= 0) return;
+  // const getAverageColor = (url: string) => {
+  //   if (!fac && url?.length <= 0) return;
+  //   const request = axios
+  //     .get(url, {
+  //       headers: {
+  //         "Access-Control-Allow-Origin": "*",
+  //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  //         "Access-Control-Allow-Headers":
+  //           "Origin, X-Requested-With, Content-Type, Accept",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       if (res.status !== 200) return;
+  //       if (res.request?.responseURL?.length <= 0) return;
 
-        fac
-          .getColorAsync(res.request?.responseURL, {
-            algorithm: "dominant",
-            ignoredColor: [
-              [255, 255, 255, 255, 55], // White
-              [0, 0, 0, 255, 20], // Black
-              [0, 0, 0, 0, 20], // Transparent
-            ],
-            mode: "speed",
-          })
-          .then((color) => {
-            setBgColor(color.rgb);
-          })
-          .catch((err) => {
-            // console.log("oof", err);
-          });
-      });
-  };
-
-  useEffect(() => {
-    setMusicQueue(tracksData);
-  }, [tracksData]);
+  //       fac
+  //         .getColorAsync(res.request?.responseURL, {
+  //           algorithm: "dominant",
+  //           ignoredColor: [
+  //             [255, 255, 255, 255, 55], // White
+  //             [0, 0, 0, 255, 20], // Black
+  //             [0, 0, 0, 0, 20], // Transparent
+  //           ],
+  //           mode: "speed",
+  //         })
+  //         .then((color) => {
+  //           setBgColor(color.rgb);
+  //         })
+  //         .catch((err) => {
+  //           // console.log("oof", err);
+  //         });
+  //     });
+  // };
 
   useEffect(() => {
     if (albumInfo) {
-      getAverageColor(
-        `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
-      );
+      const request = axios
+        .get(
+          `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+              "Access-Control-Allow-Headers":
+                "Origin, X-Requested-With, Content-Type, Accept",
+            },
+          }
+        )
+        .then((res) => {
+          if (res.status !== 200) return;
+          if (res.request?.responseURL?.length <= 0) return;
+
+          fac
+            .getColorAsync(res.request?.responseURL, {
+              algorithm: "dominant",
+              ignoredColor: [
+                [255, 255, 255, 255, 55], // White
+                [0, 0, 0, 255, 20], // Black
+                [0, 0, 0, 0, 20], // Transparent
+              ],
+              mode: "speed",
+            })
+            .then((color) => {
+              setBgColor(color.rgb);
+            })
+            .catch((err) => {
+              // console.log("oof", err);
+            });
+        });
     }
   }, [albumInfo]);
 
@@ -251,6 +278,15 @@ const LibraryAlbum: NextPage = () => {
     showPlaylistToast("", track?.trackName);
   };
 
+  const addTrackToQueue = async (track: any) => {
+    if (!api) return;
+    setQueue((prev: any) => [...prev, { ...track, queueId: track?.id }]);
+  };
+
+  useEffect(() => {
+    console.log("queue", queue);
+  }, [queue]);
+
   return (
     <div
       className={`ml-12 pr-12`}
@@ -284,7 +320,7 @@ const LibraryAlbum: NextPage = () => {
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
-                      onLoad={(e) => getAverageColor(e.target.src)}
+                      // onLoad={(e) => getAverageColor(e.target.src)}
                     />
                   </div>
                 ) : null}
@@ -546,6 +582,9 @@ const LibraryAlbum: NextPage = () => {
                                               ? "bg-emerald-500/50 active:bg-emerald-500/80 transition duration-300 ease-in-out"
                                               : "text-white"
                                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                                          onClick={() => {
+                                            addTrackToQueue(track);
+                                          }}
                                         >
                                           <span className="flex flex-row items-center gap-2">
                                             <TbPlaylistAdd className="w-5 h-5" />

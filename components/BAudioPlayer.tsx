@@ -84,24 +84,16 @@ const BAudioPlayer = () => {
   //   queue ? queue[playingTrack?.parentIndexNumber + 1] : null
   // );
 
-  // Add a song to the queue
-  function addToQueue(song: string) {
-    setMusicQueue([...musicQueue, song]);
-  }
-
-  // Remove a song from the queue
-  function removeFromQueue(song: string) {
-    setMusicQueue(musicQueue.filter((item: any) => item !== song));
-  }
-
-  // Clear the entire queue
-  function clearQueue() {
-    setMusicQueue([]);
-  }
+  console.log(musicQueue)
 
   const handleEnd = () => {
-    removeFromQueue(musicQueue);
-    setPlayingTrack(musicQueue[1]);
+    getSongInfo(
+      musicQueue[playingTrack?.parentIndexNumber + 1],
+      api,
+      serverUrl,
+      setIsPlaying,
+      setPlayingTrack
+    );
   };
 
   return (
