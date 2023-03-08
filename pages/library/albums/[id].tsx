@@ -458,7 +458,7 @@ const LibraryAlbum: NextPage = () => {
                               ? "bg-emerald-500/20"
                               : ""
                           }`}
-                          onDoubleClick={() => {
+                          onClick={() => {
                             getSongInfo(
                               track,
                               api,
@@ -537,7 +537,12 @@ const LibraryAlbum: NextPage = () => {
                           <td>
                             <Menu as="div" className="relative inline-block">
                               <div>
-                                <Menu.Button className="inline-flex justify-center w-full rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-slate-900/50 transition duration-200 ease-in-out">
+                                <Menu.Button
+                                  onClick={(e: any) => {
+                                    e.stopPropagation();
+                                  }}
+                                  className="inline-flex justify-center w-full rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-slate-900/50 transition duration-200 ease-in-out"
+                                >
                                   <span className="sr-only">
                                     Open options menu
                                   </span>
@@ -563,7 +568,8 @@ const LibraryAlbum: NextPage = () => {
                                               ? "bg-emerald-500/50 active:bg-emerald-500/80 transition duration-300 ease-in-out"
                                               : "text-white"
                                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                          onClick={() => {
+                                          onClick={(e) => {
+                                            e.stopPropagation();
                                             setPlaylistModal({
                                               isOpen: true,
                                               id: track?.Id,
@@ -586,7 +592,8 @@ const LibraryAlbum: NextPage = () => {
                                               ? "bg-emerald-500/50 active:bg-emerald-500/80 transition duration-300 ease-in-out"
                                               : "text-white"
                                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                                          onClick={() => {
+                                          onClick={(e) => {
+                                            e.stopPropagation();
                                             addTrackToQueue(track);
                                           }}
                                         >
