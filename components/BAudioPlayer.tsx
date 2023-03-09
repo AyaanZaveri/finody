@@ -280,8 +280,8 @@ const BAudioPlayer = () => {
                                 />
                               </Tilt>
                             </div>
-                            <div className="flex flex-col gap-1">
-                              <span className="font-bold text-sm">
+                            <div className="flex flex-col overflow-hidden">
+                              <span className="font-bold text-sm overflow-hidden break-all">
                                 {track?.Name}
                               </span>
                               <span className="font-normal text-xs">
