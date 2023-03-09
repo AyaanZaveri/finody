@@ -167,44 +167,42 @@ const LibraryAlbum: NextPage = () => {
   //     });
   // };
 
-  useEffect(() => {
-    if (albumInfo) {
-      const request = axios
-        .get(
-          `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`,
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods":
-                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-              "Access-Control-Allow-Headers":
-                "Origin, X-Requested-With, Content-Type, Accept",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.status !== 200) return;
-          if (res.request?.responseURL?.length <= 0) return;
+  // make the function above async and await the axios request
 
-          fac
-            .getColorAsync(res.request?.responseURL, {
-              algorithm: "dominant",
-              ignoredColor: [
-                [255, 255, 255, 255, 55], // White
-                [0, 0, 0, 255, 20], // Black
-                [0, 0, 0, 0, 20], // Transparent
-              ],
-              mode: "speed",
-            })
-            .then((color) => {
-              setBgColor(color.rgb);
-            })
-            .catch((err) => {
-              // console.log("oof", err);
-            });
-        });
-    }
-  }, [albumInfo]);
+  const getAverageColor = async (url: string) => {
+    if (!fac && url?.length <= 0) return;
+    const request = await axios
+      .get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+          "Access-Control-Allow-Headers":
+            "Origin, X-Requested-With, Content-Type, Accept",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+      .then((res) => {
+        if (res.status !== 200) return;
+        if (res.request?.responseURL?.length <= 0) return;
+
+        fac
+          .getColorAsync(res.request?.responseURL, {
+            algorithm: "dominant",
+            ignoredColor: [
+              [255, 255, 255, 255, 55], // White
+              [0, 0, 0, 255, 20], // Black
+              [0, 0, 0, 0, 20], // Transparent
+            ],
+            mode: "speed",
+          })
+          .then((color) => {
+            setBgColor(color.rgb);
+          })
+          .catch((err) => {
+            // console.log("oof", err);
+          });
+      });
+  };
 
   useEffect(() => {
     if (albumInfo && query?.indexNumber) {
@@ -320,7 +318,7 @@ const LibraryAlbum: NextPage = () => {
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt=""
                       // @ts-ignore
-                      // onLoad={(e) => getAverageColor(e.target.src)}
+                      onLoad={(e) => getAverageColor(e.target.src)}
                     />
                   </div>
                 ) : null}
@@ -669,7 +667,7 @@ const LibraryAlbum: NextPage = () => {
               >
                 <Dialog.Overlay className="fixed inset-0 bg-black/30" />
                 <div className="flex items-center justify-center min-h-screen">
-                  <div className="bg-slate-900/70 backdrop-blur-md rounded-md p-4 w-96">
+                  <div className="bg-slate-900/70 backdrop-blur-md rounded-md p-4 w-96 ring-1 ring-slate-700 shadow-2xl shadow-emerald-500/10">
                     <Dialog.Title className="text-xl font-bold">
                       Add to playlist
                     </Dialog.Title>
@@ -681,7 +679,7 @@ const LibraryAlbum: NextPage = () => {
                         userPlaylists.map((playlist: any) => (
                           <span>
                             <button
-                              className="flex flex-row items-center gap-2 w-full p-2 rounded-md hover:bg-slate-900/50 transition duration-200 ease-in-out"
+                              className="flex flex-row items-center gap-2 w-full p-2 rounded-md hover:bg-slate-800/30 transition duration-200 ease-in-out"
                               onClick={() => {
                                 addTrackToPlaylist(playlist, playlistModal);
                                 setPlaylistModal({
@@ -720,7 +718,7 @@ const LibraryAlbum: NextPage = () => {
                 Discover{" "}
                 <span className="font-bold">{albumInfo?.AlbumArtist}</span>
               </span>
-              <div className="flex flex-row gap-4 overflow-x-auto">
+              <div className="flex flex-row gap-4 flex-wrap">
                 {artistAlbums && artistAlbums?.length > 0 && albumInfo
                   ? artistAlbums?.map((album: any, index: number) => (
                       <Album album={album} />

@@ -112,6 +112,17 @@ const BAudioPlayer = () => {
 
   console.log("curprog", currentProgress);
 
+  const handlePlay = (track: any) => {
+    getSongInfo(
+      track,
+      api,
+      serverUrl as string,
+      setIsPlaying,
+      setPlayingTrack,
+      track.index
+    );
+  };
+
   return (
     <div className="z-20 select-none">
       {playingTrack?.url ? (
@@ -225,7 +236,7 @@ const BAudioPlayer = () => {
                 onClose={() => setShowQueue(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                className="z-50 fixed right-8 bottom-20 bg-slate-900/75 backdrop-blur-md scrollbar h-[22rem] overflow-y-auto w-72 rounded-lg ring-1 ring-slate-800"
+                className="z-50 fixed right-8 bottom-20 bg-slate-900/50 select-none backdrop-blur-md scrollbar h-[22rem] overflow-y-auto w-72 rounded-lg ring-1 ring-slate-800"
               >
                 <div className="py-6 px-4">
                   <div className="flex flex-col gap-3">
@@ -239,7 +250,18 @@ const BAudioPlayer = () => {
                       {queue.map((track: any, index: number) => (
                         <div
                           key={index}
-                          className="flex flex-row gap-3 items-center justify-between hover:bg-slate-800/80 hover:scale-[1.02] transition duration-200 ease-in-out p-3 rounded-lg cursor-pointer"
+                          className={`flex flex-row gap-3 items-center justify-between hover:bg-slate-800/80 hover:scale-[1.02] transition duration-200 ease-in-out p-3 rounded-lg cursor-pointer ${
+                            track?.Id === playingTrack?.id
+                              ? "bg-emerald-800/80 hover:bg-emerald-800"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            handlePlay({
+                              ...track,
+                              index: index,
+                            });
+                            setShowQueue(false);
+                          }}
                         >
                           <div className="flex flex-row gap-2.5 items-center">
                             <div className="group relative flex items-center justify-center overflow-hidden transition-all">
@@ -259,7 +281,7 @@ const BAudioPlayer = () => {
                               </Tilt>
                             </div>
                             <div className="flex flex-col gap-1">
-                              <span className="font-semibold">
+                              <span className="font-bold text-sm">
                                 {track?.Name}
                               </span>
                               <span className="font-normal text-xs">
