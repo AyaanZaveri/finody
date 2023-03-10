@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { Fragment, createRef, useEffect, useRef, useState } from "react";
 import {
   HiFastForward,
   HiPause,
@@ -31,8 +31,9 @@ import {
 import { getPlaystateApi } from "@jellyfin/sdk/lib/utils/api/playstate-api";
 import { useJellyfin } from "../hooks/handleJellyfin";
 import { getSongInfo } from "../utils/getSongInfo";
-import { QueueListIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { Dialog } from "@headlessui/react";
+import { QueueListIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Dialog, Transition } from "@headlessui/react";
+import Image from "next/image";
 
 const BAudioPlayer = () => {
   const player = useRef<any>();
@@ -126,61 +127,12 @@ const BAudioPlayer = () => {
     );
   };
 
-  // useEffect(() => {
-  //   if (!playingTrack) return;
-  //   if (!player.current) return;
+  const handleRemoveFromQueue = (index: number) => {
+    const newQueue = queue.filter((track: any, i: number) => i !== index);
+    setQueue(newQueue);
+  };
 
-  //   const audioCtx = new AudioContext();
-  //   const analyser = audioCtx.createAnalyser();
-  //   const source = audioCtx.createMediaElementSource(
-  //     player.current.audio.current
-  //   );
-  //   source.connect(analyser);
-  //   analyser.connect(audioCtx.destination);
-  //   analyser.fftSize = 256;
-
-  //   const bufferLength = analyser.frequencyBinCount;
-  //   const dataArray = new Uint8Array(bufferLength);
-
-  //   const canvasCtx = canvas.current.getContext("2d");
-
-  //   const WIDTH = canvas.current.width;
-  //   const HEIGHT = canvas.current.height;
-
-  //   const barWidth = (WIDTH / bufferLength) * 2.5;
-  //   let barHeight;
-  //   let x = 0;
-
-  //   function renderFrame() {
-  //     requestAnimationFrame(renderFrame);
-
-  //     x = 0;
-
-  //     analyser.getByteFrequencyData(dataArray);
-
-  //     canvasCtx!.fillStyle = "rgba(0, 0, 0, 0)";
-  //     canvasCtx!.fillRect(0, 0, WIDTH, HEIGHT);
-
-  //     for (let i = 0; i < bufferLength; i++) {
-  //       barHeight = dataArray[i];
-
-  //       const r = barHeight + 25 * (i / bufferLength);
-  //       const g = 250 * (i / bufferLength);
-  //       const b = 50;
-
-  //       canvasCtx!.fillStyle = `rgb(${r}, ${g}, ${b})`;
-  //       canvasCtx!.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
-
-  //       x += barWidth + 1;
-  //     }
-  //   }
-
-  //   renderFrame();
-  // }, [playingTrack]);
-
-  // create a music visualizer that has bars that go up and down based on the music
-
-  
+  console.log("qwuiqrwoiqueueueueueue", queue);
 
   return (
     <div className="z-20 select-none">
@@ -289,82 +241,119 @@ const BAudioPlayer = () => {
               </div>
             </div>
             {showQueue ? (
-              // make a small widget using Dialog that shows the queue on the right side above the queue button
-              <Dialog
-                open={showQueue}
-                onClose={() => setShowQueue(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                className="z-50 fixed right-8 bottom-20 bg-slate-900/50 select-none backdrop-blur-md scrollbar h-[22rem] overflow-y-auto w-72 rounded-lg ring-1 ring-slate-800"
+              <Transition
+                show={showQueue}
+                as={Fragment}
+                enter="transition ease-out duration-300"
+                enterFrom="transform translate-x-full"
+                enterTo="transform translate-x-0"
+                leave="transition ease-in duration-200"
+                leaveFrom="transform translate-x-0"
+                leaveTo="transform translate-x-full"
               >
-                <div className="py-6 px-4">
-                  <div className="flex flex-col gap-3">
-                    <div className="flex flex-row gap-3">
-                      <span className="font-semibold inline-flex items-center text-2xl ml-3">
-                        Queue
-                        <QueueListIcon className="w-5 h-5 inline-block ml-2" />
-                      </span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      {queue.map((track: any, index: number) => (
-                        <div
-                          key={index}
-                          className={`flex flex-row gap-3 items-center justify-between hover:bg-slate-800/80 hover:scale-[1.02] transition duration-200 ease-in-out p-3 rounded-lg cursor-pointer ${
-                            track?.Id === playingTrack?.id
-                              ? "bg-emerald-800/80 hover:bg-emerald-800"
-                              : ""
-                          }`}
-                          onClick={() => {
-                            handlePlay({
-                              ...track,
-                              index: index,
-                            });
-                            setShowQueue(false);
-                          }}
-                        >
-                          <div className="flex flex-row gap-2.5 items-center">
-                            <div className="group relative flex items-center justify-center overflow-hidden transition-all">
-                              <Tilt
-                                glareEnable={true}
-                                glareMaxOpacity={0.8}
-                                glareColor="#ffffff"
-                                glarePosition="bottom"
-                                glareBorderRadius="6px"
-                              >
-                                <img
-                                  draggable={false}
-                                  className="w-10 rounded-md"
-                                  src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
-                                  alt=""
-                                />
-                              </Tilt>
-                            </div>
-                            <div className="flex flex-col overflow-hidden">
-                              <span className="font-bold text-sm overflow-hidden break-all">
-                                {track?.Name}
-                              </span>
-                              <span className="font-normal text-xs">
-                                {track?.AlbumArtist}
-                              </span>
-                            </div>
-                          </div>
+                <Dialog
+                  as="div"
+                  className="z-50 fixed right-8 bottom-20 bg-slate-900/70 shadow-2xl shadow-emerald-500/10 select-none backdrop-blur-md scrollbar h-2/3 overflow-y-auto w-1/3 rounded-lg ring-1 ring-slate-800"
+                  onClose={() => setShowQueue(false)}
+                >
+                  {/* make a widget no overlay */}
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Dialog.Overlay className="fixed inset-0" />
+                  </Transition.Child>
+                  <div className="flex flex-col px-4 sm:block sm:p-0">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0 scale-95"
+                      enterTo="opacity-100 scale-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100 scale-100"
+                      leaveTo="opacity-0 scale-95"
+                    >
+                      <div className="inline-block w-full py-8 px-6 overflow-hidden text-left align-middle transition-all transform">
+                        <div className="flex flex-row justify-between">
+                          <Dialog.Title
+                            as="h3"
+                            className="text-2xl font-bold leading-6 ml-2 text-gray-900 dark:text-white"
+                          >
+                            Queue
+                          </Dialog.Title>
+                          <button
+                            onClick={() => setShowQueue(false)}
+                            className="h-10 w-10 inline-flex items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 bg-slate-800 active:bg-slate-600 rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20"
+                          >
+                            <XMarkIcon className="w-5 h-5" />
+                          </button>
                         </div>
-                      ))}
-                    </div>
+                        <div className="flex flex-col gap-1 mt-4">
+                          {queue.map((track: any, index: any) => (
+                            <div
+                              key={index}
+                              className={`flex flex-row gap-3 items-center justify-between hover:bg-slate-800/50 active:bg-slate-800/80 px-4 py-3 transition-colors duration-300 ease-in-out rounded-lg hover:cursor-pointer ${
+                                playingTrack?.id === track?.Id
+                                  ? "bg-emerald-800/50"
+                                  : null
+                              }`}
+                              onClick={() =>
+                                getSongInfo(
+                                  track,
+                                  api,
+                                  serverUrl as string,
+                                  setIsPlaying,
+                                  setPlayingTrack,
+                                  index
+                                )
+                              }
+                            >
+                              <div className="flex flex-row gap-3 items-center">
+                                <div className="group relative flex items-center justify-center overflow-hidden transition-all">
+                                  <img
+                                    src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
+                                    alt=""
+                                    className="w-12 h-12 rounded-lg"
+                                  />
+                                </div>
+                                <div className="flex flex-col justify-center">
+                                  <div className="flex flex-row gap-3">
+                                    <span className="inline-flex items-center gap-1 font-semibold">
+                                      {track?.Name}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className="font-normal text-sm w-12">
+                                      {track?.AlbumArtist}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="flex flex-row gap-3">
+                                <button
+                                  onClick={() => handleRemoveFromQueue(index)}
+                                  className="h-10 w-10 inline-flex items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 bg-slate-800 active:bg-slate-600 rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20"
+                                >
+                                  <TrashIcon className="w-5 h-5" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </Transition.Child>
                   </div>
-                </div>
-              </Dialog>
+                </Dialog>
+              </Transition>
             ) : null}
           </div>
         </div>
       ) : null}
-      {/* <canvas
-        id="visualizer"
-        className="fixed bottom-28 left-64 w-full h-1/3 z-50"
-        ref={canvas}
-      >
-        Your browser does not support the HTML5 canvas tag.
-      </canvas> */}
     </div>
   );
 };

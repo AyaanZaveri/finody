@@ -172,36 +172,28 @@ const LibraryAlbum: NextPage = () => {
 
   const getAverageColor = async (url: string) => {
     if (!fac && url?.length <= 0) return;
-    const request = await axios
-      .get(url, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          "Access-Control-Allow-Headers":
-            "Origin, X-Requested-With, Content-Type, Accept",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-      .then((res) => {
-        if (res.status !== 200) return;
-        if (res.request?.responseURL?.length <= 0) return;
 
-        fac
-          .getColorAsync(res.request?.responseURL, {
-            algorithm: "dominant",
-            ignoredColor: [
-              [255, 255, 255, 255, 55], // White
-              [0, 0, 0, 255, 20], // Black
-              [0, 0, 0, 0, 20], // Transparent
-            ],
-            mode: "speed",
-          })
-          .then((color) => {
-            setBgColor(color.rgb);
-          })
-          .catch((err) => {
-            // console.log("oof", err);
-          });
+    let downloadedImg = new Image();
+    downloadedImg.crossOrigin = "Anonymous";
+    // downloadedImg.addEventListener("load", imageReceived, false);
+    // downloadedImg.alt = imageDescription;
+    downloadedImg.src = url;
+
+    fac 
+      .getColorAsync(downloadedImg, {
+        algorithm: "dominant",
+        ignoredColor: [
+          [255, 255, 255, 255, 55], // White
+          [0, 0, 0, 255, 20], // Black
+          [0, 0, 0, 0, 20], // Transparent
+        ],
+        mode: "speed",
+      })
+      .then((color) => {
+        setBgColor(color.rgb);
+      })
+      .catch((err) => {
+        console.log("oof", err);
       });
   };
 
@@ -293,7 +285,9 @@ const LibraryAlbum: NextPage = () => {
         `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
       );
     } else {
-      setBgColor("rgba(0, 0, 0, 0.5)");
+      getAverageColor(
+        `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+      );
     }
   }, [albumInfo, albumImgLoaded]);
 
@@ -328,7 +322,7 @@ const LibraryAlbum: NextPage = () => {
                       draggable={false}
                       className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
-                      alt="the image for the album, slow wifi lol"
+                      alt="the image for the album"
                       onLoad={() => setAlbumImgLoaded(true)}
                     />
                   </div>
