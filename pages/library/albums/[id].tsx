@@ -323,9 +323,7 @@ const LibraryAlbum: NextPage = () => {
                       draggable={false}
                       className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
-                      alt=""
-                      // @ts-ignore
-                      onLoad={(e) => getAverageColor(e.target.src)}
+                      alt="the image for the album, slow wifi lol"
                     />
                   </div>
                 ) : null}
