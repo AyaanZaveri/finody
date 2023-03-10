@@ -60,6 +60,7 @@ const LibraryAlbum: NextPage = () => {
 
   const [queue, setQueue] = useRecoilState<any>(musicQueueState);
   const [userPlaylists, setUserPlaylists] = useState<any>([]);
+  const [albumImgLoaded, setAlbumImgLoaded] = useState<boolean>(false);
 
   const myRef = useRef<any>(null);
 
@@ -287,10 +288,14 @@ const LibraryAlbum: NextPage = () => {
 
   useEffect(() => {
     if (!albumInfo || !serverUrl) return;
-    getAverageColor(
-      `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
-    );
-  }, [albumInfo]);
+    if (albumImgLoaded) {
+      getAverageColor(
+        `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+      );
+    } else {
+      setBgColor("rgba(0, 0, 0, 0.5)");
+    }
+  }, [albumInfo, albumImgLoaded]);
 
   return (
     <div
@@ -324,6 +329,7 @@ const LibraryAlbum: NextPage = () => {
                       className="select-none rounded-xl shadow-2xl shadow-emerald-500/20 ring-2 ring-slate-400/30 hover:ring-slate-400 transition-all duration-1000 ease-in-out hover:shadow-emerald-500/60"
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt="the image for the album, slow wifi lol"
+                      onLoad={() => setAlbumImgLoaded(true)}
                     />
                   </div>
                 ) : null}
