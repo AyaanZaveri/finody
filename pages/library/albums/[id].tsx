@@ -285,6 +285,10 @@ const LibraryAlbum: NextPage = () => {
     console.log("queue", queue);
   }, [queue]);
 
+  useEffect(() => {
+    getAverageColor(`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`);
+  })
+
   return (
     <div
       className={`ml-12 pr-12`}
