@@ -286,8 +286,9 @@ const LibraryAlbum: NextPage = () => {
   }, [queue]);
 
   useEffect(() => {
+    if (!albumInfo || !serverUrl) return;
     getAverageColor(`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`);
-  })
+  }, [albumInfo, query?.id]);
 
   return (
     <div
