@@ -44,6 +44,9 @@ const BAudioPlayer = () => {
 
   const { user, api, serverUrl } = useJellyfin();
 
+  const canvas = useRef<any>(null);
+  const canvasCtx = useRef<any>(null);
+
   useEffect(() => {
     if (!api) return;
     if (isPlaying && playingTrack?.url) {
@@ -122,6 +125,62 @@ const BAudioPlayer = () => {
       track.index
     );
   };
+
+  // useEffect(() => {
+  //   if (!playingTrack) return;
+  //   if (!player.current) return;
+
+  //   const audioCtx = new AudioContext();
+  //   const analyser = audioCtx.createAnalyser();
+  //   const source = audioCtx.createMediaElementSource(
+  //     player.current.audio.current
+  //   );
+  //   source.connect(analyser);
+  //   analyser.connect(audioCtx.destination);
+  //   analyser.fftSize = 256;
+
+  //   const bufferLength = analyser.frequencyBinCount;
+  //   const dataArray = new Uint8Array(bufferLength);
+
+  //   const canvasCtx = canvas.current.getContext("2d");
+
+  //   const WIDTH = canvas.current.width;
+  //   const HEIGHT = canvas.current.height;
+
+  //   const barWidth = (WIDTH / bufferLength) * 2.5;
+  //   let barHeight;
+  //   let x = 0;
+
+  //   function renderFrame() {
+  //     requestAnimationFrame(renderFrame);
+
+  //     x = 0;
+
+  //     analyser.getByteFrequencyData(dataArray);
+
+  //     canvasCtx!.fillStyle = "rgba(0, 0, 0, 0)";
+  //     canvasCtx!.fillRect(0, 0, WIDTH, HEIGHT);
+
+  //     for (let i = 0; i < bufferLength; i++) {
+  //       barHeight = dataArray[i];
+
+  //       const r = barHeight + 25 * (i / bufferLength);
+  //       const g = 250 * (i / bufferLength);
+  //       const b = 50;
+
+  //       canvasCtx!.fillStyle = `rgb(${r}, ${g}, ${b})`;
+  //       canvasCtx!.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+  //       x += barWidth + 1;
+  //     }
+  //   }
+
+  //   renderFrame();
+  // }, [playingTrack]);
+
+  // create a music visualizer that has bars that go up and down based on the music
+
+  
 
   return (
     <div className="z-20 select-none">
@@ -299,6 +358,13 @@ const BAudioPlayer = () => {
           </div>
         </div>
       ) : null}
+      {/* <canvas
+        id="visualizer"
+        className="fixed bottom-28 left-64 w-full h-1/3 z-50"
+        ref={canvas}
+      >
+        Your browser does not support the HTML5 canvas tag.
+      </canvas> */}
     </div>
   );
 };

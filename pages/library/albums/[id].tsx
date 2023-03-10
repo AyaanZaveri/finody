@@ -287,8 +287,10 @@ const LibraryAlbum: NextPage = () => {
 
   useEffect(() => {
     if (!albumInfo || !serverUrl) return;
-    getAverageColor(`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`);
-  }, [albumInfo, query?.id]);
+    getAverageColor(
+      `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+    );
+  }, [albumInfo]);
 
   return (
     <div
@@ -620,6 +622,7 @@ const LibraryAlbum: NextPage = () => {
               </div>
             </div>
           ) : null}
+
           {/* {playlistModal ? (
             <Dialog
               open={playlistModal}
