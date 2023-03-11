@@ -78,7 +78,7 @@ const LibraryAlbumsIndex: NextPage = () => {
               Albums
             </h1>
             <div className="gap-2 flex flex-row" style={{
-          left: sidebarWidth,
+
         }}>
               {/* create a custom dropdown menu to change the sortBy using menu from headlessui */}
               <Menu as="div" className="relative inline-block text-left">

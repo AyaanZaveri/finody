@@ -288,16 +288,16 @@ const BAudioPlayer = () => {
                           </Dialog.Title>
                           <button
                             onClick={() => setShowQueue(false)}
-                            className="h-10 w-10 inline-flex items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 bg-slate-800 active:bg-slate-600 rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20"
+                            className="h-8 w-8 inline-flex items-center justify-center border border-slate-200 hover:border-slate-300 active:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 dark:active:border-slate-600 bg-slate-800 active:bg-slate-600 rounded-full shadow-xl shadow-emerald-500/10 transition duration-300 ease-in-out hover:shadow-emerald-300/20"
                           >
-                            <XMarkIcon className="w-5 h-5" />
+                            <XMarkIcon className="w-4 h-4" />
                           </button>
                         </div>
                         <div className="flex flex-col gap-1 mt-4">
                           {queue.map((track: any, index: any) => (
                             <div
                               key={index}
-                              className={`flex flex-row gap-3 items-center justify-between hover:bg-slate-800/50 active:bg-slate-800/80 px-4 py-3 transition-colors duration-300 ease-in-out rounded-lg hover:cursor-pointer ${
+                              className={`flex flex-row gap-3 items-center hover:scale-[1.02] active:scale-[0.97] justify-between hover:bg-slate-800/50 active:bg-slate-800/80 px-4 py-3 transition-all duration-300 ease-in-out rounded-lg hover:cursor-pointer ${
                                 playingTrack?.id === track?.Id
                                   ? "bg-emerald-800/50"
                                   : null
@@ -319,6 +319,7 @@ const BAudioPlayer = () => {
                                     src={`${serverUrl}/Items/${track?.Id}/Images/Primary?maxHeight=400&tag=${track?.ImageTags?.Primary}&quality=90`}
                                     alt=""
                                     className="w-12 h-12 rounded-lg"
+                                    draggable={false}
                                   />
                                 </div>
                                 <div className="flex flex-col justify-center">

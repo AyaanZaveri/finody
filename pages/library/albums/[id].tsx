@@ -62,6 +62,8 @@ const LibraryAlbum: NextPage = () => {
   const [userPlaylists, setUserPlaylists] = useState<any>([]);
   const [albumImgLoaded, setAlbumImgLoaded] = useState<boolean>(false);
 
+  const albumImgRef = useRef<any>(null);
+
   const myRef = useRef<any>(null);
 
   const [playlistModal, setPlaylistModal] = useState<any>({
@@ -172,23 +174,20 @@ const LibraryAlbum: NextPage = () => {
 
   const getAverageColor = async (url: string) => {
     if (!fac && url?.length <= 0) return;
+    fac
+      .getColorAsync(
+        url,
 
-    let downloadedImg = new Image();
-    downloadedImg.crossOrigin = "Anonymous";
-    // downloadedImg.addEventListener("load", imageReceived, false);
-    // downloadedImg.alt = imageDescription;
-    downloadedImg.src = url;
-
-    fac 
-      .getColorAsync(downloadedImg, {
-        algorithm: "dominant",
-        ignoredColor: [
-          [255, 255, 255, 255, 55], // White
-          [0, 0, 0, 255, 20], // Black
-          [0, 0, 0, 0, 20], // Transparent
-        ],
-        mode: "speed",
-      })
+        {
+          algorithm: "dominant",
+          ignoredColor: [
+            [255, 255, 255, 255, 55], // White
+            [0, 0, 0, 255, 20], // Black
+            [0, 0, 0, 0, 20], // Transparent
+          ],
+          mode: "speed",
+        }
+      )
       .then((color) => {
         setBgColor(color.rgb);
       })
@@ -282,11 +281,11 @@ const LibraryAlbum: NextPage = () => {
     if (!albumInfo || !serverUrl) return;
     if (albumImgLoaded) {
       getAverageColor(
-        `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+        albumImgRef?.current
       );
     } else {
       getAverageColor(
-        `${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`
+        albumImgRef?.current
       );
     }
   }, [albumInfo, albumImgLoaded]);
@@ -324,6 +323,8 @@ const LibraryAlbum: NextPage = () => {
                       src={`${serverUrl}/Items/${albumInfo?.Id}/Images/Primary?maxHeight=400&tag=${albumInfo?.ImageTags?.Primary}&quality=90`}
                       alt="the image for the album"
                       onLoad={() => setAlbumImgLoaded(true)}
+                      ref={albumImgRef}
+                      crossOrigin="anonymous"
                     />
                   </div>
                 ) : null}
